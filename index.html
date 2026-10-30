@@ -1,339 +1,291 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b0e0c">
-<title>Скоро открытие</title>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>seyuga.ru</title>
+<script>document.documentElement.classList.add('js')</script>
 <style>
-:root {
-    --bg: #0b0e0c;
-    --panel: rgba(17, 22, 18, 0.88);
-    --text: #edf4ee;
-    --muted: #89968b;
-    --green: #a3e635;
-    --line: rgba(194, 214, 194, 0.12);
-}
-
-* {
-    box-sizing: border-box;
-}
-
-html, body {
-    width: 100%;
-    height: 100%;
+  :root {
+    --bg: #0a0d11;
+    --panel: #0f1419;
+    --bar: #151b22;
+    --border: #232c36;
+    --fg: #c5cdd6;
+    --key: #e6edf3;
+    --val: #9aa6b2;
+    --dim: #5f6b78;
+    --line: #3d4955;
+    --accent: #1793d1;      /* Arch blue. Для лаймового как на сайте: #a3e635 */
+    --on-accent: #06121a;
+    --ok: #3fb950;
+    --mono: "JetBrains Mono", "Fira Code", "Cascadia Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
     margin: 0;
-    overflow: hidden;
-}
-
-body {
     display: grid;
     place-items: center;
-    padding: 20px;
+    padding: 24px 16px;
     background:
-        radial-gradient(ellipse at 50% 42%, rgba(91, 138, 54, 0.13), transparent 42%),
-        linear-gradient(rgba(163,230,53,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(163,230,53,.025) 1px, transparent 1px),
-        var(--bg);
-    background-size: auto, 42px 42px, 42px 42px, auto;
-    color: var(--text);
-    font-family: Inter, system-ui, sans-serif;
-}
+      radial-gradient(900px 500px at 50% -10%, rgba(23,147,209,.12), transparent 70%),
+      var(--bg);
+    color: var(--fg);
+    font: 14px/1.65 var(--mono);
+  }
+  body::after {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(to bottom, rgba(255,255,255,.015) 0 1px, transparent 1px 3px);
+  }
 
-.frame {
-    position: relative;
-    width: min(100%, 760px);
-    padding: clamp(24px, 5vw, 54px);
-    overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: 22px;
+  .term {
+    width: 100%;
+    max-width: 800px;
     background: var(--panel);
-    box-shadow: 0 28px 100px rgba(0,0,0,.42),
-                0 0 70px rgba(126,190,54,.055);
-    backdrop-filter: blur(16px);
-}
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 0 0 1px rgba(23,147,209,.08), 0 24px 60px rgba(0,0,0,.55);
+    overflow: hidden;
+  }
+  .bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px;
+    background: var(--bar);
+    border-bottom: 1px solid var(--border);
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; background: #3a4552; }
+  .dot:nth-child(1) { background: #ff5f57; }
+  .dot:nth-child(2) { background: #febc2e; }
+  .dot:nth-child(3) { background: #28c840; }
+  .bar-title { flex: 1; text-align: center; color: var(--dim); font-size: 12px; margin-right: 41px; }
 
-.frame::before {
+  .screen { padding: 20px 22px 20px; }
+
+  /* до начала «печати» скрываем, но место держим, чтобы окно не прыгало */
+  .js .pending { visibility: hidden; }
+
+  /* prompt */
+  .prompt { position: relative; padding-left: 30px; }
+  .prompt::before {
     content: "";
-    position: absolute;
-    inset: 0 0 auto;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--green), transparent);
-}
+    position: absolute; left: 4px; top: 10px;
+    width: 22px; height: 29px;
+    border: 1.5px solid var(--line);
+    border-right: 0;
+    border-radius: 10px 0 0 10px;
+  }
+  .pl, .pc { display: flex; align-items: center; white-space: nowrap; }
+  .pl { height: 22px; }
+  .pc { height: 24px; margin-top: 4px; }
 
-.topbar, .footer, .status, .eyebrow, .prompt {
-    font-family: monospace;
-}
+  .seg {
+    --t: 11px;
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 22px;
+    font-size: 12px; font-weight: 700;
+  }
+  .seg svg { flex: none; }
+  .s1 {
+    background: #dde4f0; color: #0d1520;
+    padding: 0 calc(var(--t) + 2px) 0 10px;
+    border-radius: 11px 0 0 11px;
+    clip-path: polygon(0 0, calc(100% - var(--t)) 0, 100% 50%, calc(100% - var(--t)) 100%, 0 100%);
+  }
+  .s2 {
+    background: var(--accent); color: var(--on-accent);
+    margin-left: calc(-1 * var(--t) - 0.6px);
+    padding: 0 calc(var(--t) + 2px) 0 calc(var(--t) + 6px);
+    clip-path: polygon(0 0, calc(100% - var(--t)) 0, 100% 50%, calc(100% - var(--t)) 100%, 0 100%, var(--t) 50%);
+  }
+  .s3 {
+    background: #575656; color: #d6deeb;
+    margin-left: calc(-1 * var(--t) - 0.6px);
+    padding: 0 12px 0 calc(var(--t) + 6px);
+    border-radius: 0 11px 11px 0;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, var(--t) 50%);
+  }
+  .chev { flex: none; width: 8px; height: 12px; color: var(--key); margin-right: 10px; }
 
-.topbar, .footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    color: var(--muted);
-    font-size: 12px;
-    letter-spacing: .04em;
-}
+  /* команды с подсветкой */
+  .cmd { white-space: pre; }
+  .t-cmd { color: #e5c07b; }
+  .t-arg { color: #dcdfe4; }
+  .t-op  { color: #dcdfe4; }
+  .t-exe { color: #e5c07b; }
 
-.brand {
-    color: #dce8dc;
-}
+  .cursor {
+    display: inline-block;
+    width: 1.25px; height: 1em;
+    margin-left: .6em;
+    border-radius: 999px;
+    background: var(--accent);
+    animation: blink 1.05s steps(1) infinite;
+  }
+  .cur-a { display: none; }
+  .js .cur-a { display: inline-block; }
+  @keyframes blink { 50% { opacity: 0; } }
 
-.brand-mark {
-    color: var(--green);
-}
-
-.status {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
-}
-
-.status-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--green);
-    box-shadow: 0 0 12px rgba(163,230,53,.8);
-}
-
-.content {
-    padding: clamp(42px, 8vh, 78px) 0 clamp(34px, 7vh, 64px);
-}
-
-.eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 22px;
-    color: var(--green);
-    font-size: 11px;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-}
-
-.eyebrow::before {
-    content: "";
-    width: 22px;
-    height: 1px;
-    background: var(--green);
-}
-
-h1 {
-    max-width: 620px;
+  /* fastfetch */
+  .fetch { display: flex; gap: 30px; align-items: center; margin: 14px 0 16px; }
+  .logo {
     margin: 0;
-    font-size: clamp(34px, 6.8vw, 62px);
-    line-height: 1.04;
-    letter-spacing: -.055em;
-    font-weight: 650;
-}
+    color: var(--accent);
+    font: 700 10.5px/1.2 var(--mono);
+    white-space: pre;
+    user-select: none;
+  }
+  .info { min-width: 0; color: var(--val); }
+  .info p { margin: 0; white-space: pre-wrap; word-break: break-word; }
+  .info b { color: var(--key); font-weight: 700; }
+  .info .head { color: var(--key); font-weight: 700; margin-bottom: 6px; }
+  .info .ok { color: var(--ok); }
 
-.accent {
-    color: var(--green);
-}
-
-.description {
-    max-width: 510px;
-    margin: 22px 0 0;
-    color: #a9b5aa;
-    font-size: 15px;
-    line-height: 1.75;
-}
-
-.action-row {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-top: 34px;
-}
-
-.action {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    min-height: 48px;
-    padding: 0 19px;
-    border: 1px solid rgba(163,230,53,.55);
-    border-radius: 9px;
-    background: var(--green);
-    color: #11170b;
+  /* кнопка: тёмная «таблетка» со свечением, без анимаций */
+  .launch { display: flex; justify-content: flex-end; margin-top: 22px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 46px;
+    padding: 0 28px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #14233a, #0d1726);
+    border: 1px solid rgba(23,147,209,.55);
+    color: #fff;
+    font: 700 14px/1 var(--mono);
     text-decoration: none;
-    font-size: 13px;
-    font-weight: 700;
-    transition: .16s ease;
-}
+    box-shadow: 0 0 0 1px rgba(23,147,209,.12), 0 0 22px rgba(23,147,209,.30), inset 0 0 14px rgba(23,147,209,.14);
+  }
+  .btn { -webkit-tap-highlight-color: transparent; }
+  .btn:focus-visible { outline: 2px solid var(--key); outline-offset: 3px; }
 
-.action:hover {
-    transform: translateY(-2px);
-    background: #b8f35a;
-    box-shadow: 0 8px 28px rgba(163,230,53,.18);
-}
-
-.action:focus-visible {
-    outline: 2px solid var(--text);
-    outline-offset: 4px;
-}
-
-.action-arrow {
-    font-size: 17px;
-}
-
-.prompt {
-    color: #748176;
-    font-size: 11px;
-}
-
-.prompt span {
-    color: var(--green);
-}
-
-.footer {
-    padding-top: 18px;
-    border-top: 1px solid var(--line);
-    font-size: 10px;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-}
-
-@media (max-width: 520px) {
-    .frame {
-        border-radius: 16px;
-    }
-
-    .content {
-        padding: 48px 0 42px;
-    }
-
-    .topbar, .footer {
-        font-size: 10px;
-    }
-
-    .footer {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 7px;
-    }
-
-    .action-row {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-}
-
-@media (max-height: 620px) {
-    .content {
-        padding: 25px 0;
-    }
-}
+  @media (max-width: 620px) {
+    body { font-size: 12px; }
+    .logo { display: none; }
+    .screen { padding: 16px 14px 16px; }
+    .seg { font-size: 11px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cursor { animation: none; }
+  }
 </style>
 </head>
-
 <body>
+  <main class="term">
+    <div class="bar" aria-hidden="true">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span class="bar-title">seyuga@arch:~</span>
+    </div>
 
-<main class="frame">
-
-    <header class="topbar">
-        <div class="brand">
-            <span class="brand-mark">●</span>
-            <span id="brand"></span>
+    <div class="screen">
+      <div class="prompt">
+        <div class="pl">
+          <span class="seg s1"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="2" width="14" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.5 6l2.2 2-2.2 2M8.3 10.2h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>seyuga</span><span class="seg s2">~</span><span class="seg s3">34ms</span>
         </div>
-
-        <div class="status">
-            <span class="status-dot"></span>
-            <span id="status"></span>
+        <div class="pc">
+          <svg class="chev" viewBox="0 0 8 12" aria-hidden="true"><path d="M1.5 1.5L6 6l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="cmd" id="cmdA"><span class="t-cmd">fastfetch</span></span><span class="cursor cur-a" id="curA" aria-hidden="true"></span>
         </div>
-    </header>
+      </div>
 
-    <section class="content">
+      <div class="fetch pending" id="fetch">
+<pre class="logo" aria-hidden="true">                   -`
+                  .o+`
+                 `ooo/
+                `+oooo:
+               `+oooooo:
+               -+oooooo+:
+             `/:-:++oooo+:
+            `/++++/+++++++:
+           `/++++++++++++++:
+          `/+++ooooooooooooo/`
+         ./ooosssso++osssssso+`
+        .oossssso-````/ossssss+`
+       -osssssso.      :ssssssso.
+      :osssssss/        osssso+++.
+     /ossssssss/        +ssssooo/-
+   `/ossssso+/:-        -:/+osssso+-
+  `+sso+:-`                 `.-/+oso:
+ `++:.                           `-/+/
+ .`                                 `/</pre>
 
-        <div class="eyebrow" id="eyebrow"></div>
-
-        <h1 id="headline"></h1>
-
-        <p class="description" id="description"></p>
-
-        <div class="action-row">
-
-            <a class="action" id="action" href="#">
-                <span id="buttonText"></span>
-                <span class="action-arrow">↗</span>
-            </a>
-
-            <span class="prompt">
-                <span>user@linux</span>:~$ ./stay_tuned
-            </span>
-
+        <div class="info">
+          <p class="head">seyuga@arch</p>
+          <p><b>OS</b>: Arch Linux x86_64</p>
+          <p><b>Host</b>: seyuga.ru</p>
+          <p><b>Terminal</b>: alacritty</p>
+          <p><b>CPU</b>: AMD Ryzen 5 5600 (12) @ 3.50 GHz</p>
+          <p><b>GPU</b>: NVIDIA GeForce RTX 3050 @ 0.21 GHz (7.85 GiB)</p>
+          <p><b>Memory</b>: 8.58 GiB / 15.92 GiB (54%)</p>
+          <p><b>Status</b>: <span class="ok">● online</span></p>
         </div>
+      </div>
 
-    </section>
+      <div class="prompt pending" id="p2">
+        <div class="pl">
+          <span class="seg s1"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="2" width="14" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.5 6l2.2 2-2.2 2M8.3 10.2h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>seyuga</span><span class="seg s2">~</span><span class="seg s3">34ms</span>
+        </div>
+        <div class="pc">
+          <svg class="chev" viewBox="0 0 8 12" aria-hidden="true"><path d="M1.5 1.5L6 6l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="cmd" id="cmdB"><span class="t-cmd">cd</span><span> </span><span class="t-arg">history-ai</span><span> </span><span class="t-op">&amp;&amp;</span><span> </span><span class="t-exe">./start</span></span><span class="cursor" aria-hidden="true"></span>
+        </div>
+      </div>
 
-    <footer class="footer">
-        <span id="footerLeft"></span>
-        <span id="footerRight"></span>
-    </footer>
-
-</main>
+      <div class="launch pending" id="launch">
+        <a class="btn" href="/history-ai/">Открыть History AI <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </main>
 
 <script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var cmdA = $('cmdA'), cmdB = $('cmdB'), curA = $('curA');
+  var fetchEl = $('fetch'), p2 = $('p2'), launch = $('launch');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* =====================================
-   НАСТРОЙКИ САЙТА
-   МЕНЯЙ ТЕКСТ И ССЫЛКИ ЗДЕСЬ
-===================================== */
+  function show(el) { el.classList.remove('pending'); }
 
-const CONFIG = {
+  if (reduce) {
+    curA.style.display = 'none';
+    show(fetchEl); show(p2); show(launch);
+    return;
+  }
 
-    pageTitle: "Скоро открытие",
+  function prep(el) {
+    var toks = [].map.call(el.children, function (s) { return { t: s.textContent, c: s.className }; });
+    el.textContent = '';
+    return toks;
+  }
+  function type(el, toks, done) {
+    var ti = 0, ci = 0, cur;
+    (function step() {
+      if (ti >= toks.length) { if (done) done(); return; }
+      if (ci === 0) { cur = document.createElement('span'); cur.className = toks[ti].c; el.appendChild(cur); }
+      ci++;
+      cur.textContent = toks[ti].t.slice(0, ci);
+      if (ci >= toks[ti].t.length) { ti++; ci = 0; }
+      setTimeout(step, 48 + Math.random() * 42);
+    })();
+  }
 
-    brand: "~/my-site",
+  var a = prep(cmdA), b = prep(cmdB);
 
-    status: "IN DEVELOPMENT",
-
-    eyebrow: "SYSTEM MESSAGE",
-
-    headline: 'Скоро здесь<br><span class="accent">будет что-то интересное.</span>',
-
-    description: "Я работаю над сайтом. Загляни сюда немного позже — скоро здесь появится кое-что новое.",
-
-    buttonText: "Открыть History AI",
-
-    buttonUrl: "./history-ai/index.html",
-
-    footerLeft: "© 2026 · YOUR NAME",
-
-    footerRight: "BUILT WITH A LINUX MINDSET"
-
-};
-
-/* =====================================
-   НЕ НУЖНО МЕНЯТЬ КОД НИЖЕ
-===================================== */
-
-document.title = CONFIG.pageTitle;
-
-document.getElementById("brand").textContent = CONFIG.brand;
-
-document.getElementById("status").textContent = CONFIG.status;
-
-document.getElementById("eyebrow").textContent = CONFIG.eyebrow;
-
-document.getElementById("headline").innerHTML = CONFIG.headline;
-
-document.getElementById("description").textContent = CONFIG.description;
-
-document.getElementById("buttonText").textContent = CONFIG.buttonText;
-
-document.getElementById("action").href = CONFIG.buttonUrl;
-
-document.getElementById("footerLeft").textContent = CONFIG.footerLeft;
-
-document.getElementById("footerRight").textContent = CONFIG.footerRight;
-
+  setTimeout(function () {
+    type(cmdA, a, function () {
+      setTimeout(function () {
+        curA.style.display = 'none';
+        show(fetchEl); show(p2);
+        setTimeout(function () {
+          type(cmdB, b, function () {
+            setTimeout(function () { show(launch); }, 300);
+          });
+        }, 450);
+      }, 300);
+    });
+  }, 600);
+})();
 </script>
-
 </body>
 </html>

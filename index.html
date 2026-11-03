@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Сайт «История развития искусственного интеллекта» · версия V11 · 03.11.2026 -->
+<!-- История развития искусственного интеллекта · version 12 (исправление фотографий ученых и меню) (03.11.2026) -->
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -19,7 +19,6 @@
   color-scheme: dark;
   --bg-0: #070b1d;
   --bg-1: #0d1233;
-  --bg-2: #161a4a;
   --bg-deep-1: #03050e;
   --bg-deep-2: #060a1a;
   --bg-deep-3: #0a0f2c;
@@ -46,11 +45,6 @@
   --panel-solid: #141c47;
   --ring-hole: #0d1233;
   --ok: #6ee7b7;
-  --ok-ink: #06251a;
-  --bad: #fca5a5;
-  --bad-ink: #450a0a;
-  --rgb-ok: 110, 231, 183;
-  --rgb-bad: 252, 165, 165;
   --btn-bg: #e0f2fe;
   --grad-main: linear-gradient(135deg, #67e8f9 0%, #60a5fa 52%, #818cf8 100%);
   --grad-shine: linear-gradient(100deg,
@@ -70,7 +64,6 @@
 [data-theme="red"] {
   --bg-0: #160609;
   --bg-1: #210a10;
-  --bg-2: #2e0e17;
   --bg-deep-1: #0d0305;
   --bg-deep-2: #14050a;
   --bg-deep-3: #1f0810;
@@ -97,11 +90,6 @@
   --panel-solid: #2d1018;
   --ring-hole: #210a10;
   --ok: #86efac;
-  --ok-ink: #052e16;
-  --bad: #fcd34d;
-  --bad-ink: #3b2506;
-  --rgb-ok: 134, 239, 172;
-  --rgb-bad: 252, 211, 77;
   --btn-bg: #ffe4e6;
   --grad-main: linear-gradient(135deg, #fb7185 0%, #f43f5e 52%, #be123c 100%);
   --grad-shine: linear-gradient(100deg,
@@ -118,7 +106,6 @@
 [data-theme="mono"] {
   --bg-0: #0a0a0a;
   --bg-1: #121212;
-  --bg-2: #1c1c1c;
   --bg-deep-1: #000000;
   --bg-deep-2: #050505;
   --bg-deep-3: #0d0d0d;
@@ -145,11 +132,6 @@
   --panel-solid: #1b1b1b;
   --ring-hole: #121212;
   --ok: #ffffff;
-  --ok-ink: #0a0a0a;
-  --bad: #8a8a8a;
-  --bad-ink: #ffffff;
-  --rgb-ok: 255, 255, 255;
-  --rgb-bad: 138, 138, 138;
   --btn-bg: #f5f5f5;
   --grad-main: linear-gradient(135deg, #ffffff 0%, #d4d4d4 52%, #8f8f8f 100%);
   --grad-shine: linear-gradient(100deg,
@@ -166,7 +148,6 @@
 [data-theme="orange"] {
   --bg-0: #150a03;
   --bg-1: #1f1006;
-  --bg-2: #2b1608;
   --bg-deep-1: #0d0501;
   --bg-deep-2: #150a03;
   --bg-deep-3: #1e0e05;
@@ -193,11 +174,6 @@
   --panel-solid: #27150a;
   --ring-hole: #1f1006;
   --ok: #86efac;
-  --ok-ink: #052e16;
-  --bad: #fda4af;
-  --bad-ink: #450a0a;
-  --rgb-ok: 134, 239, 172;
-  --rgb-bad: 253, 164, 175;
   --btn-bg: #ffedd5;
   --grad-main: linear-gradient(135deg, #fdba74 0%, #fb923c 52%, #ea580c 100%);
   --grad-shine: linear-gradient(100deg,
@@ -214,7 +190,6 @@
 [data-theme="green"] {
   --bg-0: #04120c;
   --bg-1: #082018;
-  --bg-2: #0b2c20;
   --bg-deep-1: #020b06;
   --bg-deep-2: #04120c;
   --bg-deep-3: #071c14;
@@ -241,11 +216,6 @@
   --panel-solid: #10382b;
   --ring-hole: #082018;
   --ok: #bbf7d0;
-  --ok-ink: #052e16;
-  --bad: #fcd34d;
-  --bad-ink: #3b2506;
-  --rgb-ok: 187, 247, 208;
-  --rgb-bad: 252, 211, 77;
   --btn-bg: #d1fae5;
   --grad-main: linear-gradient(135deg, #6ee7b7 0%, #34d399 52%, #059669 100%);
   --grad-shine: linear-gradient(100deg,
@@ -2339,15 +2309,18 @@ window.I18N.zh = {
   var nav = document.getElementById("nav");
   var burger = document.getElementById("burger");
   function setMenu(state) {
+    var isOpen = nav.classList.contains("open");
     if (state) {
       nav.classList.remove("closing");
       nav.classList.add("open");
-    } else {
+    } else if (isOpen) {
+      /* анимация закрытия — только если меню реально было открыто,
+         иначе оно на мгновение всплывает при клике по логотипу */
       nav.classList.remove("open");
       nav.classList.add("closing");
       setTimeout(function () { nav.classList.remove("closing"); }, 260);
     }
-    burger.setAttribute("aria-expanded", String(state));
+    burger.setAttribute("aria-expanded", String(nav.classList.contains("open")));
   }
 
   burger.addEventListener("click", function () {

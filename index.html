@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- История развития искусственного интеллекта · version 13 (исправление плеч у Ньюэлла и Саймона) (03.11.2026) -->
+<!-- История развития искусственного интеллекта · version 14 (3D-карточки, кольцо аватара, анимации теста, кнопка наверх) (03.11.2026) -->
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -654,6 +654,84 @@ section[id], header[id] { scroll-margin-top: 96px; }
   .tool-menu { min-width: 178px; }
 }
 
+/* ---------- 3D-наклон карточек и подсветка курсором ---------- */
+.scientist, .fact {
+  --ty: 0px; --rx: 0deg; --ry: 0deg; --mx: 50%; --my: 50%;
+  transform: perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(var(--ty));
+  transform-style: preserve-3d;
+  transition: box-shadow 0.35s ease, border-color 0.35s ease, opacity 0.35s ease,
+              transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .scientist, .fact, .tl-card { position: relative; }
+  .scientist::after, .fact::after, .tl-card::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(var(--rgb-1), 0.16), rgba(var(--rgb-1), 0) 66%);
+    opacity: 0; transition: opacity 0.35s ease; }
+  .scientist:hover::after, .fact:hover::after, .tl-card:hover::after { opacity: 1; }
+}
+
+/* ---------- аватар: вращающееся кольцо при наведении ---------- */
+.avatar::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; padding: 2px;
+  z-index: 2; pointer-events: none; opacity: 0;
+  background: conic-gradient(from 0deg, transparent 0 55%, rgba(var(--rgb-1), 0.95), transparent 84%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  transition: opacity 0.35s ease;
+  animation: spin-slow 5s linear infinite; }
+.scientist:hover .avatar::after { opacity: 1; }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+
+/* ---------- тест: отклики на ответ ---------- */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(2px); }
+}
+.option.shake { animation: shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
+@keyframes pop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.035); }
+  100% { transform: scale(1); }
+}
+.option.pop { animation: pop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes correct-flash {
+  0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.55); }
+  100% { box-shadow: 0 0 0 16px rgba(74, 222, 128, 0); }
+}
+.option.correct { animation: correct-flash 0.7s ease-out; }
+#confetti { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 300;
+  pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
+#confetti.show { opacity: 1; }
+
+/* ---------- кнопка «наверх» с кольцом прогресса ---------- */
+.to-top { position: fixed; left: 20px; bottom: 20px; z-index: 140;
+  width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--ink); background: var(--panel-soft); border: 1px solid var(--glass-border);
+  box-shadow: 0 12px 34px var(--shadow-nav);
+  opacity: 0; visibility: hidden; transform: translateY(14px) scale(0.9);
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.3s; }
+.to-top.show { opacity: 1; visibility: visible; transform: none; }
+.to-top:hover { border-color: rgba(255, 255, 255, 0.34); }
+.to-top .arrow { width: 20px; height: 20px; }
+.to-top .ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg);
+  pointer-events: none; }
+.to-top .ring circle { fill: none; stroke: var(--c1); stroke-width: 2; stroke-linecap: round;
+  stroke-dasharray: 157.08; stroke-dashoffset: 157.08; opacity: 0.85; }
+@media (max-width: 760px) {
+  .to-top { width: 44px; height: 44px; left: 12px; bottom: 14px; }
+  .to-top .arrow { width: 17px; height: 17px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scientist, .fact { transition: box-shadow 0.3s ease, border-color 0.3s ease; }
+  .avatar::after { animation: none; }
+  .option.shake, .option.pop, .option.correct { animation: none; }
+}
+
 </style>
 </head>
 <body>
@@ -831,6 +909,12 @@ section[id], header[id] { scroll-margin-top: 96px; }
   </div>
 </div>
 
+<button class="to-top" id="toTop" type="button" aria-label="Наверх" data-i18n="back_top" data-i18n-attr="aria-label">
+  <svg class="ring" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="25"/></svg>
+  <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+</button>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
 <script>
 window.I18N = window.I18N || {};
 window.I18N.ru = {
@@ -855,6 +939,7 @@ window.I18N.ru = {
     sci_sub: "От теоретиков вычислительных машин до авторов глубокого обучения — люди, чьи идеи превратили фантастику в технологию.",
     facts_title: "Интересные факты",
     facts_sub: "Неожиданные детали истории, которые не найдёшь в учебнике.",
+    back_top: "Наверх",
     quiz_title: "Тест на знания",
     quiz_sub: "Тридцать вопросов в базе. Каждая попытка — пять случайных, и в следующую предыдущие пять не попадут.",
     quiz_step: "Вопрос {n} из {total}",
@@ -1072,6 +1157,7 @@ window.I18N.en = {
     sci_sub: "From theorists of computing machines to the authors of deep learning — the people whose ideas turned fiction into technology.",
     facts_title: "Surprising Facts",
     facts_sub: "Unexpected details of history that you will not find in a textbook.",
+    back_top: "Back to top",
     quiz_title: "Knowledge Quiz",
     quiz_sub: "Thirty questions in the bank. Each attempt draws five at random, and the next one never repeats the previous five.",
     quiz_step: "Question {n} of {total}",
@@ -1289,6 +1375,7 @@ window.I18N.pl = {
     sci_sub: "Od teoretyków maszyn liczących do autorów uczenia głębokiego — ludzie, których idee zamieniły fantastykę w technologię.",
     facts_title: "Ciekawostki",
     facts_sub: "Nieoczekiwane szczegóły historii, których nie znajdziesz w podręczniku.",
+    back_top: "Do góry",
     quiz_title: "Test wiedzy",
     quiz_sub: "Trzydzieści pytań w bazie. Każda próba to pięć losowych, a następna nie powtórzy poprzednich pięciu.",
     quiz_step: "Pytanie {n} z {total}",
@@ -1506,6 +1593,7 @@ window.I18N.zh = {
     sci_sub: "从计算理论家到深度学习的开创者——他们的思想把幻想变成了技术。",
     facts_title: "趣味事实",
     facts_sub: "教科书里读不到的历史细节。",
+    back_top: "回到顶部",
     quiz_title: "知识测试",
     quiz_sub: "题库共30道题。每次随机抽取5道，下一次不会重复上一轮的五道。",
     quiz_step: "第 {n} 题，共 {total} 题",
@@ -2077,12 +2165,16 @@ window.I18N.zh = {
     var buttons = quizOptions.querySelectorAll(".option");
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].disabled = true;
-      if (i === right) buttons[i].classList.add("correct");
+      if (i === right) buttons[i].classList.add("correct", "pop");
     }
     if (pos === right) {
       score++;
     } else {
-      btn.classList.add("wrong");
+      btn.classList.add("wrong", "shake");
+      btn.addEventListener("animationend", function stopShake() {
+        btn.classList.remove("shake");
+        btn.removeEventListener("animationend", stopShake);
+      });
     }
     quizExplain.textContent = q.explain;
     quizExplain.classList.add("show");
@@ -2111,6 +2203,7 @@ window.I18N.zh = {
     quizPlay.style.display = "none";
     quizResult.classList.add("show");
     fillResult();
+    celebrate(score);
   }
 
   function refreshQuiz() {
@@ -2470,6 +2563,137 @@ window.I18N.zh = {
       srcBtn.setAttribute("aria-expanded", String(!open));
       srcPanel.classList.toggle("open", !open);
     });
+  }
+
+  /* ================= 3D-НАКЛОН И ПОДСВЕТКА КАРТОЧЕК ================= */
+  var finePointer = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var tiltEl = null;
+
+  function resetTilt(el) {
+    el.style.transition = "box-shadow 0.35s ease, border-color 0.35s ease, opacity 0.35s ease, " +
+      "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)";
+    el.style.setProperty("--rx", "0deg");
+    el.style.setProperty("--ry", "0deg");
+  }
+
+  if (finePointer && !reduceMotion) {
+    document.addEventListener("pointermove", function (ev) {
+      var card = ev.target && ev.target.closest ? ev.target.closest(".scientist, .fact, .tl-card") : null;
+      if (card) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty("--mx", (ev.clientX - r.left).toFixed(1) + "px");
+        card.style.setProperty("--my", (ev.clientY - r.top).toFixed(1) + "px");
+      }
+      var tiltable = card && (card.classList.contains("scientist") || card.classList.contains("fact")) ? card : null;
+      if (tiltEl && tiltEl !== tiltable) { resetTilt(tiltEl); tiltEl = null; }
+      if (tiltable) {
+        var tr = tiltable.getBoundingClientRect();
+        var nx = (ev.clientX - tr.left) / tr.width - 0.5;
+        var ny = (ev.clientY - tr.top) / tr.height - 0.5;
+        tiltable.style.transition = "box-shadow 0.35s ease, border-color 0.35s ease, opacity 0.35s ease";
+        tiltable.style.setProperty("--ry", (nx * 8).toFixed(2) + "deg");
+        tiltable.style.setProperty("--rx", (-ny * 8).toFixed(2) + "deg");
+        tiltEl = tiltable;
+      }
+    }, { passive: true });
+
+    document.addEventListener("pointerout", function (ev) {
+      if (!tiltEl) return;
+      if (ev.relatedTarget && tiltEl.contains(ev.relatedTarget)) return;
+      if (ev.target !== tiltEl && !tiltEl.contains(ev.target)) return;
+      resetTilt(tiltEl);
+      tiltEl = null;
+    }, { passive: true });
+
+    window.addEventListener("blur", function () {
+      if (tiltEl) { resetTilt(tiltEl); tiltEl = null; }
+    });
+  }
+
+  /* ================= КНОПКА «НАВЕРХ» С КОЛЬЦОМ ================= */
+  var toTopBtn = document.getElementById("toTop");
+  var toTopCircle = toTopBtn ? toTopBtn.querySelector(".ring circle") : null;
+  var RING_LEN = 157.08;
+
+  function updateToTop() {
+    if (!toTopBtn) return;
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - window.innerHeight;
+    var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    toTopBtn.classList.toggle("show", window.scrollY > window.innerHeight * 0.7);
+    if (toTopCircle) toTopCircle.style.strokeDashoffset = (RING_LEN * (1 - p)).toFixed(2);
+  }
+  if (toTopBtn) {
+    var ttRaf = 0;
+    window.addEventListener("scroll", function () {
+      if (ttRaf) return;
+      ttRaf = requestAnimationFrame(function () { ttRaf = 0; updateToTop(); });
+    }, { passive: true });
+    window.addEventListener("resize", updateToTop);
+    toTopBtn.addEventListener("click", function () { smoothScrollTo(0); });
+    updateToTop();
+  }
+
+  /* ================= КОНФЕТТИ ЗА ИДЕАЛЬНЫЙ ТЕСТ ================= */
+  var confettiCanvas = document.getElementById("confetti");
+
+  function celebrate(finalScore) {
+    if (reduceMotion || finalScore < QUIZ_SIZE || !confettiCanvas || !confettiCanvas.getContext) return;
+    var cctx = confettiCanvas.getContext("2d");
+    if (!cctx) return;
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    var W = window.innerWidth, H = window.innerHeight;
+    confettiCanvas.width = Math.round(W * dpr);
+    confettiCanvas.height = Math.round(H * dpr);
+    cctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    var cs = getComputedStyle(document.documentElement);
+    var palette = ["--c1", "--c2", "--c3", "--c4"].map(function (key) {
+      return cs.getPropertyValue(key).trim();
+    }).filter(function (c) { return !!c; });
+    if (!palette.length) palette = ["#67e8f9", "#60a5fa", "#818cf8", "#a78bfa"];
+
+    var parts = [], n = 150;
+    var cx = W / 2, cy = Math.min(H * 0.4, 340);
+    for (var i = 0; i < n; i++) {
+      var ang = Math.random() * Math.PI * 2;
+      var sp = 4 + Math.random() * 10;
+      parts.push({
+        x: cx + (Math.random() - 0.5) * 30, y: cy,
+        vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp - 3.5,
+        w: 4 + Math.random() * 6, h: 7 + Math.random() * 9,
+        rot: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.4,
+        color: palette[i % palette.length],
+        life: 0, ttl: 95 + Math.random() * 55
+      });
+    }
+
+    confettiCanvas.classList.add("show");
+    function tick() {
+      cctx.clearRect(0, 0, W, H);
+      var alive = 0;
+      for (var k = 0; k < parts.length; k++) {
+        var pt = parts[k];
+        pt.life++;
+        if (pt.life > pt.ttl) continue;
+        alive++;
+        pt.vy += 0.17;
+        pt.vx *= 0.992;
+        pt.x += pt.vx;
+        pt.y += pt.vy;
+        pt.rot += pt.vr;
+        cctx.save();
+        cctx.globalAlpha = Math.max(0, 1 - pt.life / pt.ttl);
+        cctx.translate(pt.x, pt.y);
+        cctx.rotate(pt.rot);
+        cctx.fillStyle = pt.color;
+        cctx.fillRect(-pt.w / 2, -pt.h / 2, pt.w, pt.h);
+        cctx.restore();
+      }
+      if (alive) requestAnimationFrame(tick);
+      else { cctx.clearRect(0, 0, W, H); confettiCanvas.classList.remove("show"); }
+    }
+    tick();
   }
 
   /* ================= СТАРТ ================= */

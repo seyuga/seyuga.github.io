@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- История развития искусственного интеллекта · version 14 (3D-карточки, кольцо аватара, анимации теста, кнопка наверх) (03.11.2026) -->
+<!-- История развития искусственного интеллекта · version 15 (фиолетовая тема, фикс углов 3D-карточек, анимации теста, живая точка) (03.11.2026) -->
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -142,6 +142,48 @@
   --shadow-glass: 0 24px 60px rgba(0, 0, 0, 0.7);
   --shadow-nav: rgba(0, 0, 0, 0.6);
   --tool-border: rgba(255, 255, 255, 0.3);
+}
+
+/* ---------- Фиолетовая палитра ---------- */
+[data-theme="purple"] {
+  --bg-0: #0c0618;
+  --bg-1: #150b2b;
+  --bg-deep-1: #06020e;
+  --bg-deep-2: #0a0517;
+  --bg-deep-3: #120826;
+  --ink: #f8f3ff;
+  --ink-soft: rgba(241, 233, 255, 0.84);
+  --ink-faint: rgba(226, 214, 255, 0.52);
+  --glass-bg: rgba(255, 255, 255, 0.07);
+  --glass-bg-strong: rgba(255, 255, 255, 0.11);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-highlight: rgba(255, 255, 255, 0.32);
+  --c1: #ad8aff;
+  --c2: #c4a5ff;
+  --c3: #8b5cf6;
+  --c4: #d8c2ff;
+  --c1-soft: #cbb2ff;
+  --c3-soft: #e2d4ff;
+  --rgb-1: 173, 138, 255;
+  --rgb-2: 196, 165, 255;
+  --rgb-3: 139, 92, 246;
+  --rgb-4: 216, 194, 255;
+  --on-accent: #12061f;
+  --panel: #150b2b;
+  --panel-soft: rgba(21, 11, 43, 0.62);
+  --panel-solid: #1e1140;
+  --ring-hole: #150b2b;
+  --ok: #6ee7b7;
+  --btn-bg: #efe4ff;
+  --grad-main: linear-gradient(135deg, #c9aaff 0%, #ad8aff 52%, #8b5cf6 100%);
+  --grad-shine: linear-gradient(100deg,
+    #ad8aff 0%, #c9aaff 12%, #e2d4ff 24%, #c4a5ff 36%,
+    #ffffff 50%,
+    #c4a5ff 64%, #e2d4ff 76%, #c9aaff 88%, #ad8aff 100%);
+  --grad-chip: linear-gradient(100deg, #ad8aff 0%, #ffffff 30%, #c4a5ff 64%, #ad8aff 100%);
+  --shadow-glass: 0 24px 60px rgba(9, 3, 22, 0.55);
+  --shadow-nav: rgba(6, 2, 15, 0.5);
+  --tool-border: rgba(255, 255, 255, 0.26);
 }
 
 /* ---------- Оранжевая палитра ---------- */
@@ -292,7 +334,19 @@ section[id], header[id] { scroll-margin-top: 96px; }
 .nav-brand { display: flex; align-items: center; gap: 9px; font-weight: 700; letter-spacing: 0.4px;
   padding: 16px 18px; color: var(--ink); text-decoration: none; white-space: nowrap; }
 .nav-brand .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--grad-main);
-  box-shadow: 0 0 14px rgba(var(--rgb-4), 0.9); }
+  position: relative; flex: 0 0 auto;
+  animation: dot-breathe 3.6s ease-in-out infinite; }
+.nav-brand .dot::after { content: ""; position: absolute; inset: -2px; border-radius: 50%;
+  border: 1.5px solid rgba(var(--rgb-1), 0.85); pointer-events: none;
+  animation: dot-ping 3.6s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
+@keyframes dot-breathe {
+  0%, 100% { box-shadow: 0 0 6px 0 rgba(var(--rgb-1), 0.35); transform: scale(1); }
+  50% { box-shadow: 0 0 16px 3px rgba(var(--rgb-1), 0.6); transform: scale(1.12); }
+}
+@keyframes dot-ping {
+  0% { transform: scale(0.62); opacity: 1; }
+  62%, 100% { transform: scale(2.15); opacity: 0; }
+}
 .nav-links { display: flex; gap: 2px; flex-wrap: nowrap; position: relative; }
 .nav-links a { color: var(--ink-soft); text-decoration: none; font-size: 14px; padding: 7px 13px;
   border-radius: 999px; transition: color 0.28s ease, background-color 0.28s ease; white-space: nowrap; position: relative; z-index: 1; }
@@ -643,6 +697,7 @@ section[id], header[id] { scroll-margin-top: 96px; }
 .sw-synthora { background: linear-gradient(135deg, #67e8f9, #818cf8); }
 .sw-red { background: linear-gradient(135deg, #fb7185, #be123c); }
 .sw-mono { background: linear-gradient(135deg, #ffffff, #8f8f8f); }
+.sw-purple { background: linear-gradient(135deg, #c9aaff, #8b5cf6); }
 .sw-orange { background: linear-gradient(135deg, #fdba74, #ea580c); }
 .sw-green { background: linear-gradient(135deg, #6ee7b7, #059669); }
 .tool-btn .sw { width: 22px; height: 22px; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.28); }
@@ -658,10 +713,10 @@ section[id], header[id] { scroll-margin-top: 96px; }
 .scientist, .fact {
   --ty: 0px; --rx: 0deg; --ry: 0deg; --mx: 50%; --my: 50%;
   transform: perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(var(--ty));
-  transform-style: preserve-3d;
   transition: box-shadow 0.35s ease, border-color 0.35s ease, opacity 0.35s ease,
               transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
+.scientist { overflow: hidden; }
 @media (hover: hover) and (pointer: fine) {
   .scientist, .fact, .tl-card { position: relative; }
   .scientist::after, .fact::after, .tl-card::after {
@@ -703,7 +758,7 @@ section[id], header[id] { scroll-margin-top: 96px; }
   0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.55); }
   100% { box-shadow: 0 0 0 16px rgba(74, 222, 128, 0); }
 }
-.option.correct { animation: correct-flash 0.7s ease-out; }
+.option.correct { animation: correct-flash 0.7s ease-out, pop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
 #confetti { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 300;
   pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
 #confetti.show { opacity: 1; }
@@ -716,8 +771,11 @@ section[id], header[id] { scroll-margin-top: 96px; }
   opacity: 0; visibility: hidden; transform: translateY(14px) scale(0.9);
   transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.3s; }
 .to-top.show { opacity: 1; visibility: visible; transform: none; }
-.to-top:hover { border-color: rgba(255, 255, 255, 0.34); }
-.to-top .arrow { width: 20px; height: 20px; }
+.to-top.show:hover { opacity: 1; visibility: visible; transform: none; }
+.to-top:hover { border-color: rgba(255, 255, 255, 0.34);
+  box-shadow: 0 14px 38px var(--shadow-nav), 0 0 0 4px rgba(var(--rgb-1), 0.12); }
+.to-top .arrow { width: 20px; height: 20px; transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1); }
+.to-top:hover .arrow { transform: translateY(-2px); }
 .to-top .ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg);
   pointer-events: none; }
 .to-top .ring circle { fill: none; stroke: var(--c1); stroke-width: 2; stroke-linecap: round;
@@ -730,6 +788,8 @@ section[id], header[id] { scroll-margin-top: 96px; }
   .scientist, .fact { transition: box-shadow 0.3s ease, border-color 0.3s ease; }
   .avatar::after { animation: none; }
   .option.shake, .option.pop, .option.correct { animation: none; }
+  .nav-brand .dot, .nav-brand .dot::after { animation: none; }
+  .to-top .arrow { transition: none; }
 }
 
 </style>
@@ -963,7 +1023,7 @@ window.I18N.ru = {
     years_suffix: " гг.",
     lang_label: "Язык", theme_label: "Палитра",
     theme_synthora: "Синяя", theme_red: "Красная", theme_mono: "Чёрно-белая",
-    theme_orange: "Оранжевая", theme_green: "Зелёная"
+    theme_purple: "Фиолетовая", theme_orange: "Оранжевая", theme_green: "Зелёная"
   },
   fields: ["Все", "Теория вычислений", "Языки ИИ", "Нейросети", "Когнитивная наука",
     "Этика ИИ", "Экспертные системы", "Глубокое обучение", "Свёрточные сети", "Кибернетика"],
@@ -1181,7 +1241,7 @@ window.I18N.en = {
     years_suffix: "",
     lang_label: "Language", theme_label: "Palette",
     theme_synthora: "Blue", theme_red: "Red", theme_mono: "Black & white",
-    theme_orange: "Orange", theme_green: "Green"
+    theme_purple: "Purple", theme_orange: "Orange", theme_green: "Green"
   },
   fields: ["All", "Theory of computation", "AI languages", "Neural networks", "Cognitive science",
     "AI ethics", "Expert systems", "Deep learning", "Convolutional networks", "Cybernetics"],
@@ -1399,7 +1459,7 @@ window.I18N.pl = {
     years_suffix: " r.",
     lang_label: "Język", theme_label: "Paleta",
     theme_synthora: "Niebieska", theme_red: "Czerwona", theme_mono: "Czarno-biała",
-    theme_orange: "Pomarańczowa", theme_green: "Zielona"
+    theme_purple: "Fioletowa", theme_orange: "Pomarańczowa", theme_green: "Zielona"
   },
   fields: ["Wszyscy", "Teoria obliczeń", "Języki AI", "Sieci neuronowe", "Nauki kognitywne",
     "Etyka AI", "Systemy ekspertowe", "Uczenie głębokie", "Sieci konwolucyjne", "Cybernetyka"],
@@ -1617,7 +1677,7 @@ window.I18N.zh = {
     years_suffix: " 年",
     lang_label: "语言", theme_label: "配色",
     theme_synthora: "蓝色", theme_red: "红色", theme_mono: "黑白",
-    theme_orange: "橙色", theme_green: "绿色"
+    theme_purple: "紫色", theme_orange: "橙色", theme_green: "绿色"
   },
   fields: ["全部", "计算理论", "人工智能语言", "神经网络", "认知科学",
     "人工智能伦理", "专家系统", "深度学习", "卷积网络", "控制论"],
@@ -1802,6 +1862,7 @@ window.I18N.zh = {
     { id: "synthora", key: "theme_synthora", sw: "sw-synthora" },
     { id: "red", key: "theme_red", sw: "sw-red" },
     { id: "mono", key: "theme_mono", sw: "sw-mono" },
+    { id: "purple", key: "theme_purple", sw: "sw-purple" },
     { id: "orange", key: "theme_orange", sw: "sw-orange" },
     { id: "green", key: "theme_green", sw: "sw-green" }
   ];
@@ -2160,6 +2221,7 @@ window.I18N.zh = {
     var d = D();
     answered = true;
     lastPick = pos;
+    quizPlay.classList.remove("q-anim");
     var q = d.quiz[roundQuestions[current].idx];
     var right = correctPos();
     var buttons = quizOptions.querySelectorAll(".option");

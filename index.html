@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- История развития искусственного интеллекта · version 17 (выровнены кнопки палитры и языка) (04.11.2026) -->
+<!-- История развития искусственного интеллекта · version 18 (чистый адрес без #якорей) (04.11.2026) -->
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -2530,6 +2530,12 @@ window.I18N.zh = {
     requestAnimationFrame(step);
   }
 
+  /* убираем #якорь из адресной строки (replaceState — без записи в историю) */
+  function cleanHash() {
+    if (!history.replaceState || !location.hash) return;
+    history.replaceState(null, "", location.pathname + location.search);
+  }
+
   var anchorLinks = document.querySelectorAll('a[href^="#"]');
   for (var a = 0; a < anchorLinks.length; a++) {
     anchorLinks[a].addEventListener("click", function (ev) {
@@ -2540,7 +2546,8 @@ window.I18N.zh = {
       ev.preventDefault();
       setMenu(false);
       smoothScrollTo(anchorTop(target));
-      if (history.replaceState) history.replaceState(null, "", href);
+      /* адрес оставляем чистым: seyuga.ru вместо seyuga.ru/#timeline */
+      cleanHash();
     });
   }
 
@@ -2710,6 +2717,23 @@ window.I18N.zh = {
     window.addEventListener("resize", updateToTop);
     toTopBtn.addEventListener("click", function () { smoothScrollTo(0); });
     updateToTop();
+  }
+
+  /* открыли seyuga.ru/#timeline — прокрутка работает, но адрес потом чистый */
+  if (location.hash) {
+    var initial = document.getElementById(location.hash.slice(1));
+    if (initial) {
+      var deepLinkTouched = false;
+      ["wheel", "touchstart", "keydown"].forEach(function (ev) {
+        window.addEventListener(ev, function () { deepLinkTouched = true; }, { passive: true, once: true });
+      });
+      setTimeout(function () { smoothScrollTo(anchorTop(initial)); cleanHash(); }, 80);
+      window.addEventListener("load", function () {
+        if (!deepLinkTouched) window.scrollTo(0, anchorTop(initial));
+      });
+    } else {
+      cleanHash();
+    }
   }
 
   /* ================= КОНФЕТТИ ЗА ИДЕАЛЬНЫЙ ТЕСТ ================= */

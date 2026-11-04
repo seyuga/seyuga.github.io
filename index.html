@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- История развития искусственного интеллекта · version 16 (светлее фиолетовая тема, убран муар на 3D-карточках, спокойный hover кнопки) (04.11.2026) -->
+<!-- История развития искусственного интеллекта · version 17 (выровнены кнопки палитры и языка) (04.11.2026) -->
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -670,10 +670,23 @@ section[id], header[id] { scroll-margin-top: 96px; }
   box-shadow: 0 12px 34px var(--shadow-nav);
   transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.2s ease; }
 .tool-btn:hover { border-color: rgba(255, 255, 255, 0.34); background: var(--panel-solid); }
+.tool-btn:focus { outline: none; }
+.tool-btn:focus-visible { outline: 2px solid rgba(var(--rgb-1), 0.9); outline-offset: 3px; }
 .tool-btn:active { transform: scale(0.96); }
 .tool-btn svg { width: 19px; height: 19px; display: block; flex: 0 0 auto; }
 .tool-btn .tool-code { line-height: 1; }
 #themeBtn { width: 46px; padding: 0; }
+/* на десктопе обе кнопки одной ширины — без «ступеньки» */
+@media (min-width: 761px) {
+  .tools { align-items: stretch; }
+  .tool { display: flex; }
+  .tool-btn { width: 100%; }
+  #themeBtn { width: 100%; }
+  #langBtn { min-width: 74px; }
+  .tool-btn .sw { width: 24px; height: 24px; }
+  #themeBtn .chev { width: 12px; height: 12px; opacity: 0.55; }
+  #themeBtn:hover .chev { opacity: 0.85; }
+}
 .tool-menu { position: absolute; right: 0; bottom: calc(100% + 9px); min-width: 196px;
   display: flex; flex-direction: column; gap: 2px; padding: 7px;
   background: var(--panel-solid); border: 1px solid var(--tool-border); border-radius: 18px;
@@ -687,6 +700,8 @@ section[id], header[id] { scroll-margin-top: 96px; }
   font-family: var(--font); font-size: 14px; text-align: left; cursor: pointer;
   transition: background-color 0.18s ease, color 0.18s ease; }
 .tool-item:hover { background: var(--glass-bg-strong); color: var(--ink); }
+.tool-item:focus { outline: none; }
+.tool-item:focus-visible { outline: 2px solid rgba(var(--rgb-1), 0.75); outline-offset: -2px; }
 .tool-item[aria-selected="true"] { color: var(--ink); background: var(--glass-bg-strong); font-weight: 600; }
 .tool-item .tick { margin-left: auto; opacity: 0; color: var(--c1); font-weight: 700; }
 .tool-item[aria-selected="true"] .tick { opacity: 1; }
@@ -705,6 +720,7 @@ section[id], header[id] { scroll-margin-top: 96px; }
   .tools { right: 12px; bottom: 12px; gap: 8px; flex-direction: row; align-items: center; }
   .tool-btn { height: 40px; min-width: 40px; padding: 0 9px; }
   #themeBtn { width: 40px; padding: 0; }
+  #themeBtn .chev { display: none; }
   .tool-btn .sw { width: 20px; height: 20px; }
   .tool-menu { min-width: 178px; }
 }
@@ -955,6 +971,8 @@ section[id], header[id] { scroll-margin-top: 96px; }
   <div class="tool">
     <button class="tool-btn" id="themeBtn" aria-haspopup="true" aria-expanded="false" aria-label="Палитра">
       <span class="sw sw-synthora" id="themeSwatch"></span>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
     </button>
     <div class="tool-menu" id="themeMenu" role="menu" aria-label="Палитра"></div>
   </div>
@@ -2427,7 +2445,7 @@ window.I18N.zh = {
     });
     menu.addEventListener("click", function (ev) {
       ev.stopPropagation();
-      if (ev.target.closest && ev.target.closest(".tool-item")) btn.focus();
+      if (ev.target.closest && ev.target.closest(".tool-item") && ev.detail === 0) btn.focus();
     });
     menu.addEventListener("keydown", function (ev) {
       var items = menuItems(menu);

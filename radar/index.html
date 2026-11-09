@@ -52,7 +52,7 @@ async function rtcConnection(){
  if(peer&&peer.connectionState==='connected'&&performance.now()-rtcLast<6000)return;
  if(rtcStarting||Date.now()<rtcRetry)return;
  if(peer&&['new','connecting'].includes(peer.connectionState))return;
- resetRTC();rtcStarting=true;const current=generation,pc=new RTCPeerConnection({iceServers:[{urls:'stun:stun.l.google.com:19302'}]});peer=pc;
+ resetRTC();rtcStarting=true;const current=generation;let iceServers=[{urls:'stun:stun.cloudflare.com:3478'},{urls:'stun:stun.l.google.com:19302'}];try{const config=await fetch(base+'/rtc/config',{credentials:'omit',cache:'no-store',signal:AbortSignal.timeout(4000)});if(config.ok){const configured=await config.json();if(configured.iceServers?.length)iceServers=configured.iceServers}}catch{}if(current!==generation)return;const pc=new RTCPeerConnection({iceServers});peer=pc;
  const channel=pc.createDataChannel('radar',{ordered:false,maxRetransmits:0});
  const fail=()=>{if(peer!==pc)return;resetRTC();rtcRetry=Date.now()+1500;rtcAttempts++;$('status').textContent='WebRTC: переподключение';$('status').classList.remove('status-ok');if(rtcAttempts>=3){$('message').textContent='Прямой канал недоступен в этой сети. Включён HTTPS-резерв.';transport='http';$('transport').value='http'}};
  pc.onconnectionstatechange=()=>{if(peer!==pc)return;if(pc.connectionState==='failed'||pc.connectionState==='closed')fail()};

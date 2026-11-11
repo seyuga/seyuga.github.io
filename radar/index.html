@@ -96,7 +96,7 @@ function marker(x,y,p,self,z,localTeam){
  if(self){ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180);const beam=ctx.createRadialGradient(0,0,3,0,0,48);beam.addColorStop(0,'rgba(235,245,255,.24)');beam.addColorStop(.5,'rgba(205,225,255,.11)');beam.addColorStop(1,'rgba(205,225,255,0)');ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,48,-.42,.42);ctx.closePath();ctx.fillStyle=beam;ctx.fill();ctx.restore()}
  ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=2;ctx.fillStyle=color;ctx.beginPath();
  if(enemy){ctx.moveTo(0,-5.8);ctx.lineTo(8,0);ctx.lineTo(0,5.8);ctx.lineTo(-8,0);ctx.closePath();ctx.fill()}
- else{ctx.arc(0,0,5.5,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180);ctx.beginPath();ctx.moveTo(2,-3.8);ctx.quadraticCurveTo(3.4,0,2,3.8);ctx.quadraticCurveTo(1.8,4.4,3,3.9);ctx.lineTo(17,1);ctx.quadraticCurveTo(18.5,0,17,-1);ctx.lineTo(3,-3.9);ctx.quadraticCurveTo(1.8,-4.4,2,-3.8);ctx.closePath();ctx.fillStyle='#fff';ctx.fill();ctx.restore()}
+ else{ctx.arc(0,0,5.5,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180);ctx.beginPath();ctx.moveTo(2,-3.8);ctx.quadraticCurveTo(3.4,0,2,3.8);ctx.quadraticCurveTo(1.8,4.4,3,3.9);ctx.quadraticCurveTo(9,3.3,14.5,.75);ctx.quadraticCurveTo(15.8,0,14.5,-.75);ctx.quadraticCurveTo(9,-3.3,3,-3.9);ctx.quadraticCurveTo(1.8,-4.4,2,-3.8);ctx.closePath();ctx.fillStyle='#fff';ctx.fill();ctx.restore()}
  ctx.restore()
 }
 const mixYaw=(a,b,t)=>a+(((b-a+540)%360)-180)*t;

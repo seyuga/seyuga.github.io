@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- История развития искусственного интеллекта · version 25 (исправления текстов и словарей по итогам проверки) (11.11.2026) -->
+<!-- История развития искусственного интеллекта · version 26 (аудит: доступность, режим без JS, тексты) (12.11.2026) -->
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -920,9 +920,8 @@ section[id], header[id] { scroll-margin-top: 96px; }
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
-  transition: opacity 0.35s ease;
-  animation: spin-slow 5s linear infinite; }
-.scientist:hover .avatar::after { opacity: 1; }
+  transition: opacity 0.35s ease; }
+.scientist:hover .avatar::after { opacity: 1; animation: spin-slow 5s linear infinite; }
 @keyframes spin-slow { to { transform: rotate(360deg); } }
 
 /* ---------- тест: отклики на ответ ---------- */
@@ -1135,7 +1134,7 @@ section[id], header[id] { scroll-margin-top: 96px; }
 .tl-years {
   order: -1; margin: 0 0 10px; padding: 0; border: 0; border-radius: 0; background: none;
   font-family: var(--font-mono); font-size: 10.5px; font-weight: 500;
-  letter-spacing: 0.16em; text-transform: uppercase; color: var(--c1); white-space: normal;
+  letter-spacing: 0.16em; text-transform: none; color: var(--c1); white-space: normal;
 }
 .tl-name { display: block; font-family: var(--font-display); font-weight: 600;
   font-size: clamp(17px, 2vw, 22px); line-height: 1.25; letter-spacing: -0.035em; }
@@ -1326,7 +1325,7 @@ section[id], header[id] { scroll-margin-top: 96px; }
 
 /* Reading, keyboard use and long educational content */
 [hidden] { display:none !important; }
-.skip-link { position:fixed;top:8px;left:8px;z-index:9999;transform:translateY(-200%);background:var(--bg-0);color:var(--text);padding:14px; }
+.skip-link { position:fixed;top:8px;left:8px;z-index:9999;transform:translateY(-200%);background:var(--bg-0);color:var(--ink);padding:14px; }
 .skip-link:focus { transform:none; }
 .sr-only { position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%); }
 .tl-trigger { display:block;width:100%;border:0;background:transparent;color:inherit;text-align:left;font:inherit;padding:0;cursor:pointer; }
@@ -1338,7 +1337,19 @@ section[id], header[id] { scroll-margin-top: 96px; }
 .event-sources a,.material-link,.src-list a { color:var(--c1);text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere; }
 .review-row { text-align:left;border-top:1px solid var(--line);padding:18px 0;overflow-wrap:anywhere; }
 .review-row h4 { font-size:1rem;line-height:1.6; } .review-row p,.review-advice { font-size:1rem;line-height:1.7;margin:.6em 0; }
-#quizReview { width:100%;margin:24px 0;text-align:left; } .noscript-note { padding:30px;line-height:1.6; }
+#quizReview { width:100%;margin:24px 0;text-align:left; } .noscript-note { max-width:1180px;margin:0 auto;padding:88px 24px 8px;line-height:1.65;font-size:14px;color:var(--ink-soft); }
+/* Резервный текст для режима без JavaScript: тот же материал, читаемая вёрстка. */
+.noscript-block { display:grid;gap:16px; }
+.noscript-block h3 { font-family:var(--font-display);font-size:clamp(16px,1.6vw,19px);font-weight:600;letter-spacing:-.03em;margin-top:8px; }
+.noscript-events { list-style:none;display:grid;gap:7px; }
+.noscript-events li { position:relative;padding-left:16px;font-size:14px;line-height:1.6;color:var(--ink-soft); }
+.noscript-events li::before { content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--c1); }
+.noscript-meaning { font-size:13.5px;line-height:1.65;color:var(--ink);border-left:2px solid var(--c1);padding-left:12px; }
+.noscript-meaning b { display:block;margin-bottom:4px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--c1); }
+.noscript-scientists p { font-size:14px;line-height:1.65;color:var(--ink-soft); }
+.noscript-scientists p b { font-family:var(--font-display);font-weight:600;color:var(--ink); }
+/* Видимый фокус с клавиатуры: системный контур тёмный и теряется на фоне. */
+a:focus-visible,button:focus-visible,summary:focus-visible { outline:2px solid var(--c1);outline-offset:3px; }
 @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important;transition:none!important;scroll-behavior:auto!important; } }
 @media print {
  :root { color-scheme:light; } * { color:#111!important;background:transparent!important;box-shadow:none!important;text-shadow:none!important; }
@@ -1392,7 +1403,14 @@ section[id], header[id] { scroll-margin-top: 96px; }
 </head>
 <body>
 <a class="skip-link" href="#main" data-i18n="skip">К содержимому</a>
-<noscript><style>.reveal{opacity:1!important;transform:none!important}.src-panel[hidden]{display:block!important;max-height:none!important;overflow:visible!important}.src-toggle{display:none!important}</style><div class="noscript-note">Для интерактивной хронологии, карточек и теста включите JavaScript. Краткое введение и список источников доступны ниже. / Enable JavaScript for the interactive timeline, scientist cards and quiz.</div></noscript>
+<noscript><style>
+.reveal{opacity:1!important;transform:none!important}
+.tools,.to-top,.nav-burger{display:none!important}
+#facts,#quiz,.nav-links a[href="#facts"],.nav-links a[href="#quiz"]{display:none!important}
+#timeline .timeline,#scientists .filters,#scientists .scientists{display:none!important}
+.src-toggle{display:none!important}
+.src-panel[hidden]{display:block!important;height:auto!important;max-height:none!important;overflow:visible!important;opacity:1!important}
+</style><div class="noscript-note">Для интерактивных карточек, фактов и теста включите JavaScript. Полная хронология, сведения об учёных и список источников доступны ниже. / Enable JavaScript for the interactive cards, facts and quiz. The full timeline, scientists and sources are available below.</div></noscript>
 
 <div class="bg-orbs">
   <div class="orb-solo"></div>
@@ -1409,7 +1427,7 @@ section[id], header[id] { scroll-margin-top: 96px; }
     <a href="#quiz" data-i18n="nav_quiz">Тест</a>
     <a href="#about" data-i18n="nav_about">Об авторе</a>
   </div>
-  <button class="nav-burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+  <button class="nav-burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- HERO -->
@@ -1431,13 +1449,38 @@ section[id], header[id] { scroll-margin-top: 96px; }
 </header>
 
 <main id="main" tabindex="-1">
-<noscript><section class="section"><h2>Хронология без JavaScript</h2><h3>Зарождение</h3><ul><li>1943 — Маккаллок и Питтс создают математическую модель искусственного нейрона</li><li>1950 — Статья Алана Тьюринга «Вычислительные машины и интеллект» и тест Тьюринга</li><li>1955–1956 — Ньюэлл, Саймон и Шоу разрабатывают Logic Theorist — программу доказательства теорем</li><li>1956 — Дартмутская конференция: в обиход входит термин «искусственный интеллект»</li></ul><p>Появление термина и выделение ИИ в самостоятельную науку на стыке кибернетики, логики и вычислительной техники.</p><h3>«Золотой век» символического ИИ</h3><ul><li>1957 — Фрэнк Розенблатт создаёт персептрон — одну из ранних обучаемых нейросетевых моделей.</li><li>1958 — Джон Маккарти разрабатывает язык LISP</li><li>1965 — DENDRAL — первая экспертная система (химический анализ)</li><li>1966 — Программа ELIZA Вейценбаума имитирует диалог с психотерапевтом</li><li>1969 — Книга «Персептроны» анализирует ограничения этого класса моделей.</li><li>1970-е — Система MYCIN диагностирует инфекции и подбирает антибиотики</li></ul><p>Первые рабочие программы ИИ — и одновременно завышенные ожидания, которые технологии не смогли оправдать.</p><h3>Первая «зима ИИ»</h3><ul><li>1973 — Предпосылка: отчёт профессора Лайтхилла — исследования ИИ не оправдали надежд</li><li>1974 — Великобритания практически прекращает финансирование ИИ</li><li>1970-е — DARPA существенно сокращает поддержку исследований в США</li></ul><p>Урок этапа: возможности технологий должны соответствовать заявленным целям, иначе доверие инвесторов теряется.</p><h3>Эпоха экспертных систем</h3><ul><li>1980 — Система XCON (R1) компании DEC экономит десятки миллионов долларов в год</li><li>1982 — Япония запускает программу «Пятого поколения» вычислительных систем</li><li>1980-е — Расцвет рынка LISP-машин и массовое внедрение экспертных систем</li></ul><p>Первый коммерческий успех ИИ; к 1987 году дороговизна сопровождения привела ко второй «зиме».</p><h3>От правил к обучению</h3><ul><li>1986 — Предпосылка: Популяризация алгоритма обратного распространения ошибки (Румельхарт, Хинтон, Уильямс)</li><li>1995 — Метод опорных векторов (В. Вапник, К. Кортес)</li><li>1997 — Deep Blue побеждает Гарри Каспарова в шахматном матче</li><li>1997 — Архитектура LSTM (Хохрайтер, Шмидхубер)</li><li>1998 — Свёрточная сеть LeNet-5 распознаёт рукописные цифры</li></ul><p>Deep Blue: поиск ходов и оценка позиций, а не современная обучаемая нейросеть.</p><h3>Революция глубокого обучения</h3><ul><li>2006 — Метод послойного предобучения глубоких сетей (группа Д. Хинтона)</li><li>2012 — На ILSVRC-2012 top-5 ошибка AlexNet составила 15,3 % против 26,2 % у следующего результата: разница 10,9 процентного пункта (около 11). Правильный класс отсутствует среди пяти лучших предсказаний — это top-5 ошибка.</li><li>2014 — Генеративно-состязательные сети (GAN) Иэна Гудфеллоу</li><li>2016 — AlphaGo побеждает чемпиона мира по игре го Ли Седоля 4:1</li></ul><p>Глубокое обучение становится стандартом в компьютерном зрении, речи и переводе.</p><h3>Трансформеры и генеративный ИИ</h3><ul><li>2017 — Статья «Attention Is All You Need» — архитектура трансформер</li><li>2018 — Модель BERT улучшает понимание контекста в языке</li><li>2020 — GPT-3 — 175 миллиардов параметров</li><li>2020 — AlphaFold2 показывает высокую точность на CASP14</li><li>2021 — Метод AlphaFold2 опубликован в Nature</li><li>2022 — Выход ChatGPT как диалогового интерфейса к языковой модели.</li></ul><p>ИИ выходит на массовый рынок и превращается в повседневный инструмент.</p><h3>Современный этап</h3><ul><li>2025 — DeepSeek-R1: статья от 22 января об обучении рассуждению с подкреплением.</li><li>2024–2026 — Учебная рамка для продолжающихся исследований мультимодальности, рассуждения и агентов; не отдельное событие 2026 года.</li></ul><p>Возможности зависят от задачи и условий проверки; ошибки и необходимость контроля сохраняются.</p><h2>Учёные</h2><p><b>Алан Тьюринг</b>. Создатель концепции универсальной машины и теста Тьюринга (1950) — операционального критерия машинного интеллекта.</p><p><b>Джон Маккарти</b>. Ввёл термин «искусственный интеллект» (1955), создал язык LISP и организовал Дартмутскую конференцию 1956 года.</p><p><b>Марвин Минский</b>. Вместе с Джоном Маккарти основал проект ИИ в MIT (1959); соавтор книги «Персептроны» (1969).</p><p><b>Аллен Ньюэлл</b>. Соавтор программы Logic Theorist (1955–1956) и решателя общих задач GPS; исследовал модели человеческого мышления.</p><p><b>Герберт Саймон</b>. Соавтор Logic Theorist, лауреат Нобелевской премии по экономике 1978 года за теорию принятия решений.</p><p><b>Фрэнк Розенблатт</b>. Фрэнк Розенблатт создал персептрон — одну из ранних обучаемых нейросетевых моделей (1957–1958).</p><p><b>Джозеф Вейценбаум</b>. Автор программы ELIZA (1966); показал, насколько легко люди доверяют машинам, и заложил основы этики ИИ.</p><p><b>Эдвард Фейгенбаум</b>. Создатель DENDRAL (1965) и один из основателей инженерии знаний — подхода, стоящего за экспертными системами.</p><p><b>Джеффри Хинтон</b>. «Крёстный отец» глубокого обучения; алгоритм обратного распространения ошибки, AlexNet, Нобелевская премия по физике 2024 года.</p><p><b>Ян Лекун</b>. Создатель сети LeNet-5 (1998) для распознавания цифр; лауреат премии Тьюринга 2018 года.</p><p><b>Йошуа Бенжио</b>. Один из авторов современного глубокого обучения и моделей внимания; лауреат премии Тьюринга 2018 года.</p><p><b>Виктор Глушков</b>. Один из основателей кибернетики в СССР; руководил Институтом кибернетики АН УССР и разработкой ОГАС.</p></section></noscript>
 <!-- TIMELINE -->
 <section class="section" id="timeline">
   <div class="section-head reveal">
     <h2 class="section-title" data-i18n="tl_title">Восемь этапов развития ИИ</h2>
     <p class="section-sub" data-i18n="tl_sub">Учебная периодизация: границы условны, подходы развиваются параллельно. Нажмите на этап, чтобы открыть события и источники.</p>
   </div>
+  <noscript><div class="noscript-block">
+<h3>Зарождение</h3><ul class="noscript-events">
+<li>1943 — Маккаллок и Питтс создают математическую модель искусственного нейрона</li><li>1950 — Статья Алана Тьюринга «Вычислительные машины и интеллект» и тест Тьюринга</li><li>1955–1956 — Ньюэлл, Саймон и Шоу разрабатывают Logic Theorist — программу доказательства теорем</li><li>1956 — Дартмутская конференция: в обиход входит термин «искусственный интеллект»</li>
+</ul><p class="noscript-meaning"><b>Значение:</b> Появление термина и выделение ИИ в самостоятельную науку на стыке кибернетики, логики и вычислительной техники.</p>
+<h3>«Золотой век» символического ИИ</h3><ul class="noscript-events">
+<li>1957 — Фрэнк Розенблатт создаёт персептрон — одну из ранних обучаемых нейросетевых моделей</li><li>1958 — Джон Маккарти разрабатывает язык LISP</li><li>1965 — DENDRAL — первая экспертная система (химический анализ)</li><li>1966 — Программа ELIZA Вейценбаума имитирует диалог с психотерапевтом</li><li>1969 — Книга «Персептроны» анализирует ограничения этого класса моделей</li><li>1970-е — Система MYCIN диагностирует инфекции и подбирает антибиотики</li>
+</ul><p class="noscript-meaning"><b>Значение:</b> Первые рабочие программы ИИ — и одновременно завышенные ожидания, которые технологии не смогли оправдать.</p>
+<h3>Первая «зима ИИ»</h3><ul class="noscript-events">
+<li>1973 — Предпосылка: отчёт профессора Лайтхилла — исследования ИИ не оправдали надежд</li><li>1974 — Великобритания практически прекращает финансирование ИИ</li><li>1970-е — DARPA существенно сокращает поддержку исследований в США</li>
+</ul><p class="noscript-meaning"><b>Значение:</b> Урок этапа: возможности технологий должны соответствовать заявленным целям, иначе доверие инвесторов теряется.</p>
+<h3>Эпоха экспертных систем</h3><ul class="noscript-events">
+<li>1980 — Система XCON (R1) компании DEC экономит десятки миллионов долларов в год</li><li>1982 — Япония запускает программу «Пятого поколения» вычислительных систем</li><li>1980-е — Расцвет рынка LISP-машин и массовое внедрение экспертных систем</li>
+</ul><p class="noscript-meaning"><b>Значение:</b> Первый коммерческий успех ИИ; к 1987 году дороговизна сопровождения привела ко второй «зиме».</p>
+<h3>От правил к обучению</h3><ul class="noscript-events">
+<li>1986 — Предпосылка: Популяризация алгоритма обратного распространения ошибки (Румельхарт, Хинтон, Уильямс)</li><li>1995 — Метод опорных векторов (В. Вапник, К. Кортес)</li><li>1997 — Deep Blue побеждает Гарри Каспарова в шахматном матче</li><li>1997 — Архитектура LSTM (Хохрайтер, Шмидхубер)</li><li>1998 — Свёрточная сеть LeNet-5 распознаёт рукописные цифры</li>
+</ul><p class="noscript-meaning"><b>Значение:</b> Deep Blue: поиск ходов и оценка позиций, а не современная обучаемая нейросеть.</p>
+<h3>Революция глубокого обучения</h3><ul class="noscript-events">
+<li>2006 — Метод послойного предобучения глубоких сетей (группа Д. Хинтона)</li><li>2012 — На ILSVRC-2012 top-5 ошибка AlexNet составила 15,3 % против 26,2 % у следующего результата: разница 10,9 процентного пункта (около 11). Правильный класс отсутствует среди пяти лучших предсказаний — это top-5 ошибка</li><li>2014 — Генеративно-состязательные сети (GAN) Иэна Гудфеллоу</li><li>2016 — AlphaGo побеждает чемпиона мира по игре го Ли Седоля 4:1</li>
+</ul><p class="noscript-meaning"><b>Значение:</b> Глубокое обучение становится стандартом в компьютерном зрении, речи и переводе.</p>
+<h3>Трансформеры и генеративный ИИ</h3><ul class="noscript-events">
+<li>2017 — Статья «Attention Is All You Need» — архитектура трансформер</li><li>2018 — Модель BERT улучшает понимание контекста в языке</li><li>2020 — GPT-3 — 175 миллиардов параметров</li><li>2020 — AlphaFold2 показывает высокую точность на CASP14</li><li>2021 — Метод AlphaFold2 опубликован в Nature</li><li>2022 — Выход ChatGPT как диалогового интерфейса к языковой модели</li>
+</ul><p class="noscript-meaning"><b>Значение:</b> ИИ выходит на массовый рынок и превращается в повседневный инструмент.</p>
+<h3>Современный этап</h3><ul class="noscript-events">
+<li>2025 — DeepSeek-R1: статья от 22 января об обучении рассуждению с подкреплением</li><li>2024–2026 — Учебная рамка для продолжающихся исследований мультимодальности, рассуждения и агентов; не отдельное событие 2026 года</li>
+</ul><p class="noscript-meaning"><b>Значение:</b> Возможности зависят от задачи и условий проверки; ошибки и необходимость контроля сохраняются.</p>
+</div></noscript>
   <div class="timeline" id="timelineList">
     <div class="tl-progress" id="tlProgress"></div>
   </div>
@@ -1449,6 +1492,20 @@ section[id], header[id] { scroll-margin-top: 96px; }
     <h2 class="section-title" data-i18n="sci_title">Учёные, создавшие ИИ</h2>
     <p class="section-sub" data-i18n="sci_sub">От теоретиков вычислительных машин до авторов глубокого обучения — люди, чьи идеи превратили фантастику в технологию.</p>
   </div>
+  <noscript><div class="noscript-block noscript-scientists">
+<p><b>Алан Тьюринг</b>. Создатель концепции универсальной машины и теста Тьюринга (1950) — операционального критерия машинного интеллекта.</p>
+<p><b>Джон Маккарти</b>. Ввёл термин «искусственный интеллект» (1955), создал язык LISP и организовал Дартмутскую конференцию 1956 года.</p>
+<p><b>Марвин Минский</b>. Вместе с Джоном Маккарти основал проект ИИ в MIT (1959); соавтор книги «Персептроны» (1969).</p>
+<p><b>Аллен Ньюэлл</b>. Соавтор программы Logic Theorist (1955–1956) и решателя общих задач GPS; исследовал модели человеческого мышления.</p>
+<p><b>Герберт Саймон</b>. Соавтор Logic Theorist, лауреат Нобелевской премии по экономике 1978 года за теорию принятия решений.</p>
+<p><b>Фрэнк Розенблатт</b>. Фрэнк Розенблатт создал персептрон — одну из ранних обучаемых нейросетевых моделей (1957–1958).</p>
+<p><b>Джозеф Вейценбаум</b>. Автор программы ELIZA (1966); показал, насколько легко люди доверяют машинам, и заложил основы этики ИИ.</p>
+<p><b>Эдвард Фейгенбаум</b>. Создатель DENDRAL (1965) и один из основателей инженерии знаний — подхода, стоящего за экспертными системами.</p>
+<p><b>Джеффри Хинтон</b>. «Крёстный отец» глубокого обучения; алгоритм обратного распространения ошибки, AlexNet, Нобелевская премия по физике 2024 года.</p>
+<p><b>Ян Лекун</b>. Создатель сети LeNet-5 (1998) для распознавания цифр; лауреат премии Тьюринга 2018 года.</p>
+<p><b>Йошуа Бенжио</b>. Один из авторов современного глубокого обучения и моделей внимания; лауреат премии Тьюринга 2018 года.</p>
+<p><b>Виктор Глушков</b>. Один из основателей кибернетики в СССР; руководил Институтом кибернетики АН УССР и разработкой ОГАС.</p>
+</div></noscript>
   <div class="filters reveal" id="sciFilters"></div>
   <div class="scientists" id="sciGrid"></div>
 </section>
@@ -1466,7 +1523,6 @@ section[id], header[id] { scroll-margin-top: 96px; }
 <section class="section" id="quiz">
   <div class="section-head solo reveal">
     <h2 class="section-title" data-i18n="quiz_title">Тест на знания</h2>
-    
   </div>
   <div class="quiz glass reveal" id="quizBox">
     <div id="quizPlay">
@@ -1476,7 +1532,7 @@ section[id], header[id] { scroll-margin-top: 96px; }
       <div class="quiz-bar"><div class="quiz-bar-fill" id="quizBarFill"></div></div>
       <div class="quiz-question" id="quizQuestion" tabindex="-1"></div>
       <div class="quiz-options" id="quizOptions"></div>
-      <p id="quizStatus" role="status"></p><div class="quiz-explain" id="quizExplain" aria-live="polite" aria-live="polite"></div>
+      <p id="quizStatus" role="status"></p><div class="quiz-explain" id="quizExplain" aria-live="polite"></div>
       <button class="btn btn-primary quiz-next" id="quizNext">Следующий вопрос →</button>
     </div>
     <div class="quiz-result" id="quizResult" aria-live="polite">
@@ -1508,6 +1564,7 @@ section[id], header[id] { scroll-margin-top: 96px; }
 </section>
 <!-- SOURCES -->
 <section class="section" id="sources">
+  <h2 class="sr-only" data-i18n="sources_label">Источники</h2>
   <div class="src-wrap reveal">
     <button class="src-toggle glass" id="srcToggle" aria-expanded="false" aria-controls="srcPanel">
       <span class="src-label" data-i18n="sources_label">Источники</span>
@@ -1552,14 +1609,11 @@ section[id], header[id] { scroll-margin-top: 96px; }
 <a href="https://projects.csail.mit.edu/films/aifilms/AIFilms.html" target="_blank" rel="noopener noreferrer">MIT · AI Project ↗</a>
 <a href="https://news.cornell.edu/stories/2019/09/professors-perceptron-paved-way-ai-60-years-too-soon" target="_blank" rel="noopener noreferrer">Cornell · Perceptron ↗</a>
 </div>
-<details class="photo-credits"><summary><span data-i18n="portrait_credits">Портреты учёных</span></summary><ul><li><a href="https://commons.wikimedia.org/wiki/File:Alan_Turing_(1951).jpg" target="_blank" rel="noopener noreferrer">Алан Тьюринг</a><span>Elliott & Fry · Public domain</span></li><li><a href="https://commons.wikimedia.org/wiki/File:John_McCarthy_Stanford.jpg" target="_blank" rel="noopener noreferrer">Джон Маккарти</a><span>"null0" · CC BY-SA 2.0</span></li><li><a href="https://commons.wikimedia.org/wiki/File:Marvin_Minsky_at_OLPC.jpg" target="_blank" rel="noopener noreferrer">Марвин Минский</a><span>Sethwoodworth at English Wikipedia, taken by Bcjordan · CC BY 3.0</span></li><li><a href="https://commons.wikimedia.org/wiki/File:Herbert_A._Simon_and_Allen_Newell_Chess_Match_(cropped).jpg" target="_blank" rel="noopener noreferrer">Аллен Ньюэлл</a><span>Paolo Massa · Public domain</span></li><li><a href="https://commons.wikimedia.org/wiki/File:Herbert_Simon_close-up_(cropped).jpg" target="_blank" rel="noopener noreferrer">Герберт Саймон</a><span>Rochester Institute of Technology · Public domain</span></li><li><a href="https://commons.wikimedia.org/wiki/File:Frank_Rosenblatt.jpg" target="_blank" rel="noopener noreferrer">Фрэнк Розенблатт</a><span>Автор неизвестен (так указан на странице файла; источник — Heinz Nixdorf MuseumsForum) · CC BY-SA 4.0</span></li><li><a href="https://commons.wikimedia.org/wiki/File:Joseph_Weizenbaum.jpg" target="_blank" rel="noopener noreferrer">Джозеф Вейценбаум</a><span>Ulrich Hansen, Germany (Journalist). · CC BY-SA 3.0</span></li><li><a href="https://commons.wikimedia.org/wiki/File:AAAI_2025_-_Edward_Feigenbaum_04.jpg" target="_blank" rel="noopener noreferrer">Эдвард Фейгенбаум</a><span>Xuthoria · CC BY-SA 4.0</span></li><li><a href="https://commons.wikimedia.org/wiki/File:SD_2025_-_Geoffrey_Hinton_05.jpg" target="_blank" rel="noopener noreferrer">Джеффри Хинтон</a><span>Xuthoria · CC BY-SA 4.0</span></li><li><a href="https://commons.wikimedia.org/wiki/File:Yann_LeCun_-_2018_(cropped).jpg" target="_blank" rel="noopener noreferrer">Ян Лекун</a><span>Jérémy Barande · CC BY-SA 2.0</span></li><li><a href="https://commons.wikimedia.org/wiki/File:SD_2025_-_Yoshua_Bengio_04.jpg" target="_blank" rel="noopener noreferrer">Йошуа Бенжио</a><span>Xuthoria · CC BY-SA 4.0</span></li><li><a href="https://commons.wikimedia.org/wiki/File:Victor_Glushkov_envelope-cropped.jpg" target="_blank" rel="noopener noreferrer">Виктор Глушков</a><span>Victor_Glushkov_envelope.jpg: Бендель П. Э.
-derivative work: Allesmüller (talk) · Public domain</span></li></ul></details>
+<details class="photo-credits"><summary><span data-i18n="portrait_credits">Портреты учёных</span></summary><ul><li><a href="https://commons.wikimedia.org/wiki/File:Alan_Turing_(1951).jpg" target="_blank" rel="noopener noreferrer">Алан Тьюринг</a><span>Elliott & Fry · Public domain</span></li><li><a href="https://commons.wikimedia.org/wiki/File:John_McCarthy_Stanford.jpg" target="_blank" rel="noopener noreferrer">Джон Маккарти</a><span>"null0" · CC BY-SA 2.0</span></li><li><a href="https://commons.wikimedia.org/wiki/File:Marvin_Minsky_at_OLPC.jpg" target="_blank" rel="noopener noreferrer">Марвин Минский</a><span>Sethwoodworth at English Wikipedia, taken by Bcjordan · CC BY 3.0</span></li><li><a href="https://commons.wikimedia.org/wiki/File:Herbert_A._Simon_and_Allen_Newell_Chess_Match_(cropped).jpg" target="_blank" rel="noopener noreferrer">Аллен Ньюэлл</a><span>Paolo Massa · Public domain</span></li><li><a href="https://commons.wikimedia.org/wiki/File:Herbert_Simon_close-up_(cropped).jpg" target="_blank" rel="noopener noreferrer">Герберт Саймон</a><span>Rochester Institute of Technology · Public domain</span></li><li><a href="https://commons.wikimedia.org/wiki/File:Frank_Rosenblatt.jpg" target="_blank" rel="noopener noreferrer">Фрэнк Розенблатт</a><span>Автор неизвестен (так указан на странице файла; источник — Heinz Nixdorf MuseumsForum) · CC BY-SA 4.0</span></li><li><a href="https://commons.wikimedia.org/wiki/File:Joseph_Weizenbaum.jpg" target="_blank" rel="noopener noreferrer">Джозеф Вейценбаум</a><span>Ulrich Hansen, Germany (Journalist). · CC BY-SA 3.0</span></li><li><a href="https://commons.wikimedia.org/wiki/File:AAAI_2025_-_Edward_Feigenbaum_04.jpg" target="_blank" rel="noopener noreferrer">Эдвард Фейгенбаум</a><span>Xuthoria · CC BY-SA 4.0</span></li><li><a href="https://commons.wikimedia.org/wiki/File:SD_2025_-_Geoffrey_Hinton_05.jpg" target="_blank" rel="noopener noreferrer">Джеффри Хинтон</a><span>Xuthoria · CC BY-SA 4.0</span></li><li><a href="https://commons.wikimedia.org/wiki/File:Yann_LeCun_-_2018_(cropped).jpg" target="_blank" rel="noopener noreferrer">Ян Лекун</a><span>Jérémy Barande · CC BY-SA 2.0</span></li><li><a href="https://commons.wikimedia.org/wiki/File:SD_2025_-_Yoshua_Bengio_04.jpg" target="_blank" rel="noopener noreferrer">Йошуа Бенжио</a><span>Xuthoria · CC BY-SA 4.0</span></li><li><a href="https://commons.wikimedia.org/wiki/File:Victor_Glushkov_envelope-cropped.jpg" target="_blank" rel="noopener noreferrer">Виктор Глушков</a><span>Victor_Glushkov_envelope.jpg: Бендель П. Э. Derivative work: Allesmüller · Public domain</span></li></ul></details>
       <p class="src-note" data-i18n="sources_note">Ссылки открываются через интернет; учебный текст и фотографии доступны офлайн. Записи сохранены на языке оригинала. Сведения о портретах — в раскрываемом блоке.</p>
     </div>
   </div>
 </section>
-
-
 
 </main>
 <div class="tools" id="tools">
@@ -1713,7 +1767,7 @@ window.I18N.ru = {
       "events": [
         [
           "1957",
-          "Фрэнк Розенблатт создаёт персептрон — одну из ранних обучаемых нейросетевых моделей."
+          "Фрэнк Розенблатт создаёт персептрон — одну из ранних обучаемых нейросетевых моделей"
         ],
         [
           "1958",
@@ -1729,7 +1783,7 @@ window.I18N.ru = {
         ],
         [
           "1969",
-          "Книга «Персептроны» анализирует ограничения этого класса моделей."
+          "Книга «Персептроны» анализирует ограничения этого класса моделей"
         ],
         [
           "1970-е",
@@ -1813,7 +1867,7 @@ window.I18N.ru = {
         ],
         [
           "2012",
-          "На ILSVRC-2012 top-5 ошибка AlexNet составила 15,3 % против 26,2 % у следующего результата: разница 10,9 процентного пункта (около 11). Правильный класс отсутствует среди пяти лучших предсказаний — это top-5 ошибка."
+          "На ILSVRC-2012 top-5 ошибка AlexNet составила 15,3 % против 26,2 % у следующего результата: разница 10,9 процентного пункта (около 11). Правильный класс отсутствует среди пяти лучших предсказаний — это top-5 ошибка"
         ],
         [
           "2014",
@@ -1852,7 +1906,7 @@ window.I18N.ru = {
         ],
         [
           "2022",
-          "Выход ChatGPT как диалогового интерфейса к языковой модели."
+          "Выход ChatGPT как диалогового интерфейса к языковой модели"
         ]
       ],
       "meaning": "ИИ выходит на массовый рынок и превращается в повседневный инструмент."
@@ -1863,11 +1917,11 @@ window.I18N.ru = {
       "events": [
         [
           "2025",
-          "DeepSeek-R1: статья от 22 января об обучении рассуждению с подкреплением."
+          "DeepSeek-R1: статья от 22 января об обучении рассуждению с подкреплением"
         ],
         [
           "2024–2026",
-          "Учебная рамка для продолжающихся исследований мультимодальности, рассуждения и агентов; не отдельное событие 2026 года."
+          "Учебная рамка для продолжающихся исследований мультимодальности, рассуждения и агентов; не отдельное событие 2026 года"
         ]
       ],
       "meaning": "Возможности зависят от задачи и условий проверки; ошибки и необходимость контроля сохраняются."
@@ -2123,7 +2177,7 @@ window.I18N.en = {
       "events": [
         [
           "1957",
-          "Frank Rosenblatt creates the perceptron, an early trainable neural network model."
+          "Frank Rosenblatt creates the perceptron, an early trainable neural network model"
         ],
         [
           "1958",
@@ -2139,7 +2193,7 @@ window.I18N.en = {
         ],
         [
           "1969",
-          "Perceptrons analyses limitations of this class of models."
+          "Perceptrons analyses limitations of this class of models"
         ],
         [
           "1970s",
@@ -2223,7 +2277,7 @@ window.I18N.en = {
         ],
         [
           "2012",
-          "On ILSVRC-2012 AlexNet achieved 15.3% top-5 test error versus the runner-up’s 26.2%: 10.9 percentage points (about 11). Top-5 error means the correct class is absent from the five best predictions."
+          "On ILSVRC-2012 AlexNet achieved 15.3% top-5 test error versus the runner-up’s 26.2%: 10.9 percentage points (about 11). Top-5 error means the correct class is absent from the five best predictions"
         ],
         [
           "2014",
@@ -2262,7 +2316,7 @@ window.I18N.en = {
         ],
         [
           "2022",
-          "ChatGPT launched as a conversational interface to a language model."
+          "ChatGPT launched as a conversational interface to a language model"
         ]
       ],
       "meaning": "AI enters the mass market and turns into an everyday tool."
@@ -2273,11 +2327,11 @@ window.I18N.en = {
       "events": [
         [
           "2025",
-          "DeepSeek-R1: 22 January paper on reinforcement learning for reasoning."
+          "DeepSeek-R1: 22 January paper on reinforcement learning for reasoning"
         ],
         [
           "2024–2026",
-          "An educational frame for ongoing multimodal, reasoning and agent research; not a separate 2026 milestone."
+          "An educational frame for ongoing multimodal, reasoning and agent research; not a separate 2026 milestone"
         ]
       ],
       "meaning": "Capabilities depend on tasks and evaluation settings; errors and the need for oversight remain."
@@ -2533,7 +2587,7 @@ window.I18N.pl = {
       "events": [
         [
           "1957",
-          "Frank Rosenblatt tworzy perceptron — jeden z wczesnych uczących się modeli neuronowych."
+          "Frank Rosenblatt tworzy perceptron — jeden z wczesnych uczących się modeli neuronowych"
         ],
         [
           "1958",
@@ -2549,7 +2603,7 @@ window.I18N.pl = {
         ],
         [
           "1969",
-          "Książka Perceptrons analizuje ograniczenia tej klasy modeli."
+          "Książka Perceptrons analizuje ograniczenia tej klasy modeli"
         ],
         [
           "lata 70.",
@@ -2633,7 +2687,7 @@ window.I18N.pl = {
         ],
         [
           "2012",
-          "Na ILSVRC-2012 błąd testowy top-5 AlexNet wyniósł 15,3% wobec 26,2% kolejnego wyniku: różnica 10,9 punktu procentowego (około 11). Błąd top-5 oznacza brak właściwej klasy w pięciu najlepszych przewidywaniach."
+          "Na ILSVRC-2012 błąd testowy top-5 AlexNet wyniósł 15,3% wobec 26,2% kolejnego wyniku: różnica 10,9 punktu procentowego (około 11). Błąd top-5 oznacza brak właściwej klasy w pięciu najlepszych przewidywaniach"
         ],
         [
           "2014",
@@ -2672,7 +2726,7 @@ window.I18N.pl = {
         ],
         [
           "2022",
-          "Uruchomienie ChatGPT jako interfejsu rozmowy z modelem językowym."
+          "Uruchomienie ChatGPT jako interfejsu rozmowy z modelem językowym"
         ]
       ],
       "meaning": "AI wchodzi na rynek masowy i staje się narzędziem codziennego użytku."
@@ -2683,11 +2737,11 @@ window.I18N.pl = {
       "events": [
         [
           "2025",
-          "DeepSeek-R1: artykuł z 22 stycznia o uczeniu rozumowania przez wzmacnianie."
+          "DeepSeek-R1: artykuł z 22 stycznia o uczeniu rozumowania przez wzmacnianie"
         ],
         [
           "2024–2026",
-          "Rama dydaktyczna dla badań multimodalności, rozumowania i agentów; nie osobne wydarzenie z 2026 roku."
+          "Rama dydaktyczna dla badań multimodalności, rozumowania i agentów; nie osobne wydarzenie z 2026 roku"
         ]
       ],
       "meaning": "Możliwości zależą od zadania i warunków oceny; błędy i potrzeba kontroli pozostają."
@@ -2943,7 +2997,7 @@ window.I18N.zh = {
       "events": [
         [
           "1957",
-          "弗兰克·罗森布拉特发明感知机——早期可训练神经模型之一。"
+          "弗兰克·罗森布拉特发明感知机——早期可训练神经模型之一"
         ],
         [
           "1958",
@@ -2959,7 +3013,7 @@ window.I18N.zh = {
         ],
         [
           "1969",
-          "《感知机》分析了这类模型的局限。"
+          "《感知机》分析了这类模型的局限"
         ],
         [
           "1970年代",
@@ -3043,7 +3097,7 @@ window.I18N.zh = {
         ],
         [
           "2012",
-          "在 ILSVRC-2012 中，AlexNet 的 top-5 测试错误率为15.3%，第二名为26.2%，相差10.9个百分点（约11）。Top-5 错误指正确类别未出现在前五个预测中。"
+          "在 ILSVRC-2012 中，AlexNet 的 top-5 测试错误率为15.3%，第二名为26.2%，相差10.9个百分点（约11）。Top-5 错误指正确类别未出现在前五个预测中"
         ],
         [
           "2014",
@@ -3082,7 +3136,7 @@ window.I18N.zh = {
         ],
         [
           "2022",
-          "ChatGPT 作为语言模型对话界面发布。"
+          "ChatGPT 作为语言模型对话界面发布"
         ]
       ],
       "meaning": "人工智能进入大众市场，成为日常工具。"
@@ -3093,11 +3147,11 @@ window.I18N.zh = {
       "events": [
         [
           "2025",
-          "DeepSeek-R1：1月22日论文讨论用强化学习提升推理能力。"
+          "DeepSeek-R1：1月22日论文讨论用强化学习提升推理能力"
         ],
         [
           "2024–2026",
-          "用于讨论多模态、推理与智能体研究的教学范围，并不代表2026年发生了单独的里程碑事件。"
+          "用于讨论多模态、推理与智能体研究的教学范围，并不代表2026年发生了单独的里程碑事件"
         ]
       ],
       "meaning": "能力取决于任务和评测条件；错误与监督需求仍然存在。"
@@ -3346,7 +3400,7 @@ window.I18N.zh = {
       var yearsLabel = STAGE_YEARS[i] + (d.ui.years_suffix || "");
       item.innerHTML =
         "<div class='tl-node'></div>" +
-        "<div class='tl-card glass' aria-expanded='false'><button type='button' class='tl-trigger' aria-expanded='false' aria-controls='stage-panel-" + (i+1) + "'>" +
+        "<div class='tl-card glass' data-expanded='false'><button type='button' class='tl-trigger' aria-expanded='false' aria-controls='stage-panel-" + (i+1) + "'>" +
           "<div class='tl-head'><span class='tl-name'>" + (i + 1) + ". " + st.name + "</span>" +
           "<span class='tl-years'>" + yearsLabel + "</span>" +
           "<span class='tl-toggle' aria-hidden='true'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg></span></div>" +
@@ -3366,9 +3420,9 @@ window.I18N.zh = {
           var opening = all[k] === item && !wasActive;
           var c = all[k].querySelector(".tl-card");
           var panel = c.querySelector(".tl-details");
-          var changed = c.getAttribute("aria-expanded") !== String(opening);
+          var changed = c.getAttribute("data-expanded") !== String(opening);
           all[k].classList.toggle("active", opening);
-          c.setAttribute("aria-expanded", String(opening));
+          c.setAttribute("data-expanded", String(opening));
           c.querySelector(".tl-trigger").setAttribute("aria-expanded", String(opening));
           if (changed) animateStagePanel(panel, opening);
         }
@@ -3424,7 +3478,9 @@ window.I18N.zh = {
     };
   }
 
+  var tlMetrics = null;
   function timelineMetrics() {
+    if (tlMetrics) return tlMetrics;
     var items = tlList.querySelectorAll(".tl-item");
     if (!items.length) return null;
     var firstNode = items[0].querySelector(".tl-node");
@@ -3435,14 +3491,18 @@ window.I18N.zh = {
       while (n && n !== root) { y += n.offsetTop; n = n.offsetParent; }
       return y;
     }
-    return {
-      top: tlList.getBoundingClientRect().top,
+    /* абсолютное смещение кэшируется: при скролле позиция вьюпорта считается
+       вычитанием scrollY, без чтения геометрии на каждом кадре */
+    tlMetrics = {
+      absTop: offsetIn(tlList, document.body),
       start: offsetIn(firstNode, tlList) + firstNode.offsetHeight / 2,
       end: offsetIn(lastNode, tlList) + lastNode.offsetHeight / 2
     };
+    return tlMetrics;
   }
 
   function layoutTimeline() {
+    tlMetrics = null;
     var m = timelineMetrics();
     if (!m) return;
     tlList.style.setProperty("--tl-start", m.start + "px");
@@ -3455,7 +3515,8 @@ window.I18N.zh = {
     if (!m) return;
     var vh = window.innerHeight;
     var span = Math.max(m.end - m.start, 0);
-    var passed = Math.min(Math.max(vh * 0.65 - m.top - m.start, 0), span);
+    var top = m.absTop - window.pageYOffset;
+    var passed = Math.min(Math.max(vh * 0.65 - top - m.start, 0), span);
     tlProgress.style.height = passed + "px";
   }
   var tlRaf = 0;
@@ -3465,6 +3526,7 @@ window.I18N.zh = {
   }, { passive: true });
   window.addEventListener("resize", layoutTimeline);
   window.addEventListener("load", layoutTimeline);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutTimeline);
 
   /* ================= УЧЁНЫЕ ================= */
   var sciGrid = document.getElementById("sciGrid");
@@ -3634,7 +3696,7 @@ window.I18N.zh = {
     });
   }
 
-  function answer(pos, btn) {
+  function answer(pos, btn, focusNext) {
     if (answered) return;
     var d = D();
     answered = true;
@@ -3661,7 +3723,7 @@ window.I18N.zh = {
     quizExplain.textContent = q.explain;
     quizExplain.classList.add("show");
     quizNext.classList.add("show");
-    quizNext.focus({preventScroll:true});
+    if (focusNext !== false) quizNext.focus({preventScroll:true});
   }
 
   function fillResult() {
@@ -3701,7 +3763,7 @@ window.I18N.zh = {
     renderQuestion();
     if (wasAnswered && pick >= 0) {
       var keepScore = score;
-      answer(pick, quizOptions.querySelectorAll(".option")[pick]);
+      answer(pick, quizOptions.querySelectorAll(".option")[pick], false);
       score = keepScore;
     }
   }
@@ -4260,10 +4322,11 @@ window.I18N.zh = {
     });
     if (mistakes.length) {
       var advice=document.createElement("p");advice.className="review-advice";advice.textContent=d.ui.repeat;
-      mistakes.forEach(function(topic) {
+      mistakes.forEach(function(topic,i) {
         var name=topic.indexOf("stage-")===0 ? d.stages[Number(topic.slice(6))-1].name :
           topic==="guide"?d.ui.guide_title:topic==="scientists"?d.ui.sci_title:topic==="facts"?d.ui.facts_title:d.ui.tl_title;
-        advice.appendChild(materialLink(topic,name));advice.appendChild(document.createTextNode(" · "));
+        if(i) advice.appendChild(document.createTextNode(" · "));
+        advice.appendChild(materialLink(topic,name));
       });el.insertBefore(advice,h.nextSibling);
     }
   }

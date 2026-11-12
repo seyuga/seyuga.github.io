@@ -135,6 +135,7 @@ function marker(x,y,p,self,z,localTeam){
   ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180);ctx.fillStyle='#fff';ctx.beginPath();ctx.moveTo(3,-4.3);ctx.quadraticCurveTo(7,-3.7,10.9,-1.1);ctx.quadraticCurveTo(12.4,0,10.9,1.1);ctx.quadraticCurveTo(7,3.7,3,4.3);ctx.closePath();ctx.fill();ctx.restore();
   ctx.fillStyle=color;ctx.beginPath();ctx.arc(0,0,5.5,0,Math.PI*2);ctx.fill()
  }
+ if(p.has_bomb){ctx.fillStyle='#ffd84a';ctx.strokeStyle='#211b0c';ctx.lineWidth=1;ctx.fillRect(4,-12,18,12);ctx.strokeRect(4,-12,18,12);ctx.fillStyle='#211b0c';ctx.font='bold 8px Arial,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('C4',13,-6)}
  ctx.restore()
 }
 const mixYaw=(a,b,t)=>a+(((b-a+540)%360)-180)*t;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- История развития искусственного интеллекта · version 30 (язык: русский или английский) (12.11.2026) -->
+<!-- История развития искусственного интеллекта · version 31 (язык браузера: ru/pl/zh/en) (12.11.2026) -->
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -3438,11 +3438,15 @@ window.I18N.zh = {
 
 
   /* ================= СОСТОЯНИЕ ================= */
-  /* Первый визит: русский браузер — русский, любой другой — английский.
-     Польский и китайский остаются в меню, но автоматически не включаются. */
+  /* Первый визит: язык браузера → тот же язык сайта (ru/pl/zh/en),
+     любой неподдерживаемый — английский. Ручной выбор в меню важнее. */
   function detectLang() {
     var primary = (navigator.languages && navigator.languages[0]) || navigator.language || "";
-    return /^ru\b/i.test(String(primary)) ? "ru" : "en";
+    var code = String(primary).toLowerCase();
+    if (code.indexOf("zh") === 0) return "zh";
+    if (code.indexOf("pl") === 0) return "pl";
+    if (code.indexOf("ru") === 0) return "ru";
+    return "en";
   }
 
   var lang = "ru";

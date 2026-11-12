@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- История развития искусственного интеллекта · version 27 (единый док, футер, иконки фактов) (12.11.2026) -->
+<!-- История развития искусственного интеллекта · version 28 (ядро, AI на мобиле, факты) (12.11.2026) -->
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -1012,17 +1012,18 @@ section[id], header[id] { scroll-margin-top: 96px; }
   mask-image: radial-gradient(ellipse at 52% 16%, #000 0%, transparent 74%);
 }
 .orb-solo {
-  left: 62%; top: 28%;
-  width: 82vmax; height: 82vmax; margin: -41vmax 0 0 -41vmax;
+  left: 50%; top: 48%;
+  width: 86vmax; height: 86vmax; margin: -43vmax 0 0 -43vmax;
   background: radial-gradient(circle at 50% 50%,
-    rgba(var(--rgb-1), 0.15) 0%,
-    rgba(var(--rgb-1), 0.07) 30%,
-    rgba(var(--rgb-4), 0.04) 48%,
-    rgba(var(--rgb-4), 0) 68%);
+    rgba(var(--rgb-1), 0.34) 0%,
+    rgba(var(--rgb-1), 0.24) 18%,
+    rgba(var(--rgb-4), 0.13) 36%,
+    rgba(var(--rgb-4), 0.04) 54%,
+    rgba(var(--rgb-4), 0) 70%);
 }
 @keyframes orb-breath {
-  0%, 100% { transform: translateZ(0) scale(0.95); }
-  50% { transform: translateZ(0) scale(1.08); }
+  0%, 100% { transform: translateZ(0) scale(0.86); }
+  50% { transform: translateZ(0) scale(1.24); }
 }
 .grain { opacity: 0.11; mix-blend-mode: overlay; }
 
@@ -1296,8 +1297,16 @@ section[id], header[id] { scroll-margin-top: 96px; }
   .src-list { columns: 1; }
 }
 @media (max-width: 760px) {
-  /* контурное «AI» на узком экране даёт прямоугольный угол прямо у шапки — скрываем */
+  /* контурное «AI» у шапки давало прямоугольный угол; на телефоне — водяной знак в карточке */
   .hero::before { display: none; }
+  .hero-card::after {
+    content: "AI"; position: absolute; right: -10px; top: -30px; z-index: 0;
+    font-family: var(--font-display); font-size: 122px; font-weight: 900; line-height: 0.8;
+    letter-spacing: -0.08em; color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.13);
+    pointer-events: none; user-select: none;
+  }
+  .hero-card > * { position: relative; z-index: 1; }
   /* сетка тоже не должна рисовать прямой угол под самым доком: плавно проявляем её ниже */
   .bg-orbs::before {
     -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 110px, #000 210px);
@@ -1473,6 +1482,11 @@ a:focus-visible,button:focus-visible,summary:focus-visible { outline:2px solid v
     font-family: var(--font-mono); font-size: 10px; font-weight: 500;
     letter-spacing: 0.1em; opacity: 0.4;
   }
+}
+
+/* на телефоне контурное FACTS читалось как обрезанная каша — уменьшаем до целого слова */
+@media (max-width: 760px) {
+  #facts::after { font-size: 54px; right: 16px; bottom: 8px; letter-spacing: -0.06em; }
 }
 
 </style>

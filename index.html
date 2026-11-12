@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- История развития искусственного интеллекта · version 28 (ядро, AI на мобиле, факты) (12.11.2026) -->
+<!-- История развития искусственного интеллекта · version 29 (кольцо и язык браузера) (12.11.2026) -->
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -925,8 +925,8 @@ section[id], header[id] { scroll-margin-top: 96px; }
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
-  transition: opacity 0.35s ease; }
-.scientist:hover .avatar::after { opacity: 1; animation: spin-slow 5s linear infinite; }
+  transition: opacity 0.35s ease; animation: spin-slow 5s linear infinite; }
+.scientist:hover .avatar::after { opacity: 1; }
 @keyframes spin-slow { to { transform: rotate(360deg); } }
 
 /* ---------- тест: отклики на ответ ---------- */
@@ -3438,13 +3438,26 @@ window.I18N.zh = {
 
 
   /* ================= СОСТОЯНИЕ ================= */
+  /* Язык браузера учитываем только при первом визите: ручной выбор в меню важнее. */
+  function detectLang() {
+    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || ""];
+    for (var i = 0; i < list.length; i++) {
+      var code = String(list[i]).toLowerCase();
+      if (code.indexOf("zh") === 0) return "zh";
+      if (code.indexOf("pl") === 0) return "pl";
+      if (code.indexOf("en") === 0) return "en";
+      if (code.indexOf("ru") === 0) return "ru";
+    }
+    return "ru";
+  }
+
   var lang = "ru";
   var theme = "synthora";
   var firstTimelineRender = true;
 
   try {
     var savedLang = localStorage.getItem("site-lang");
-    if (savedLang && T[savedLang]) lang = savedLang;
+    lang = (savedLang && T[savedLang]) ? savedLang : detectLang();
     var savedTheme = localStorage.getItem("site-theme");
     if (savedTheme) {
       for (var ti = 0; ti < THEMES.length; ti++) if (THEMES[ti].id === savedTheme) theme = savedTheme;

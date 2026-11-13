@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- История развития искусственного интеллекта · version 32 (немецкий язык, рекорд теста) (13.11.2026) -->
+<!-- История развития искусственного интеллекта · version 33 (блок «Масштаб») (14.11.2026) -->
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -1184,8 +1184,8 @@ section[id], header[id] { scroll-margin-top: 96px; }
   padding: clamp(68px, 8vw, 104px) clamp(16px, 4vw, 44px);
   background: transparent; position: relative; overflow: hidden; isolation: isolate;
 }
-#facts::after {
-  content: "FACTS"; position: absolute; right: -1%; bottom: -4%; z-index: 0;
+#facts .facts::after {
+  content: "FACTS"; position: absolute; right: -1%; bottom: -4%; z-index: -1;
   font-family: var(--font-display); font-size: clamp(130px, 20vw, 300px);
   font-weight: 900; line-height: 0.8; letter-spacing: -0.08em;
   color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.10);
@@ -1193,6 +1193,9 @@ section[id], header[id] { scroll-margin-top: 96px; }
 }
 #facts .section-head, #facts .facts {
   max-width: 1180px; margin-left: auto; margin-right: auto; position: relative; z-index: 1;
+}
+#facts .facts {
+  isolation: isolate;
 }
 .facts { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
 .fact {
@@ -1486,7 +1489,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible { outline:2px solid v
 
 /* на телефоне контурное FACTS читалось как обрезанная каша — уменьшаем до целого слова */
 @media (max-width: 760px) {
-  #facts::after { font-size: 54px; right: 16px; bottom: 8px; letter-spacing: -0.06em; }
+  #facts .facts::after { font-size: 54px; right: 16px; bottom: 8px; letter-spacing: -0.06em; }
 }
 
 /* ---------- v32: личный рекорд теста ---------- */
@@ -1498,6 +1501,67 @@ a:focus-visible,button:focus-visible,summary:focus-visible { outline:2px solid v
 .result-best.new { color: var(--c1); }
 @media (max-width: 560px) {
   .result-best { font-size: 10px; letter-spacing: 0.08em; }
+}
+
+/* ---------- v33: блок «Масштаб» в фактах ---------- */
+.scale { margin-top: 18px; padding: clamp(24px, 3vw, 40px); }
+.scale-kicker {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--ink-faint);
+}
+.scale-title {
+  margin: 10px 0 8px; font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(20px, 2.4vw, 30px); letter-spacing: -0.03em; line-height: 1.15;
+  overflow-wrap: break-word;
+}
+.scale-sub { margin: 0 0 26px; max-width: 62ch; color: var(--ink-soft); font-size: 14px; line-height: 1.6; }
+.scale-chart {
+  display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: minmax(0, 1fr) auto auto auto;
+  column-gap: 14px; height: 268px; padding-top: 26px;
+}
+.scale-track { position: relative; display: flex; align-items: flex-end; justify-content: center; min-height: 0; }
+.scale-bar {
+  width: 100%; max-width: 132px; height: var(--h);
+  border-radius: 6px 6px 0 0;
+  background: linear-gradient(180deg, rgba(var(--rgb-1), 0.38), rgba(var(--rgb-1), 0.10));
+  border: 1px solid rgba(var(--rgb-1), 0.30); border-bottom: 0;
+  print-color-adjust: exact; -webkit-print-color-adjust: exact;
+}
+.scale-bar.accent {
+  background: linear-gradient(180deg, rgba(var(--rgb-1), 0.70), rgba(var(--rgb-1), 0.18));
+  border-color: rgba(var(--rgb-1), 0.55);
+}
+.scale-val {
+  position: absolute; left: 0; right: 0; bottom: calc(var(--h) + 8px);
+  text-align: center;
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--ink-soft);
+  white-space: nowrap;
+}
+.scale-val.accent { color: var(--c1); }
+.scale-axis { grid-column: 1 / -1; border-top: 1px solid var(--line-strong); }
+.scale-year { margin-top: 10px; text-align: center; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--ink-faint); }
+.scale-name { margin-top: 2px; text-align: center; font-size: 12px; color: var(--ink-soft); }
+.scale-steps { position: relative; height: 18px; margin-top: 9px; }
+.scale-steps span {
+  position: absolute; top: 0; transform: translateX(-50%);
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+  color: var(--c1); opacity: 0.75; white-space: nowrap;
+}
+.scale-steps span:nth-child(1) { left: 25%; }
+.scale-steps span:nth-child(2) { left: 50%; }
+.scale-steps span:nth-child(3) { left: 75%; }
+.scale-note { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--line); font-size: 11px; color: var(--ink-faint); }
+@media (max-width: 760px) {
+  .scale-chart { height: 216px; gap: 8px; padding-top: 22px; }
+  .scale-title { font-size: 22px; }
+  .scale-val { font-size: 10px; }
+  .scale-steps { display: none; }
+  .scale-note { border-top: 0; padding-top: 0; margin-top: 10px; }
+}
+@media print {
+  .scale-bar { background: #e8e8e8 !important; border-color: #999 !important; }
+  .scale-bar.accent { background: #cfcfcf !important; }
+  .scale-val.accent, .scale-steps span { color: #111 !important; }
 }
 
 </style>
@@ -1618,6 +1682,28 @@ a:focus-visible,button:focus-visible,summary:focus-visible { outline:2px solid v
     <p class="section-sub" data-i18n="facts_sub">Неожиданные детали истории, которые не найдёшь в учебнике.</p>
   </div>
   <div class="facts" id="factsGrid"></div>
+  <div class="scale glass reveal">
+    <div class="scale-kicker" data-i18n="scale_kicker">Масштаб</div>
+    <h3 class="scale-title" data-i18n="scale_title">От сотни весов до 175 миллиардов параметров</h3>
+    <p class="scale-sub" data-i18n="scale_sub">Сколько настраиваемых чисел было в моделях разных лет — от персептрона до языковых моделей.</p>
+    <div class="scale-chart">
+      <div class="scale-track" style="--h:24%"><span class="scale-val" data-i18n="scale_v1">сотни</span><div class="scale-bar"></div></div>
+      <div class="scale-track" style="--h:42%"><span class="scale-val" data-i18n="scale_v2">60 тыс.</span><div class="scale-bar"></div></div>
+      <div class="scale-track" style="--h:69%"><span class="scale-val" data-i18n="scale_v3">60 млн</span><div class="scale-bar"></div></div>
+      <div class="scale-track" style="--h:100%"><span class="scale-val accent" data-i18n="scale_v4">175 млрд</span><div class="scale-bar accent"></div></div>
+      <div class="scale-axis" aria-hidden="true"></div>
+      <div class="scale-year">1958</div>
+      <div class="scale-year">1998</div>
+      <div class="scale-year">2012</div>
+      <div class="scale-year">2020</div>
+      <div class="scale-name" data-i18n="scale_n1">персептрон</div>
+      <div class="scale-name">LeNet-5</div>
+      <div class="scale-name">AlexNet</div>
+      <div class="scale-name">GPT-3</div>
+    </div>
+    <div class="scale-steps"><span data-i18n="scale_s1">≈ × 100</span><span data-i18n="scale_s2">× 1 000</span><span data-i18n="scale_s3">≈ × 3 000</span></div>
+    <p class="scale-note" data-i18n="scale_note">Шкала логарифмическая: высота столбца — порядок величины, а не кратность.</p>
+  </div>
 </section>
 
 <!-- QUIZ -->
@@ -1817,6 +1903,18 @@ window.I18N.ru = {
     "sources_note": "Ссылки открываются через интернет; учебный текст и фотографии доступны офлайн. Записи сохранены на языке оригинала. Сведения о портретах — в раскрываемом блоке.",
     "foot_note": "© 2026 · Учебный проект",
     "foot_meta": "8 этапов · 12 учёных · 6 фактов · 28 источников",
+    "scale_kicker": "Масштаб",
+    "scale_title": "От сотни весов до 175 миллиардов параметров",
+    "scale_sub": "Сколько настраиваемых чисел было в моделях разных лет — от персептрона до языковых моделей.",
+    "scale_v1": "сотни",
+    "scale_v2": "60 тыс.",
+    "scale_v3": "60 млн",
+    "scale_v4": "175 млрд",
+    "scale_n1": "персептрон",
+    "scale_s1": "≈ × 100",
+    "scale_s2": "× 1 000",
+    "scale_s3": "≈ × 3 000",
+    "scale_note": "Шкала логарифмическая: высота столбца — порядок величины, а не кратность.",
     "meaning": "Значение:",
     "years_suffix": " гг.",
     "lang_label": "Язык",
@@ -2231,6 +2329,18 @@ window.I18N.en = {
     "sources_note": "Links require internet; educational text and photographs remain available offline. Entries retain their original language. Portrait credits are in the expandable list.",
     "foot_note": "© 2026 · Educational project",
     "foot_meta": "8 stages · 12 scientists · 6 facts · 28 sources",
+    "scale_kicker": "Scale",
+    "scale_title": "From hundreds of weights to 175 billion parameters",
+    "scale_sub": "How many trainable numbers the models of different years had — from the perceptron to language models.",
+    "scale_v1": "hundreds",
+    "scale_v2": "60k",
+    "scale_v3": "60M",
+    "scale_v4": "175B",
+    "scale_n1": "perceptron",
+    "scale_s1": "≈ ×100",
+    "scale_s2": "×1,000",
+    "scale_s3": "≈ ×3,000",
+    "scale_note": "The scale is logarithmic: bar height shows the order of magnitude, not the ratio.",
     "meaning": "Significance:",
     "years_suffix": "",
     "lang_label": "Language",
@@ -2645,6 +2755,18 @@ window.I18N.de = {
     "sources_note": "Die Links benötigen Internet; Lehrtext und Fotografien bleiben offline verfügbar. Die Einträge stehen in der Originalsprache. Bildnachweise finden sich in der ausklappbaren Liste.",
     "foot_note": "© 2026 · Lernprojekt",
     "foot_meta": "8 Etappen · 12 Wissenschaftler · 6 Fakten · 28 Quellen",
+    "scale_kicker": "Maßstab",
+    "scale_title": "Von hundert Gewichten zu 175 Milliarden Parametern",
+    "scale_sub": "Wie viele trainierbare Zahlen die Modelle verschiedener Jahre hatten — vom Perzeptron bis zu Sprachmodellen.",
+    "scale_v1": "Hunderte",
+    "scale_v2": "60 Tsd.",
+    "scale_v3": "60 Mio.",
+    "scale_v4": "175 Mrd.",
+    "scale_n1": "Perzeptron",
+    "scale_s1": "≈ × 100",
+    "scale_s2": "× 1 000",
+    "scale_s3": "≈ × 3 000",
+    "scale_note": "Die Skala ist logarithmisch: Die Balkenhöhe zeigt die Größenordnung, nicht das Verhältnis.",
     "meaning": "Bedeutung:",
     "years_suffix": "",
     "lang_label": "Sprache",
@@ -3059,6 +3181,18 @@ window.I18N.pl = {
     "sources_note": "Linki wymagają internetu; tekst i zdjęcia są dostępne offline. Opisy zachowano w języku oryginału. Autorzy portretów znajdują się na rozwijanej liście.",
     "foot_note": "© 2026 · Projekt edukacyjny",
     "foot_meta": "8 etapów · 12 naukowców · 6 faktów · 28 źródeł",
+    "scale_kicker": "Skala",
+    "scale_title": "Od setek wag do 175 miliardów parametrów",
+    "scale_sub": "Ile nastawialnych liczb miały modele różnych lat — od perceptronu do modeli językowych.",
+    "scale_v1": "setki",
+    "scale_v2": "60 tys.",
+    "scale_v3": "60 mln",
+    "scale_v4": "175 mld",
+    "scale_n1": "perceptron",
+    "scale_s1": "≈ × 100",
+    "scale_s2": "× 1 000",
+    "scale_s3": "≈ × 3 000",
+    "scale_note": "Skala jest logarytmiczna: wysokość słupka pokazuje rząd wielkości, a nie krotność.",
     "meaning": "Znaczenie:",
     "years_suffix": " r.",
     "lang_label": "Język",
@@ -3473,6 +3607,18 @@ window.I18N.zh = {
     "sources_note": "链接需要网络；正文和照片可离线阅读。书目保留原文，肖像来源见可展开列表。",
     "foot_note": "© 2026 · 教学项目",
     "foot_meta": "8 个阶段 · 12 位科学家 · 6 个事实 · 28 条来源",
+    "scale_kicker": "规模",
+    "scale_title": "从几百个权重到 1750 亿个参数",
+    "scale_sub": "不同年份的模型各有多少个可训练参数——从感知机到语言模型。",
+    "scale_v1": "几百",
+    "scale_v2": "6000 万",
+    "scale_v3": "6 亿",
+    "scale_v4": "1750 亿",
+    "scale_n1": "感知机",
+    "scale_s1": "≈ ×100",
+    "scale_s2": "×1000",
+    "scale_s3": "≈ ×3000",
+    "scale_note": "纵轴为对数刻度：柱高表示数量级，而不是倍数。",
     "meaning": "意义：",
     "years_suffix": " 年",
     "lang_label": "语言",

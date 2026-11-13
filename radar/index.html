@@ -104,6 +104,19 @@ function rtcChannelUsable(channel,now,lastReceived,deadline){return !!channel&&(
 function resetRTC(){rtcRoute='';rtcRouteChecked=0;const ice=$('ice-rtt');if(ice)ice.textContent='—';rtcChannel=null;rtcWaitUntil=0;if(peer){peer.close();peer=null}if(rtcTimer)clearInterval(rtcTimer);rtcTimer=null;rtcStarting=false;rtcSequence=-1;rtcStream=''}
 async function rtcFetch(path,init={}){let lastError;rtcAlternate=options.get('signal')||read('shawiRtcSignal')||'';if(rtcAlternate){try{rtcAlternate=endpoint(rtcAlternate);store('shawiRtcSignal',rtcAlternate)}catch{rtcAlternate=''}}const targets=[...new Set([rtcPreferred,rtcAlternate,base].filter(Boolean))];const call=async target=>{const response=await fetch(target+path,{credentials:'omit',cache:'no-store',signal:signalTimeout(path.endsWith('/offer')?10000:3500),...init});if(!response.ok)throw Error('Signal '+response.status);return {response,target}};if(path.endsWith('/config')&&targets.length>1){try{const winner=await Promise.any(targets.map(call));rtcPreferred=winner.target;return winner.response}catch(error){throw error}}for(const target of targets){try{const result=await call(target);rtcPreferred=result.target;return result.response}catch(error){lastError=error}}throw lastError||Error('No signal endpoint')}
 async function inspectRtcRoute(pc){try{const stats=await pc.getStats();let pair=null;stats.forEach(r=>{if(r.type==='transport'&&r.selectedCandidatePairId)pair=stats.get(r.selectedCandidatePairId)});if(!pair)stats.forEach(r=>{if(r.type==='candidate-pair'&&r.selected)pair=r});if(!pair)return;const local=stats.get(pair.localCandidateId),remote=stats.get(pair.remoteCandidateId);if(!local||!remote)return;if(peer===pc){const path=(local.candidateType==='relay'||remote.candidateType==='relay')?'TURN':'ПРЯМОЙ';const protocol=String(local.protocol||'').toUpperCase();rtcRoute=path+(protocol==='UDP'||protocol==='TCP'?' · '+protocol:'');const ice=pair.currentRoundTripTime;const label=$('ice-rtt');if(label)label.innerHTML=Number.isFinite(ice)?Math.round(ice*1000)+' <small>мс</small>':'—'}}catch{}}
+function iceCandidatesReady(sdp,needsRelay){
+ const candidates=String(sdp||'').split(/\r?\n/).filter(line=>line.startsWith('a=candidate:')&&/\sudp\s/i.test(line));
+ return candidates.some(line=>/\styp srflx\b/i.test(line))&&(!needsRelay||candidates.some(line=>/\styp relay\b/i.test(line)));
+}
+function waitForIceCandidates(pc,needsRelay){
+ return new Promise(resolve=>{
+  let done=false,settle=0;const started=performance.now();
+  const finish=()=>{if(done)return;done=true;clearTimeout(limit);clearTimeout(warmup);clearTimeout(settle);pc.removeEventListener('icecandidate',check);pc.removeEventListener('icegatheringstatechange',check);resolve()};
+  const check=()=>{if(pc.iceGatheringState==='complete')return finish();if(performance.now()-started>=600&&iceCandidatesReady(pc.localDescription?.sdp,needsRelay)){clearTimeout(settle);settle=setTimeout(finish,250)}};
+  const limit=setTimeout(finish,4000),warmup=setTimeout(check,600);
+  pc.addEventListener('icecandidate',check);pc.addEventListener('icegatheringstatechange',check);check();
+ });
+}
 async function rtcConnection(){
  if(peer&&rtcChannelUsable(rtcChannel,performance.now(),rtcLast,rtcWaitUntil))return;
  if(rtcStarting||Date.now()<rtcRetry)return;
@@ -116,7 +129,8 @@ async function rtcConnection(){
  channel.onclose=fail;
  try{
   setStatus('Подготавливаем связь');await pc.setLocalDescription(await pc.createOffer());
-  await new Promise((resolve,reject)=>{if(pc.iceGatheringState==='complete')return resolve();const timeout=setTimeout(resolve,4000);pc.addEventListener('icegatheringstatechange',()=>{if(pc.iceGatheringState==='complete'){clearTimeout(timeout);resolve()}})});
+  const needsRelay=iceServers.some(server=>(Array.isArray(server.urls)?server.urls:[server.urls]).some(url=>typeof url==='string'&&/^turns?:/i.test(url)));
+   await waitForIceCandidates(pc,needsRelay);
   if(peer!==pc||current!==generation){pc.close();return}
   setStatus('Подключаемся');const response=await rtcFetch('/rtc/offer',{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(pc.localDescription)});
   if(!response.ok)throw Error('Signal '+response.status);const answer=await response.json();if(peer!==pc||current!==generation){pc.close();return}await pc.setRemoteDescription(answer);rtcStarting=false;

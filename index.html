@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- История развития искусственного интеллекта · version 31 (язык браузера: ru/pl/zh/en) (12.11.2026) -->
+<!-- История развития искусственного интеллекта · version 32 (немецкий язык, рекорд теста) (13.11.2026) -->
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -1489,6 +1489,17 @@ a:focus-visible,button:focus-visible,summary:focus-visible { outline:2px solid v
   #facts::after { font-size: 54px; right: 16px; bottom: 8px; letter-spacing: -0.06em; }
 }
 
+/* ---------- v32: личный рекорд теста ---------- */
+.result-best {
+  margin: 10px 0 0; min-height: 1.2em;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ink-faint);
+}
+.result-best.new { color: var(--c1); }
+@media (max-width: 560px) {
+  .result-best { font-size: 10px; letter-spacing: 0.08em; }
+}
+
 </style>
 </head>
 <body>
@@ -1629,6 +1640,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible { outline:2px solid v
       <div class="result-ring" id="resultRing"><span id="resultScore">0/5</span></div>
       <div class="result-title" id="resultTitle" role="heading" aria-level="3" tabindex="-1"></div>
       <p class="result-text" id="resultText"></p>
+      <p class="result-best" id="resultBest"></p>
       <div id="quizReview"></div><button class="btn btn-ghost" id="quizRestart" data-i18n="quiz_restart">↻ Другая попытка</button>
     </div>
   </div>
@@ -1786,6 +1798,8 @@ window.I18N.ru = {
     "res_good_x": "Верных ответов {n} из {total}. Следующая попытка — уже другие пять вопросов из тридцати.",
     "res_low_t": "Стоит повторить",
     "res_low_x": "Верных ответов {n} из {total}. Прокрутите хронологию и попробуйте снова — вопросы будут другие.",
+    "best_label": "Лучший результат: {n} из {total}",
+    "best_new": "Новый рекорд: {n} из {total}",
     "about_title": "Об авторе проекта",
     "about_lead": "Сайт создан как практическая часть индивидуального проекта по теме «Изучение истории развития искусственного интеллекта: основные этапы».",
     "about_text": "Восемь этапов — выбранная автором учебная схема. Завышенные ожидания и ограничения влияли на интерес к методам, но универсального цикла нет. Символический ИИ продолжает развиваться, а трансформеры относятся к глубокому обучению.",
@@ -2198,6 +2212,8 @@ window.I18N.en = {
     "res_good_x": "{n} of {total} correct. The next attempt uses five different questions out of thirty.",
     "res_low_t": "Worth reviewing",
     "res_low_x": "{n} of {total} correct. Scroll through the timeline and try again — the questions will be different.",
+    "best_label": "Best result: {n} of {total}",
+    "best_new": "New record: {n} of {total}",
     "about_title": "About the Author",
     "about_lead": "This site was created as the practical part of an individual project on the topic “The History of Artificial Intelligence: Main Stages”.",
     "about_text": "These eight stages are the author’s educational framework. Expectations and limitations influenced interest in methods, without a universal cycle. Symbolic AI persists; transformers are part of deep learning.",
@@ -2563,6 +2579,420 @@ window.I18N.en = {
 </script>
 <script>
 window.I18N = window.I18N || {};
+window.I18N.de = {
+  "meta": {
+    "title": "Die Geschichte der Künstlichen Intelligenz — eine interaktive Lernseite",
+    "desc": "Eine interaktive Lernseite zur Geschichte der Künstlichen Intelligenz: acht Etappen von 1943 bis 2026, zwölf Wissenschaftler, überraschende Fakten und ein Wissenstest.",
+    "ogTitle": "Die Geschichte der Künstlichen Intelligenz",
+    "ogDesc": "Acht Etappen der KI-Entwicklung, zwölf Wissenschaftler, überraschende Fakten und ein Wissenstest.",
+    "locale": "de_DE"
+  },
+  "ui": {
+    "portrait_credits": "Bildnachweise",
+    "open_source": "Quelle",
+    "born": "geb. ",
+    "brand1": "Geschichte",
+    "brand2": "der KI",
+    "nav_timeline": "Zeitleiste",
+    "nav_scientists": "Wissenschaftler",
+    "nav_facts": "Fakten",
+    "nav_quiz": "Test",
+    "nav_about": "Über",
+    "menu": "Menü",
+    "hero_t1": "Die Geschichte der",
+    "hero_t2": "Künstlichen Intelligenz",
+    "hero_text": "Eine interaktive Reise vom ersten Modell eines Neurons (1943) bis zum Zeitalter der Reasoning-Modelle und agentischen Systeme (2026): acht Etappen, zwölf Wissenschaftler, die die Welt verändert haben, überraschende Fakten und ein Wissenstest.",
+    "btn_start": "Reise beginnen →",
+    "btn_quiz": "Zum Test",
+    "stat1": "Etappen der Geschichte",
+    "stat2": "Wissenschaftler",
+    "stat3": "Jahre der Entwicklung",
+    "stat4": "Fragen im Pool",
+    "tl_title": "Acht Etappen der KI-Entwicklung",
+    "tl_sub": "Eine didaktische Periodisierung: Die Grenzen sind ungefähr, die Ansätze bestehen nebeneinander. Öffnen Sie eine Etappe für Ereignisse und Quellen.",
+    "sci_title": "Die Wissenschaftler, die die KI erschufen",
+    "sci_sub": "Von den Theoretikern der Rechenmaschinen bis zu den Autoren des Deep Learning — Menschen, deren Ideen aus Fiktion Technik machten.",
+    "facts_title": "Überraschende Fakten",
+    "facts_sub": "Unerwartete Details der Geschichte, die in keinem Lehrbuch stehen.",
+    "back_top": "Nach oben",
+    "quiz_title": "Wissenstest",
+    "quiz_step": "Frage {n} von {total}",
+    "quiz_next": "Nächste Frage →",
+    "quiz_finish": "Ergebnis anzeigen →",
+    "quiz_restart": "↻ Neuer Versuch",
+    "res_perfect_t": "Fehlerfrei!",
+    "res_perfect_x": "Alle fünf Antworten sind richtig — genau das systematische Wissen, das eine Fachkraft braucht.",
+    "res_good_t": "Fast geschafft",
+    "res_good_x": "{n} von {total} richtig. Im nächsten Versuch kommen fünf andere Fragen aus dreißig.",
+    "res_low_t": "Wiederholen lohnt sich",
+    "res_low_x": "{n} von {total} richtig. Gehen Sie die Zeitleiste durch und versuchen Sie es erneut — die Fragen werden andere sein.",
+    "best_label": "Bestes Ergebnis: {n} von {total}",
+    "best_new": "Neuer Rekord: {n} von {total}",
+    "about_title": "Über den Autor",
+    "about_lead": "Diese Seite entstand als praktischer Teil eines Einzelprojekts zum Thema „Die Geschichte der Künstlichen Intelligenz: die wichtigsten Etappen“.",
+    "about_text": "Die acht Etappen sind das didaktische Schema des Autors. Überzogene Erwartungen und Grenzen beeinflussten das Interesse an Methoden, einen allgemeinen Zyklus gibt es jedoch nicht. Symbolische KI besteht weiter, Transformer gehören zum Deep Learning.",
+    "about_k1": "Autor",
+    "about_k2": "Gruppe",
+    "about_k3": "Betreuer",
+    "about_k4": "Einrichtung",
+    "about_v1": "Daniil Juschkow",
+    "about_v2": "RPO 11",
+    "about_v3": "Nikita Dunajew",
+    "about_k5": "Jahr",
+    "about_k6": "Technologien",
+    "about_v4": "Universitätskolleg",
+    "sources_label": "Quellen",
+    "sources_note": "Die Links benötigen Internet; Lehrtext und Fotografien bleiben offline verfügbar. Die Einträge stehen in der Originalsprache. Bildnachweise finden sich in der ausklappbaren Liste.",
+    "foot_note": "© 2026 · Lernprojekt",
+    "foot_meta": "8 Etappen · 12 Wissenschaftler · 6 Fakten · 28 Quellen",
+    "meaning": "Bedeutung:",
+    "years_suffix": "",
+    "lang_label": "Sprache",
+    "theme_label": "Palette",
+    "theme_synthora": "Blau",
+    "theme_red": "Rot",
+    "theme_mono": "Schwarzweiß",
+    "theme_purple": "Violett",
+    "theme_orange": "Orange",
+    "theme_green": "Grün",
+    "guide_title": "Grundbegriffe",
+    "guide_text": "KI umfasst Regeln, Suche und Lernen. Maschinelles Lernen ist der Teil, der Muster aus Daten lernt. Deep Learning nutzt mehrschichtige neuronale Netze innerhalb des maschinellen Lernens. Überwachtes Lernen arbeitet mit Beispiel-Antwort-Paaren. Ein Transformer ist eine neuronale Architektur, die Aufmerksamkeit (Attention) nutzt, um Elemente zueinander in Beziehung zu setzen. Das Training kann Positionen parallel verarbeiten; die autoregressive Generierung erzeugt Token nacheinander. Ein Token ist ein Textfragment. Ein autoregressives Modell sagt beim Vortraining das nächste Token voraus; andere Modelle rekonstruieren maskierte Token. Ein Agent nutzt Werkzeuge, um Aufgabenschritte innerhalb gesetzter Grenzen auszuführen. Eine Halluzination ist plausibler, aber falscher Inhalt: Training oder Retrieval allein garantieren keine Wahrheit. Schwache KI deckt einen begrenzten Aufgabenbereich ab; AGI betrifft allgemeine Fähigkeiten, während die philosophische starke KI echtes Verstehen meint. Ein GAN trainiert zwei konkurrierende Netze, einen Generator und einen Diskriminator.",
+    "skip": "Zum Inhalt springen",
+    "review": "Auswertung der Antworten",
+    "your_answer": "Ihre Antwort: ",
+    "right_answer": "Richtige Antwort: ",
+    "repeat": "Material zu Ihren Fehlern wiederholen: ",
+    "read": "Material lesen",
+    "correct": "Richtig.",
+    "incorrect": "Falsch."
+  },
+  "fields": [
+    "Alle",
+    "Theorie der Berechnung",
+    "KI-Sprachen",
+    "Neuronale Netze",
+    "Kognitionswissenschaft",
+    "KI-Ethik",
+    "Expertensysteme",
+    "Deep Learning",
+    "Faltungsnetze",
+    "Kybernetik"
+  ],
+  "stages": [
+    {
+      "name": "Ursprünge",
+      "tagline": "Vom Modell eines Neurons zur eigenen Disziplin",
+      "events": [
+        [
+          "1943",
+          "McCulloch und Pitts erstellen ein mathematisches Modell eines künstlichen Neurons"
+        ],
+        [
+          "1950",
+          "Alan Turings Aufsatz „Computing Machinery and Intelligence“ und der Turing-Test"
+        ],
+        [
+          "1955–1956",
+          "Newell, Simon und Shaw entwickeln Logic Theorist, ein Programm zum Beweisen von Sätzen"
+        ],
+        [
+          "1956",
+          "Die Dartmouth-Konferenz bringt den Begriff „künstliche Intelligenz“ in Umlauf"
+        ]
+      ],
+      "meaning": "Der Begriff entsteht, und die KI wird zu einer eigenen Wissenschaft an der Schnittstelle von Kybernetik, Logik und Informatik."
+    },
+    {
+      "name": "Die „goldene Ära“ der symbolischen KI",
+      "tagline": "Intelligenz als Manipulation von Symbolen nach Regeln",
+      "events": [
+        [
+          "1957",
+          "Frank Rosenblatt entwickelt das Perzeptron, ein frühes trainierbares Modell eines neuronalen Netzes"
+        ],
+        [
+          "1958",
+          "John McCarthy entwickelt die Sprache LISP"
+        ],
+        [
+          "1965",
+          "DENDRAL — das erste Expertensystem (chemische Analyse)"
+        ],
+        [
+          "1966",
+          "Weizenbaums ELIZA imitiert ein Gespräch mit einem Psychotherapeuten"
+        ],
+        [
+          "1969",
+          "„Perceptrons“ analysiert die Grenzen dieser Modellklasse"
+        ],
+        [
+          "1970er",
+          "MYCIN diagnostiziert Infektionen und wählt Antibiotika aus"
+        ]
+      ],
+      "meaning": "Die ersten funktionierenden KI-Programme — und zugleich überzogene Erwartungen, die die Technik nicht erfüllen konnte."
+    },
+    {
+      "name": "Der erste „KI-Winter“",
+      "tagline": "Eine Krise überzogener Erwartungen",
+      "events": [
+        [
+          "1973",
+          "Vorläufer: der Lighthill-Report — die KI-Forschung hatte die Erwartungen nicht erfüllt"
+        ],
+        [
+          "1974",
+          "Das Vereinigte Königreich stellt die Finanzierung der KI nahezu ein"
+        ],
+        [
+          "1970er",
+          "DARPA kürzt die Unterstützung der Forschung in den USA"
+        ]
+      ],
+      "meaning": "Die Lehre dieser Etappe: Was eine Technik kann, muss zu dem passen, was sie verspricht, sonst verlieren Investoren das Vertrauen."
+    },
+    {
+      "name": "Das Zeitalter der Expertensysteme",
+      "tagline": "Expertenwissen als „wenn — dann“-Regeln",
+      "events": [
+        [
+          "1980",
+          "XCON (R1) von DEC spart jährlich zweistellige Millionenbeträge"
+        ],
+        [
+          "1982",
+          "Japan startet das Programm „Computer der fünften Generation“"
+        ],
+        [
+          "1980er",
+          "Der Markt für LISP-Maschinen boomt, Expertensysteme verbreiten sich"
+        ]
+      ],
+      "meaning": "Der erste kommerzielle Erfolg der KI; bis 1987 führten die Wartungskosten zum zweiten „Winter“."
+    },
+    {
+      "name": "Von Regeln zum Lernen",
+      "tagline": "Die statistische Wende: Wissen wird aus Daten gewonnen",
+      "events": [
+        [
+          "1986",
+          "Vorläufer: Backpropagation wird bekannt (Rumelhart, Hinton, Williams)"
+        ],
+        [
+          "1995",
+          "Die Support-Vektor-Maschine (V. Vapnik, C. Cortes)"
+        ],
+        [
+          "1997",
+          "Deep Blue besiegt Garri Kasparow in einem Schachwettkampf"
+        ],
+        [
+          "1997",
+          "Die LSTM-Architektur (Hochreiter, Schmidhuber)"
+        ],
+        [
+          "1998",
+          "Das Faltungsnetz LeNet-5 erkennt handschriftliche Ziffern"
+        ]
+      ],
+      "meaning": "Deep Blue nutzte Zugsuche und Stellungsbewertung, kein modernes trainiertes neuronales Netz."
+    },
+    {
+      "name": "Die Deep-Learning-Revolution",
+      "tagline": "Mehrschichtige neuronale Netze, auf große Daten trainiert",
+      "events": [
+        [
+          "2006",
+          "Schichtweises Vortraining tiefer Netze (Hintons Gruppe)"
+        ],
+        [
+          "2012",
+          "Bei ILSVRC-2012 erreicht AlexNet einen Top-5-Testfehler von 15,3 % gegenüber 26,2 % des Zweitplatzierten: 10,9 Prozentpunkte (etwa 11). Top-5-Fehler bedeutet, dass die richtige Klasse unter den fünf besten Vorhersagen fehlt"
+        ],
+        [
+          "2014",
+          "Generative adversarial networks (GANs) von Ian Goodfellow"
+        ],
+        [
+          "2016",
+          "AlphaGo besiegt den Go-Weltmeister Lee Sedol 4:1"
+        ]
+      ],
+      "meaning": "Deep Learning wird zum Standard in Bildverarbeitung, Sprache und Übersetzung."
+    },
+    {
+      "name": "Transformer und generative KI",
+      "tagline": "Attention, Skalierung und der Massenmarkt",
+      "events": [
+        [
+          "2017",
+          "„Attention Is All You Need“ — die Transformer-Architektur"
+        ],
+        [
+          "2018",
+          "BERT verbessert das Verständnis von Kontext in der Sprache"
+        ],
+        [
+          "2020",
+          "GPT-3 — 175 Milliarden Parameter"
+        ],
+        [
+          "2020",
+          "AlphaFold2 erreicht hohe Genauigkeit bei CASP14"
+        ],
+        [
+          "2021",
+          "Die AlphaFold2-Methode erscheint in Nature"
+        ],
+        [
+          "2022",
+          "ChatGPT startet als Konversationsschnittstelle zu einem Sprachmodell"
+        ]
+      ],
+      "meaning": "KI kommt in den Massenmarkt und wird zum Alltagswerkzeug."
+    },
+    {
+      "name": "Die gegenwärtige Etappe",
+      "tagline": "Multimodalität, Reasoning, Agency",
+      "events": [
+        [
+          "2025",
+          "DeepSeek-R1: Aufsatz vom 22. Januar über bestärkendes Lernen für Reasoning"
+        ],
+        [
+          "2024–2026",
+          "Ein didaktischer Rahmen für laufende multimodale, Reasoning- und Agentenforschung; kein eigener Meilenstein von 2026"
+        ]
+      ],
+      "meaning": "Die Fähigkeiten hängen von Aufgaben und Bewertungssituationen ab; Fehler und die Notwendigkeit von Kontrolle bleiben."
+    }
+  ],
+  "scientists": [
+    {
+      "name": "Alan Turing",
+      "field": "Theorie der Berechnung",
+      "desc": "Autor der universellen Maschine und des Turing-Tests (1950) — eines operationalen Kriteriums für maschinelle Intelligenz."
+    },
+    {
+      "name": "John McCarthy",
+      "field": "KI-Sprachen",
+      "desc": "Prägte den Begriff „künstliche Intelligenz“ (1955), schuf LISP und organisierte die Dartmouth-Konferenz von 1956."
+    },
+    {
+      "name": "Marvin Minsky",
+      "field": "Neuronale Netze",
+      "desc": "Gründete mit John McCarthy das KI-Projekt am MIT (1959); Mitautor von „Perceptrons“ (1969)."
+    },
+    {
+      "name": "Allen Newell",
+      "field": "Kognitionswissenschaft",
+      "desc": "Mitautor von Logic Theorist (1955–1956) und des General Problem Solver; untersuchte Modelle menschlichen Denkens."
+    },
+    {
+      "name": "Herbert Simon",
+      "field": "Kognitionswissenschaft",
+      "desc": "Mitautor von Logic Theorist und Träger des Nobelpreises für Wirtschaftswissenschaften 1978 für seine Entscheidungstheorie."
+    },
+    {
+      "name": "Frank Rosenblatt",
+      "field": "Neuronale Netze",
+      "desc": "Frank Rosenblatt entwickelte das Perzeptron, ein frühes trainierbares Modell eines neuronalen Netzes (1957–1958)."
+    },
+    {
+      "name": "Joseph Weizenbaum",
+      "field": "KI-Ethik",
+      "desc": "Autor von ELIZA (1966); zeigte, wie bereitwillig Menschen Maschinen vertrauen, und legte Grundlagen der KI-Ethik."
+    },
+    {
+      "name": "Edward Feigenbaum",
+      "field": "Expertensysteme",
+      "desc": "Schöpfer von DENDRAL (1965) und Begründer des Knowledge Engineering — des Ansatzes hinter Expertensystemen."
+    },
+    {
+      "name": "Geoffrey Hinton",
+      "field": "Deep Learning",
+      "desc": "Der „Pate“ des Deep Learning; Backpropagation, AlexNet und der Nobelpreis für Physik 2024."
+    },
+    {
+      "name": "Yann LeCun",
+      "field": "Faltungsnetze",
+      "desc": "Schöpfer von LeNet-5 (1998) zur Ziffernerkennung; Träger des Turing Award 2018."
+    },
+    {
+      "name": "Yoshua Bengio",
+      "field": "Deep Learning",
+      "desc": "Einer der Autoren des modernen Deep Learning und der Attention-Modelle; Träger des Turing Award 2018."
+    },
+    {
+      "name": "Wiktor Gluschkow",
+      "field": "Kybernetik",
+      "desc": "Einer der Begründer der sowjetischen Kybernetik; leitete das Institut für Kybernetik der Ukrainischen SSR und die Arbeiten an OGAS."
+    }
+  ],
+  "facts": [
+    {
+      "title": "Der Begriff entstand in einem Antrag",
+      "text": "Die Wörter „künstliche Intelligenz“ prägte John McCarthy 1955 — für den Titel eines Antrags auf ein Sommerforschungsprojekt am Dartmouth College."
+    },
+    {
+      "title": "Eine Sekretärin glaubte an ELIZA",
+      "text": "Als ELIZA in den 1960er-Jahren am MIT getestet wurde, bat Weizenbaums Sekretärin ihn, den Raum zu verlassen — sie wollte allein mit dem „Doktor“ sprechen."
+    },
+    {
+      "title": "Eine Tonne Stahl gegen einen Großmeister",
+      "text": "Der Computer Deep Blue wog etwa 1,4 Tonnen und bewertete bis zu 200 Millionen Schachstellungen pro Sekunde. Im Mai 1997 besiegte er Garri Kasparow 3,5:2,5."
+    },
+    {
+      "title": "Ein Abstand von 10,9 Prozentpunkten",
+      "text": "Bei ILSVRC-2012 erreichte AlexNet einen Top-5-Testfehler von 15,3 % gegenüber 26,2 % des Zweitplatzierten: 10,9 Prozentpunkte (etwa 11). Top-5-Fehler bedeutet, dass die richtige Klasse unter den fünf besten Vorhersagen fehlt."
+    },
+    {
+      "title": "Aufmerksamkeit für den Kontext",
+      "text": "Der Transformer wurde 2017 vorgeschlagen. Er gehört zum Deep Learning; paralleles Training bedeutet nicht, alle Token gleichzeitig zu erzeugen."
+    },
+    {
+      "title": "Ein Nobelpreis für neuronale Netze",
+      "text": "2024 ging der Nobelpreis für Physik an John Hopfield und Geoffrey Hinton für grundlegende Arbeiten zum maschinellen Lernen mit neuronalen Netzen."
+    }
+  ],
+  quiz: [
+    {"id": "q01", "topic": "stage-1", "q": "In welchem Jahr fand die Dartmouth-Konferenz statt — das Ereignis, das gewöhnlich als Beginn der KI als Wissenschaft gilt?", "options": ["1943", "1950", "1956", "1966"], "a": 2, "explain": "Im Sommer 1956 etablierte ein Workshop am Dartmouth College den Begriff „künstliche Intelligenz“, den John McCarthy 1955 in seinem Antrag geprägt hatte."},
+    {"id": "q02", "topic": "stage-1", "q": "Was ist der Turing-Test?", "options": ["Ein Maßstab für die Rechengeschwindigkeit einer Maschine", "Ein Kriterium dafür, dass eine Maschine in einem Textdialog nicht von einem Menschen zu unterscheiden ist", "Ein Turnier für Schachprogramme", "Eine Methode zum Training eines neuronalen Netzes"], "a": 1, "explain": "In seinem Aufsatz von 1950 schlug Turing vor, das Verhalten einer Maschine dann als intelligent zu bezeichnen, wenn sie in einem Gespräch nicht von einem Menschen zu unterscheiden ist."},
+    {"id": "q03", "topic": "stage-2", "q": "Wer entwickelte das Perzeptron, ein frühes trainierbares neuronales Modell?", "options": ["Alan Turing", "Frank Rosenblatt", "John McCarthy", "Marvin Minsky"], "a": 1, "explain": "Frank Rosenblatt entwickelte das Perzeptron 1957–1958."},
+    {"id": "q04", "topic": "guide", "q": "Welche 2017 vorgeschlagene Architektur bildet die Grundlage moderner Sprachmodelle?", "options": ["Das rekurrente Netz LSTM", "Das Faltungsnetz", "Der Transformer", "Das generative adversarial network"], "a": 2, "explain": "In „Attention Is All You Need“ (2017) schlugen Forscher von Google den Transformer vor, eine auf Attention aufgebaute Architektur. BERT, GPT und andere moderne Modelle beruhen darauf."},
+    {"id": "q05", "topic": "timeline", "q": "Welche historische Schlussfolgerung wird in dieser Arbeit vertreten?", "options": ["Die Entwicklung verlief ohne Grenzen", "Erwartungen und Grenzen beeinflussten das Interesse an Methoden", "Neuronale Netze ersetzten jede Programmierung", "Die symbolische KI verschwand nach 1956"], "a": 1, "explain": "Die acht Etappen sind das didaktische Schema des Autors. Überzogene Erwartungen und Grenzen beeinflussten das Interesse an Methoden, einen allgemeinen Zyklus gibt es jedoch nicht. Symbolische KI besteht weiter, Transformer gehören zum Deep Learning."},
+    {"id": "q06", "topic": "stage-1", "q": "Wer prägte den Begriff „künstliche Intelligenz“?", "options": ["Alan Turing", "John McCarthy", "Marvin Minsky", "Allen Newell"], "a": 1, "explain": "Der Begriff erschien 1955 in John McCarthys Antrag für den Dartmouth-Workshop und setzte sich 1956 auf der Konferenz selbst durch."},
+    {"id": "q07", "topic": "stage-1", "q": "In welchem Jahr beschrieben McCulloch und Pitts das formale Neuron?", "options": ["1936", "1943", "1950", "1956"], "a": 1, "explain": "1943 schlugen Warren McCulloch und Walter Pitts ein mathematisches Modell des Neurons vor; die Forschung zu neuronalen Netzen wird gewöhnlich auf diesen Aufsatz zurückgeführt."},
+    {"id": "q08", "topic": "stage-1", "q": "Wie hieß das 1955–1956 von Newell, Simon und Shaw entwickelte Programm, das Sätze aus den Principia bewies?", "options": ["Logic Theorist", "ELIZA", "DENDRAL", "Shakey"], "a": 0, "explain": "Logic Theorist bewies mehrere Dutzend Sätze aus Whiteheads und Russells Principia — eines der ersten Programme, die Schlussfolgern nachahmten."},
+    {"id": "q09", "topic": "stage-3", "q": "Was bedeutet der Begriff „KI-Winter“?", "options": ["Einen saisonalen Rückgang der Computerverkäufe", "Eine Phase schrumpfender Finanzierung und schwindenden Interesses an KI", "Die Abschaltung aller Forschungslabore", "Ein Verbot der KI-Forschung"], "a": 1, "explain": "Er bezeichnet die Phasen nach überzogenen Erwartungen — Mitte der 1970er und Ende der 1980er Jahre —, in denen Finanzierung und Interesse an KI einbrachen."},
+    {"id": "q10", "topic": "stage-2", "q": "Welches Buch von 1969 analysierte die Grenzen einschichtiger Perzeptrone?", "options": ["„Perceptrons“ von Minsky und Papert", "„Kybernetik“ von Wiener", "„Computing Machinery and Intelligence“ von Turing", "„General System Theory“ von Bertalanffy"], "a": 0, "explain": "Minskys und Paperts „Perceptrons“ analysierte die Grenzen dieser Modellklasse; das nachlassende Interesse hatte mehrere Ursachen."},
+    {"id": "q11", "topic": "stage-2", "q": "Wie hieß Weizenbaums Konversationsprogramm, das er 1966 in einem Aufsatz beschrieb?", "options": ["ELIZA", "SHRDLU", "PARRY", "DENDRAL"], "a": 0, "explain": "ELIZA imitierte einen Psychotherapeuten, indem es die Antworten des Nutzers umformulierte. Weizenbaum zeigte, wie bereitwillig Menschen einer Maschine Verständnis zuschreiben, das sie nicht hat."},
+    {"id": "q12", "topic": "stage-4", "q": "Was sind Expertensysteme?", "options": ["Programme, die eine Wissensbasis und Inferenzregeln nutzen", "Neuronale Netze mit Millionen Parametern", "Spracherkennungssysteme", "Schachprogramme"], "a": 0, "explain": "Ein Expertensystem speichert das Wissen von Fachleuten als Wenn-dann-Regeln und erklärt seine Schlüsse, sodass sie prüfbar bleiben."},
+    {"id": "q13", "topic": "stage-2", "q": "Wofür wurde das Expertensystem DENDRAL entwickelt?", "options": ["Für die Analyse chemischer Spektren", "Für maschinelle Übersetzung", "Für das Schachspiel", "Für die Steuerung eines Roboters"], "a": 0, "explain": "DENDRAL, unter Edward Feigenbaum entwickelt, bestimmte die Struktur organischer Moleküle aus Massenspektren — das erste erfolgreiche Expertensystem."},
+    {"id": "q14", "topic": "stage-5", "q": "Welches System besiegte Garri Kasparow im Wettkampf 1997?", "options": ["Deep Blue", "AlphaGo", "Stockfish", "Watson"], "a": 0, "explain": "IBMs Deep Blue gewann den Wettkampf 3,5:2,5. Der Sieg beruhte auf Brute-Force-Suche und Spezialhardware, nicht auf Lernen."},
+    {"id": "q15", "topic": "stage-6", "q": "Welches neuronale Netz gewann 2012 ILSVRC?", "options": ["AlexNet", "ResNet", "VGG-16", "LeNet-5"], "a": 0, "explain": "AlexNet erreichte einen Top-5-Testfehler von 15,3 % gegenüber 26,2 % des Zweitplatzierten: ein Unterschied von 10,9 Prozentpunkten (etwa 11)."},
+    {"id": "q16", "topic": "stage-6", "q": "Wie groß war der Abstand beim Top-5-Testfehler zwischen AlexNet und dem Zweitplatzierten bei ILSVRC-2012 in Prozentpunkten?", "options": ["3", "7", "10,9", "20"], "a": 2, "explain": "Bei ILSVRC-2012 erreichte AlexNet einen Top-5-Testfehler von 15,3 % gegenüber 26,2 % des Zweitplatzierten: 10,9 Prozentpunkte (etwa 11). Top-5-Fehler bedeutet, dass die richtige Klasse unter den fünf besten Vorhersagen fehlt."},
+    {"id": "q17", "topic": "stage-6", "q": "In welchem Jahr besiegte AlphaGo Lee Sedol?", "options": ["2012", "2014", "2016", "2020"], "a": 2, "explain": "Im März 2016 gewann DeepMinds AlphaGo den Wettkampf gegen Lee Sedol 4:1. 2017 lernte sein Nachfolger AlphaGo Zero das Spiel allein durch Selbstspiel."},
+    {"id": "q18", "topic": "guide", "q": "Worauf beruht der symbolische Ansatz in der KI?", "options": ["Auf Regeln, Logik und Symbolen", "Auf Textstatistik", "Auf biologischen Neuronen", "Auf evolutionärer Selektion"], "a": 0, "explain": "Symbolische KI stellt Wissen als Formeln und Inferenzregeln dar. Ihre Stärke ist die Erklärbarkeit, ihre Schwäche die Brüchigkeit in der realen Welt."},
+    {"id": "q19", "topic": "scientists", "q": "Wer gilt als „Pate des Deep Learning“?", "options": ["Geoffrey Hinton", "Marvin Minsky", "John McCarthy", "Herbert Simon"], "a": 0, "explain": "Geoffrey Hinton und seine Schüler entwickelten Backpropagation und tiefe Netze in den Jahren, in denen das Feld als Sackgasse galt."},
+    {"id": "q20", "topic": "facts", "q": "Wofür wurde 2024 der Nobelpreis für Physik verliehen?", "options": ["Für Arbeiten zu neuronalen Netzen — an Hopfield und Hinton", "Für Quantencomputer", "Für die Entdeckung von Graphen", "Für Laserforschung"], "a": 0, "explain": "Hopfield und Hinton wurden für grundlegende Entdeckungen und Erfindungen geehrt, die maschinelles Lernen mit künstlichen neuronalen Netzen ermöglichen."},
+    {"id": "q21", "topic": "guide", "q": "Was ist überwachtes Lernen?", "options": ["Lernen aus beschrifteten Beispielen", "Lernen ohne jegliche Daten", "Lernen aus Zufallssignalen", "Manuelles Einstellen jedes Gewichts"], "a": 0, "explain": "Das Modell sieht Eingabe-Antwort-Paare und passt seine Gewichte an, um weniger Fehler zu machen. Bild- und Spracherkennung werden so trainiert."},
+    {"id": "q22", "topic": "guide", "q": "Was ist das Vortrainingsziel eines autoregressiven Sprachmodells vom GPT-Typ?", "options": ["Das nächste Token aus dem Kontext vorhersagen", "Nur zufällig maskierte Token rekonstruieren", "Eine Antwort anhand menschlicher Präferenzwerte auswählen", "Nur eine externe Dokumentdatenbank aktualisieren"], "a": 0, "explain": "Das nächste Token bei gegebenem vorangehendem Kontext vorhersagen. Das ist autoregressives Vortraining; Feintuning und maskierte Modelle nutzen andere Ziele."},
+    {"id": "q23", "topic": "guide", "q": "Was ist eine „Halluzination“ eines Sprachmodells?", "options": ["Eine selbstsichere, aber falsche Antwort", "Ein Stromausfall des Servers", "Ein Übersetzungsfehler in der Oberfläche", "Das Wiederholen der Frage des Nutzers"], "a": 0, "explain": "Eine Halluzination ist plausibler, aber falscher Inhalt. Daten, Training und Generierung können dazu beitragen; Retrieval hilft, garantiert aber keine Wahrheit."},
+    {"id": "q24", "topic": "scientists", "q": "Wer gründete 1959 das KI-Projekt am MIT?", "options": ["Marvin Minsky und John McCarthy", "Alan Turing und Claude Shannon", "Allen Newell und Herbert Simon", "Geoffrey Hinton und Yann LeCun"], "a": 0, "explain": "Die Geschichte des MIT schreibt McCarthy und Minsky die Gründung des KI-Projekts 1959 zu — die Grundlage für das spätere AI Lab."},
+    {"id": "q25", "topic": "scientists", "q": "Wofür ist Wiktor Gluschkow bekannt?", "options": ["Für fortgeschrittene Kybernetik und das OGAS-Projekt", "Für die Erfindung von LISP", "Für ELIZA", "Für AlphaGo"], "a": 0, "explain": "Wiktor Gluschkow war einer der Begründer der sowjetischen Kybernetik, Leiter des Instituts für Kybernetik der Ukrainischen SSR und führend an OGAS beteiligt."},
+    {"id": "q26", "topic": "stage-7", "q": "Was sagt AlphaFold voraus?", "options": ["Die dreidimensionale Struktur von Proteinen", "Das Wetter für eine Woche", "Den Straßenverkehr", "Den Text des nächsten Aufsatzes"], "a": 0, "explain": "DeepMinds AlphaFold sagt aus der Aminosäuresequenz die 3D-Struktur eines Proteins voraus; bei CASP14 im Jahr 2020 war die Genauigkeit für viele Proteine mit experimentellen Methoden vergleichbar; die AlphaFold2-Methodik erschien 2021 in Nature."},
+    {"id": "q27", "topic": "stage-7", "q": "In welchem Jahr erschien GPT-3?", "options": ["2018", "2020", "2022", "2023"], "a": 1, "explain": "GPT-3 erschien 2020 und zeigte, dass ein Modell mit 175 Milliarden Parametern neue Aufgaben ohne Feintuning bewältigen kann."},
+    {"id": "q28", "topic": "guide", "q": "Welcher Mechanismus liegt dem Transformer zugrunde?", "options": ["Attention", "Faltung", "Rekursion", "Backpropagation"], "a": 0, "explain": "Attention lässt jedes Wort alle anderen im Satz gewichten, daher lässt sich das Training gut auf GPUs parallelisieren."},
+    {"id": "q29", "topic": "stage-6", "q": "Was ist ein GAN?", "options": ["Ein generative adversarial network", "Ein graph-analytisches Netzwerk", "Ein globales Zugangsnetzwerk", "Ein Algorithmusgenerator"], "a": 0, "explain": "Zwei Netze — ein Generator und ein Diskriminator — trainieren gegeneinander. Ian Goodfellow und Kollegen schlugen die Idee 2014 vor."},
+    {"id": "q30", "topic": "timeline", "q": "Wie viele Etappen der KI-Entwicklung nennt die Arbeit?", "options": ["Vier", "Sechs", "Acht", "Zehn"], "a": 2, "explain": "Eine didaktische Periodisierung: Die Grenzen sind ungefähr, die Ansätze bestehen nebeneinander. Öffnen Sie eine Etappe für Ereignisse und Quellen."}
+  ]
+};
+
+</script>
+<script>
+window.I18N = window.I18N || {};
 window.I18N.pl = {
   "meta": {
     "title": "Historia rozwoju sztucznej inteligencji — interaktywny serwis edukacyjny",
@@ -2610,6 +3040,8 @@ window.I18N.pl = {
     "res_good_x": "Poprawne odpowiedzi: {n} z {total}. Kolejna próba to już inne pięć pytań z trzydziestu.",
     "res_low_t": "Warto powtórzyć",
     "res_low_x": "Poprawne odpowiedzi: {n} z {total}. Przejrzyj chronologię i spróbuj ponownie — pytania będą inne.",
+    "best_label": "Najlepszy wynik: {n} z {total}",
+    "best_new": "Nowy rekord: {n} z {total}",
     "about_title": "O autorze projektu",
     "about_lead": "Serwis powstał jako praktyczna część projektu indywidualnego na temat „Badanie historii rozwoju sztucznej inteligencji: główne etapy”.",
     "about_text": "Osiem etapów to dydaktyczny schemat autora. Oczekiwania i ograniczenia wpływały na zainteresowanie metodami, ale nie tworzą uniwersalnego cyklu. AI symboliczna trwa, a transformery należą do głębokiego uczenia.",
@@ -3022,6 +3454,8 @@ window.I18N.zh = {
     "res_good_x": "答对 {n} / {total} 题。下一轮将从30道题中换另外五道。",
     "res_low_t": "值得复习",
     "res_low_x": "答对 {n} / {total} 题。请浏览时间轴后再试，题目会换新的。",
+    "best_label": "最好成绩：{n}/{total}",
+    "best_new": "新纪录：{n}/{total}",
     "about_title": "关于项目作者",
     "about_lead": "本网站是个人项目《人工智能发展史研究：主要阶段》的实践成果。",
     "about_text": "八个阶段是作者采用的教学框架。期望与局限会影响研究兴趣，但并不存在普遍适用的循环。符号人工智能仍在发展，Transformer 属于深度学习。",
@@ -3393,6 +3827,7 @@ window.I18N.zh = {
   var LANGS = [
     { id: "ru", code: "RU", name: "Русский" },
     { id: "en", code: "EN", name: "English" },
+    { id: "de", code: "DE", name: "Deutsch" },
     { id: "pl", code: "PL", name: "Polski" },
     { id: "zh", code: "ZH", name: "简体中文" }
   ];
@@ -3444,6 +3879,7 @@ window.I18N.zh = {
     var primary = (navigator.languages && navigator.languages[0]) || navigator.language || "";
     var code = String(primary).toLowerCase();
     if (code.indexOf("zh") === 0) return "zh";
+    if (code.indexOf("de") === 0) return "de";
     if (code.indexOf("pl") === 0) return "pl";
     if (code.indexOf("ru") === 0) return "ru";
     return "en";
@@ -3759,6 +4195,12 @@ window.I18N.zh = {
   var quizRestart = document.getElementById("quizRestart");
 
   var QUIZ_SIZE = 5;
+  var resultBest = document.getElementById("resultBest");
+  var BEST_KEY = "quiz-best";
+  var bestScore = 0;
+  var bestIsNew = false;
+  try { bestScore = parseInt(localStorage.getItem(BEST_KEY), 10) || 0; } catch (e) { bestScore = 0; }
+  if (!(bestScore >= 0 && bestScore <= QUIZ_SIZE)) bestScore = 0;
   var current = 0, score = 0, answered = false, lastPick = -1, finished = false;
   var roundQuestions = [];
   var lastRoundIdx = [];
@@ -3856,6 +4298,15 @@ window.I18N.zh = {
   function fillResult() {
     var d = D();
     renderReview();
+    if (resultBest) {
+      if (bestScore > 0) {
+        resultBest.textContent = fmt(bestIsNew ? d.ui.best_new : d.ui.best_label, bestScore, QUIZ_SIZE);
+        resultBest.classList.toggle("new", bestIsNew);
+      } else {
+        resultBest.textContent = "";
+        resultBest.classList.remove("new");
+      }
+    }
     var pct = Math.round(score / QUIZ_SIZE * 100);
     resultRing.style.setProperty("--pct", pct + "%");
     resultScore.textContent = score + "/" + QUIZ_SIZE;
@@ -3873,6 +4324,11 @@ window.I18N.zh = {
 
   function showResult() {
     finished = true;
+    bestIsNew = score > bestScore;
+    if (bestIsNew) {
+      bestScore = score;
+      try { localStorage.setItem(BEST_KEY, String(bestScore)); } catch (e) {}
+    }
     quizPlay.style.display = "none";
     quizResult.classList.add("show");
     fillResult();

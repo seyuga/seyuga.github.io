@@ -75,7 +75,7 @@ async function initialize(){
  }catch{}
  primary=base;
  if(!base&&fallback){base=fallback;usingFallback=true}
- if(!base){$('connection').hidden=false;$('message').textContent='Ожидаем запущенный радар на ПК…'}
+ if(!base){$('connection').hidden=true;$('message').textContent='Ищем запущенный радар на ПК…'}
  else{$('connection').hidden=true;$('endpoint').value=base}
 }
 $('settings').onclick=()=>{$('connection').hidden=!$('connection').hidden};

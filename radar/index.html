@@ -44,9 +44,10 @@ const store=(k,v)=>{try{localStorage.setItem(k,v)}catch{}},read=k=>{try{return l
 names=read('shawyNames')==='true';health=read('shawyHealth')==='true';alliesVisible=read('shawyAllies')!=='false';enemiesVisible=read('shawyEnemies')!=='false';
 let allyColors=read('shawyAllyColors')==='true';
 let bombMarkerScale=.86,bombSiteScale=1,playerTextScale=Number(read('shawyPlayerTextScale'))||1;
-groundWeaponsVisible=read('shawyGroundWeapons')!=='false';playerWeaponsVisible=read('shawyPlayerWeapons')==='true';
-const validWeaponMode=value=>['both','icon','text'].includes(value)?value:'both',readWeaponScale=(key,fallback)=>{const saved=read(key);if(saved===null||saved==='')return fallback;const n=Number(saved);return Number.isFinite(n)?Math.max(.7,Math.min(2,n)):fallback};
+groundWeaponsVisible=true;playerWeaponsVisible=read('shawyPlayerWeapons')==='true';
+const validWeaponMode=value=>['off','both','icon','text'].includes(value)?value:'both',readWeaponScale=(key,fallback)=>{const saved=read(key);if(saved===null||saved==='')return fallback;const n=Number(saved);return Number.isFinite(n)?Math.max(.7,Math.min(2,n)):fallback};
 let groundWeaponMode=validWeaponMode(read('shawyGroundWeaponMode')),playerWeaponMode=validWeaponMode(read('shawyPlayerWeaponMode'));
+groundWeaponsVisible=groundWeaponMode!=='off';if(read('shawyPlayerWeaponMode')!==null)playerWeaponsVisible=playerWeaponMode!=='off';
 let groundWeaponIconScale=readWeaponScale('shawyGroundWeaponIconScale',1.2),groundWeaponTextScale=readWeaponScale('shawyGroundWeaponTextScale',1),playerWeaponIconScale=readWeaponScale('shawyPlayerWeaponIconScale',1.2),playerWeaponTextScale=readWeaponScale('shawyPlayerWeaponTextScale',1);
 function endpoint(value){const u=new URL(value);if(u.hash){const v=new URLSearchParams(u.hash.slice(1)).get('connect');if(v)return endpoint(v)}if(u.protocol!=='https:'&&!['127.0.0.1','localhost'].includes(u.hostname))throw Error('Требуется HTTPS-ссылка');return u.origin+u.pathname.replace(/\/$/,'')}
 const signalTimeout=ms=>{if(typeof AbortSignal!=='undefined'&&typeof AbortSignal.timeout==='function')return AbortSignal.timeout(ms);const controller=new AbortController();setTimeout(()=>controller.abort(),ms);return controller.signal};
@@ -200,6 +201,7 @@ const weaponImageCache=new Map();
 function weaponIconKey(value){let normalized=String(value||'').toLowerCase().replace(/^weapon[_\s-]*/,'').replace(/[^a-z0-9а-яё]/g,'');return weaponIconAliases[normalized]||((normalized.startsWith('knife')||normalized==='bayonet')?'knife':'world')}
 function tintedWeaponImage(key,color){const cacheKey=key+'|'+color;let entry=weaponImageCache.get(cacheKey);if(entry)return entry.canvas;entry={canvas:null,loading:true};weaponImageCache.set(cacheKey,entry);const image=new Image();image.onload=()=>{const canvas=document.createElement('canvas');canvas.width=image.naturalWidth||128;canvas.height=image.naturalHeight||128;const iconContext=canvas.getContext('2d');iconContext.drawImage(image,0,0,canvas.width,canvas.height);iconContext.globalCompositeOperation='source-in';iconContext.fillStyle=color;iconContext.fillRect(0,0,canvas.width,canvas.height);entry.canvas=canvas;entry.loading=false};image.onerror=()=>{entry.loading=false;entry.failed=true};image.src='./weapon-icons/'+key+'.svg';return null}
 function drawWeaponDisplay(item,x,y,z,mode,iconScale,textScale,iconColor,textColor){
+ if(mode==='off')return;
  const showIcon=mode!=='text',showText=mode!=='icon',zoomScale=Math.max(.25,Number(z)||1),key=weaponIconKey(item.weapon_id||item.name),pistols=['deagle','revolver','glock','hkp2000','usp_silencer','p250','fiveseven','tec9','cz75a','elite','taser'],grenades=['flashbang','smokegrenade','hegrenade','molotov','incgrenade','decoy','taggrenade','healthshot'],iconSize=24*iconScale*(pistols.includes(key)?.67:grenades.includes(key)?.58:1)/zoomScale,label=String(item.name||'Оружие');
  ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';ctx.font=(10.5*textScale/zoomScale)+'px Unbounded,system-ui,sans-serif';
  const textWidth=showText?ctx.measureText(label).width:0,gap=showIcon&&showText?5/zoomScale:0,totalWidth=(showIcon?iconSize:0)+gap+textWidth;let left=x-totalWidth/2;
@@ -234,8 +236,8 @@ function syncWeaponControls(kind){
  const select=$(kind+'-weapon-mode'),mode=select.value,enabled=mode!=='off';$(kind+'-weapon-sizes').hidden=!enabled;
  const icon=kind==='ground'?groundIconControl:playerIconControl,text=kind==='ground'?groundTextControl:playerTextControl;
  icon.hidden=!enabled||mode==='text';text.hidden=!enabled||mode==='icon';
- if(kind==='ground'){groundWeaponsVisible=enabled;if(enabled)groundWeaponMode=mode;store('shawyGroundWeapons',String(enabled));if(enabled)store('shawyGroundWeaponMode',mode)}
- else{playerWeaponsVisible=enabled;if(enabled)playerWeaponMode=mode;store('shawyPlayerWeapons',String(enabled));if(enabled)store('shawyPlayerWeaponMode',mode);if(state?.ok)renderRoster(state)}
+  if(kind==='ground'){groundWeaponsVisible=enabled;groundWeaponMode=mode;store('shawyGroundWeapons',String(enabled));store('shawyGroundWeaponMode',mode)}
+  else{playerWeaponsVisible=enabled;playerWeaponMode=mode;store('shawyPlayerWeapons',String(enabled));store('shawyPlayerWeaponMode',mode);if(state?.ok)renderRoster(state)}
 }
 $('ground-weapon-mode').onchange=()=>syncWeaponControls('ground');
 $('player-weapon-mode').onchange=()=>syncWeaponControls('player');

@@ -52,7 +52,7 @@ header{padding:12px 24px 8px}.brand-app{font-size:30px!important}.brand-app img{
 #fullscreen{margin-top:2px;text-align:center}
 .radar{width:min(100%,760px,calc(100svh - 200px));max-height:calc(100svh - 190px);aspect-ratio:1}
 button,button:hover,button:active,.controls button:hover,.controls button:active{transform:none!important;transition:none!important}
-body.hide-bomb-countdown .bomb-countdown{display:none!important}
+.bomb-countdown{transform:scale(var(--bomb-countdown-scale,1));transform-origin:top right}body.hide-bomb-countdown .bomb-countdown{display:none!important}
 @media(max-width:1050px){main.layout{grid-template-columns:245px minmax(0,1fr) 205px;gap:12px;padding:12px}.radar{width:min(100%,calc(100svh - 180px))}}
 @media(max-width:760px){header{padding:10px 14px 6px}.brand-app{font-size:25px!important}.brand-app img{width:54px!important;height:42px!important}main.layout{display:grid;grid-template-columns:1fr;gap:10px;padding:10px 12px 18px}.map-area{order:0}.radar{width:min(100%,calc(100vw - 24px));max-height:none}.left-panel{position:static;order:1;width:100%;max-height:none;overflow:visible}.controls{display:grid;grid-template-columns:1fr 1fr;align-items:start}.zoom-row{grid-column:1/-1}.settings-section{min-width:0}.right-panel{order:2;width:100%;display:grid;grid-template-columns:1fr 1fr}.players-card{grid-column:1/-1}}
 @media(max-width:420px){.controls{grid-template-columns:1fr}.zoom-row{grid-column:1}.right-panel{grid-template-columns:1fr}.players-card{grid-column:1}.setting-sliders.two{grid-template-columns:1fr 1fr}}
@@ -66,11 +66,11 @@ body.hide-bomb-countdown .bomb-countdown{display:none!important}
 <div class="toggle-grid"><button id="names" class="toggle off" aria-pressed="false">Имена</button><button id="health" class="toggle off" aria-pressed="false">Здоровье</button><button id="ally-colors" class="toggle off" aria-pressed="false">Цвета союзников</button></div>
 <div class="setting-block"><span>Размер маркера и подписей</span><div id="player-size-controls" class="setting-sliders"></div></div>
 </div></details>
-<details class="settings-section" id="ground-weapon-details" open><summary>Оружие на земле</summary><div class="settings-body" id="ground-weapon-config">
-<button id="ground-weapons" class="toggle on" aria-pressed="true">Показывать</button>
+<div class="settings-section ground-settings"><div class="settings-head"><strong>Оружие на земле</strong><button id="ground-weapons" class="toggle on" aria-pressed="true">Включено</button></div>
+<details id="ground-weapon-details" open><summary>Настройки</summary><div class="settings-body" id="ground-weapon-config">
 <label>Вид<select id="ground-weapon-mode"><option value="both">Иконка + название</option><option value="icon">Только иконка</option><option value="text">Только название</option></select></label>
 <div class="setting-block"><span>Размер иконки и названия</span><div id="ground-weapon-sizes" class="setting-sliders two"></div></div>
-</div></details>
+</div></details></div>
 <details class="settings-section"><summary>Оружие игроков</summary><div class="settings-body">
 <button id="player-weapons" class="toggle off" aria-pressed="false">Показывать оружие</button>
 <label>Вид<select id="player-weapon-mode"><option value="both">Иконка + название</option><option value="icon">Только иконка</option><option value="text">Только название</option></select></label>
@@ -90,7 +90,7 @@ const viewer=Array.from(crypto.getRandomValues(new Uint8Array(16)),x=>x.toString
 const store=(k,v)=>{try{localStorage.setItem(k,v)}catch{}},read=k=>{try{return localStorage.getItem(k)}catch{return null}};
 let allyColors=read('shawyAllyColors')==='true';
 let bombVisible=read('shawyBombVisible')!=='false',bombSitesVisible=read('shawyBombSitesVisible')!=='false',bombCountdownVisible=read('shawyBombCountdownVisible')!=='false';
-let bombMarkerScale=Number(read('shawyBombMarkerScale'))||1,bombSiteScale=Number(read('shawyBombSiteScale'))||1,playerTextScale=Number(read('shawyPlayerTextScale'))||1;
+let bombMarkerScale=Number(read('shawyBombMarkerScale'))||1,bombSiteScale=Number(read('shawyBombSiteScale'))||1,bombCountdownScale=Number(read('shawyBombCountdownScale'))||1,playerTextScale=Number(read('shawyPlayerTextScale'))||1;
 groundWeaponsVisible=read('shawyGroundWeapons')!=='false';playerWeaponsVisible=read('shawyPlayerWeapons')==='true';
 const validWeaponMode=value=>['both','icon','text'].includes(value)?value:'both',readWeaponScale=(key,fallback)=>{const saved=read(key);if(saved===null||saved==='')return fallback;const n=Number(saved);return Number.isFinite(n)?Math.max(.7,Math.min(2,n)):fallback};
 let groundWeaponMode=validWeaponMode(read('shawyGroundWeaponMode')),playerWeaponMode=validWeaponMode(read('shawyPlayerWeaponMode'));
@@ -154,7 +154,7 @@ function renderRoster(next){
 setToggle('ally-colors',allyColors);$('ally-colors').onclick=()=>{allyColors=!allyColors;store('shawyAllyColors',String(allyColors));setToggle('ally-colors',allyColors);if(state?.ok)renderRoster(state)};
 $('names').onclick=()=>{names=!names;setToggle('names',names)};setToggle('names',names);
 $('health').onclick=()=>{health=!health;setToggle('health',health);if(state?.ok)renderRoster(state)};
-$('ground-weapons').onclick=()=>{groundWeaponsVisible=!groundWeaponsVisible;store('shawyGroundWeapons',String(groundWeaponsVisible));setToggle('ground-weapons',groundWeaponsVisible);$('ground-weapon-details').open=groundWeaponsVisible;$('ground-weapon-config').hidden=!groundWeaponsVisible};
+$('ground-weapons').onclick=()=>{groundWeaponsVisible=!groundWeaponsVisible;store('shawyGroundWeapons',String(groundWeaponsVisible));setToggle('ground-weapons',groundWeaponsVisible);$('ground-weapons').textContent=groundWeaponsVisible?'Включено':'Выключено';$('ground-weapon-details').open=groundWeaponsVisible;$('ground-weapon-config').hidden=!groundWeaponsVisible};
 $('player-weapons').onclick=()=>{playerWeaponsVisible=!playerWeaponsVisible;store('shawyPlayerWeapons',String(playerWeaponsVisible));setToggle('player-weapons',playerWeaponsVisible);if(state?.ok)renderRoster(state)};
 $('show-bomb').onclick=()=>{bombVisible=!bombVisible;store('shawyBombVisible',String(bombVisible));setToggle('show-bomb',bombVisible)};
 $('show-sites').onclick=()=>{bombSitesVisible=!bombSitesVisible;store('shawyBombSitesVisible',String(bombSitesVisible));setToggle('show-sites',bombSitesVisible)};
@@ -162,7 +162,7 @@ $('show-bomb-countdown').onclick=()=>{bombCountdownVisible=!bombCountdownVisible
 setToggle('show-bomb',bombVisible);setToggle('show-sites',bombSitesVisible);setToggle('show-bomb-countdown',bombCountdownVisible);document.body.classList.toggle('hide-bomb-countdown',!bombCountdownVisible);
 
 setToggle('allies',alliesVisible);setToggle('enemies',enemiesVisible);setToggle('health',health);setToggle('ground-weapons',groundWeaponsVisible);setToggle('player-weapons',playerWeaponsVisible);
-$('ground-weapon-details').open=groundWeaponsVisible;$('ground-weapon-config').hidden=!groundWeaponsVisible;$('ground-weapon-mode').value=groundWeaponMode;$('player-weapon-mode').value=playerWeaponMode;
+$('ground-weapons').textContent=groundWeaponsVisible?'Включено':'Выключено';$('ground-weapon-details').open=groundWeaponsVisible;$('ground-weapon-config').hidden=!groundWeaponsVisible;$('ground-weapon-mode').value=groundWeaponMode;$('player-weapon-mode').value=playerWeaponMode;
 $('ground-weapon-mode').onchange=()=>{groundWeaponMode=validWeaponMode($('ground-weapon-mode').value);store('shawyGroundWeaponMode',groundWeaponMode)};
 $('player-weapon-mode').onchange=()=>{playerWeaponMode=validWeaponMode($('player-weapon-mode').value);store('shawyPlayerWeaponMode',playerWeaponMode)};
 $('allies').onclick=()=>{alliesVisible=!alliesVisible;setToggle('allies',alliesVisible);if(state?.ok)renderRoster(state)};
@@ -294,6 +294,8 @@ appearanceSlider('Иконка','shawyPlayerWeaponIconScale',.7,2,.1,playerWeapo
 appearanceSlider('Название','shawyPlayerWeaponTextScale',.7,2,.1,playerWeaponTextScale,n=>playerWeaponTextScale=n,$('player-weapon-sizes'));
 appearanceSlider('Бомба','shawyBombMarkerScale',.55,1.8,.05,bombMarkerScale,n=>bombMarkerScale=n,$('bomb-size-controls'));
 appearanceSlider('Точки A/B','shawyBombSiteScale',.7,1.8,.05,bombSiteScale,n=>bombSiteScale=n,$('bomb-size-controls'));
+appearanceSlider('Таймер','shawyBombCountdownScale',.7,1.8,.05,bombCountdownScale,n=>{bombCountdownScale=n;document.documentElement.style.setProperty('--bomb-countdown-scale',n)},$('bomb-size-controls'));
+document.documentElement.style.setProperty('--bomb-countdown-scale',bombCountdownScale);
 let earlySnapshotPending=false,earlySnapshotNext=0;
 async function showFirstSnapshot(){
  if(!base||transport!=='rtc'||earlySnapshotPending||performance.now()<earlySnapshotNext||(rtcLast&&performance.now()-rtcLast<6000))return;

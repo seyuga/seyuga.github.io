@@ -97,7 +97,7 @@ function renderRoster(next){
  $('roster').replaceChildren(...next.players.filter(p=>p.team===next.local.team?alliesVisible:enemiesVisible).map(p=>{
   const row=document.createElement('div');row.className='person';
   const dot=document.createElement('i');dot.className='dot'+(p.team===next.local.team?(next.local.team===2?' t':''):' enemy');
-  const palette=['#e6c448','#bd72df','#71c765','#60a9ef','#f49740'];if(p.team===next.local.team&&allyColors&&Number.isInteger(p.teammate_color)&&p.teammate_color>=0&&p.teammate_color<palette.length)dot.style.backgroundColor=palette[p.teammate_color];
+  const palette=['#88cef5','#009e80','#f1e441','#e6802a','#bd2c96'];if(p.team===next.local.team&&allyColors&&Number.isInteger(p.teammate_color)&&p.teammate_color>=0&&p.teammate_color<palette.length)dot.style.backgroundColor=palette[p.teammate_color];
   const name=document.createElement('span');name.className='name';name.textContent=p.name;name.style.color=p.team===3?'#6ba5ff':'#f3a949';
   const hp=document.createElement('small');hp.className='health-value';hp.textContent=p.hp+' HP';hp.hidden=!health;
   const weapon=document.createElement('small');weapon.className='weapon';weapon.textContent=p.weapon||'';weapon.style.color=p.team===3?'#6ba5ff':'#f3a949';weapon.hidden=!playerWeaponsVisible||!p.weapon;
@@ -183,7 +183,7 @@ function drawBombSites(map,size,z){const sites=bombSites[normalizeMap(map)];if(!
 let selectedPlayer=null,playerHits=[];
 function marker(x,y,p,self,z,localTeam){
  ctx.save();ctx.translate(x,y);ctx.scale(1/z,1/z);
- const enemy=!self&&p.team!==localTeam,palette=['#e6c448','#bd72df','#71c765','#60a9ef','#f49740'],color=enemy?'#fa2020':(!self&&allyColors&&Number.isInteger(p.teammate_color)&&p.teammate_color>=0&&p.teammate_color<palette.length)?palette[p.teammate_color]:localTeam===3?'#00d1f3':'#ffda19';
+ const enemy=!self&&p.team!==localTeam,palette=['#88cef5','#009e80','#f1e441','#e6802a','#bd2c96'],color=enemy?'#fa2020':(!self&&allyColors&&Number.isInteger(p.teammate_color)&&p.teammate_color>=0&&p.teammate_color<palette.length)?palette[p.teammate_color]:localTeam===3?'#00d1f3':'#ffda19';
  if((self&&selectedPlayer===null)||(!self&&p.id===selectedPlayer)){ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180);const beam=ctx.createRadialGradient(0,0,2,0,0,65);beam.addColorStop(0,'rgba(238,244,250,.22)');beam.addColorStop(.45,'rgba(225,235,245,.13)');beam.addColorStop(1,'rgba(225,235,245,0)');ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,65,-.65,.65);ctx.closePath();ctx.fillStyle=beam;ctx.fill();ctx.restore()}
  if(enemy){ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(0,-5.8);ctx.lineTo(8,0);ctx.lineTo(0,5.8);ctx.lineTo(-8,0);ctx.closePath();ctx.fill()}
  else{

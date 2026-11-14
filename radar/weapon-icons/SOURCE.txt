@@ -1,0 +1,2 @@
+Источник SVG-иконок CS2: https://github.com/Juknum/counter-strike-icons
+Значки извлечены из игровых ресурсов Counter-Strike 2; права на оригинальные игровые материалы принадлежат Valve.

@@ -184,7 +184,7 @@ function marker(x,y,p,self,z,localTeam){
  if(selected&&radarArt.view.complete&&radarArt.view.naturalWidth){ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180+Math.PI/2);ctx.drawImage(radarArt.view,-19.5,-25.5,39,33);ctx.restore()}
  if(enemy){ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(0,-5.8);ctx.lineTo(8,0);ctx.lineTo(0,5.8);ctx.lineTo(-8,0);ctx.closePath();ctx.fill()}
  else{
-  if(!selected&&radarArt.direction.complete&&radarArt.direction.naturalWidth){ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180+Math.PI/2);ctx.drawImage(radarArt.direction,-5.95,-11.2,11.9,11.2);ctx.restore()}
+  if(!selected&&radarArt.direction.complete&&radarArt.direction.naturalWidth){ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180+Math.PI/2);ctx.drawImage(radarArt.direction,-5.95,-16.8,11.9,11.2);ctx.restore()}
   const dot=radarDot(color);if(dot)ctx.drawImage(dot,-5.65,-5.65,11.3,11.3)
  }
  if(p.has_bomb){ctx.save();ctx.scale(.72,.72);bombGlyph(0,0,enemy?'#f32122':'#ead781');ctx.restore()}

@@ -18,6 +18,7 @@ button,input,select{font:inherit}button{cursor:pointer;color:var(--text);border:
 .stat{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #ffffff10;color:var(--muted);font-size:10px}.stat strong{color:var(--text);font-size:14px}.stat small{font-size:9px}.secondary{width:100%;margin-top:15px}.roster{display:grid;gap:6px}.person{display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid #ffffff0c;font-size:10px}.person .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.person small{margin-left:auto}.dot{width:8px;height:8px;border-radius:50%;background:#00d1f3;flex:none}.dot.t{background:#ffda19}.dot.enemy{background:#fa2020}
 .bomb-countdown{position:absolute;right:12px;top:12px;z-index:4;display:flex;gap:8px;align-items:center;padding:8px 11px;background:#431e25;border:1px solid #ed5959;border-radius:10px;font-size:9px}.bomb-countdown strong{font-size:17px;color:#ff8b7f}#connection{position:fixed;z-index:20;inset:0;margin:0;padding:20px;display:grid;place-items:center;background:#03070cbf}#connection>div{width:min(100%,520px);padding:24px;border:1px solid var(--line);border-radius:16px;background:#101a28}#close-connection{float:right;padding:3px 9px;font-size:18px}#connection h1{font-size:18px}#connection p,#connection label{font-size:10px;color:var(--muted)}#endpoint{width:100%;margin:8px 0;padding:11px;border:1px solid var(--line);border-radius:9px;background:#0a111b;color:white}.primary{margin-top:12px;background:#386aff;border-color:#386aff}
 .radar:fullscreen,.radar:-webkit-full-screen,.radar.pseudo-fullscreen{width:100vw!important;height:100vh!important;max-width:none;max-height:none;border:0;border-radius:0}.radar.pseudo-fullscreen{position:fixed;inset:0;z-index:10000}.fullscreen-exit{display:none;position:absolute;z-index:10;right:14px;top:14px;font-size:20px}.radar:fullscreen .fullscreen-exit,.radar:-webkit-full-screen .fullscreen-exit,.radar.pseudo-fullscreen .fullscreen-exit{display:block}.radar:fullscreen .bomb-countdown,.radar:-webkit-full-screen .bomb-countdown,.radar.pseudo-fullscreen .bomb-countdown{right:72px}
+@media(max-width:850px) and (pointer:coarse){.radar:fullscreen::before,.radar:-webkit-full-screen::before,.radar.pseudo-fullscreen::before,.radar:fullscreen::after,.radar:-webkit-full-screen::after,.radar.pseudo-fullscreen::after{content:"";position:absolute;left:0;right:0;height:5px;z-index:8;pointer-events:none;border-radius:3px;background:linear-gradient(90deg,#bafaff,#49d9ff 28%,#386aff 72%,#bafaff);box-shadow:0 0 14px #386aff,0 0 4px #ecffff}.radar:fullscreen::before,.radar:-webkit-full-screen::before,.radar.pseudo-fullscreen::before{top:max(0px,calc(50dvh - min(50vw,50dvh)))}.radar:fullscreen::after,.radar:-webkit-full-screen::after,.radar.pseudo-fullscreen::after{bottom:max(0px,calc(50dvh - min(50vw,50dvh)))}}
 @media(max-width:850px){.workspace{grid-template-columns:1fr;gap:18px}.radar{width:min(100%,750px,calc(100vw - 32px));max-height:none}.sidebar{width:min(100%,750px);margin:auto}.panel{max-height:none}.topbar{height:66px}}
 @media(max-width:430px){.workspace{padding:14px 12px 24px}.map-header h1{font-size:16px}.route-status{font-size:8px}.radar{width:100%}.map-tools{width:100%}.map-tools #fullscreen{margin-left:auto}.panel{padding:16px}.tab{font-size:9px}.topbar{padding:10px 14px}.brand{gap:8px}.brand img{width:36px;height:30px}.brand b{font-size:13px;white-space:nowrap}.brand small{font-size:7px}.status-badge{max-width:130px}}
 </style></head><body>
@@ -173,14 +174,13 @@ let selectedPlayer=null,playerHits=[];
 function marker(x,y,p,self,z,localTeam){
  ctx.save();ctx.translate(x,y);ctx.scale(1/z,1/z);
  const enemy=!self&&p.team!==localTeam,palette=['#88cef5','#009e80','#f1e441','#e6802a','#bd2c96'],color=enemy?'#fa2020':(!self&&allyColors&&Number.isInteger(p.teammate_color)&&p.teammate_color>=0&&p.teammate_color<palette.length)?palette[p.teammate_color]:localTeam===3?'#00d1f3':'#ffda19';
- if((self&&selectedPlayer===null)||(!self&&p.id===selectedPlayer)){ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180);const beam=ctx.createRadialGradient(0,0,2,0,0,65);beam.addColorStop(0,'rgba(238,244,250,.22)');beam.addColorStop(.45,'rgba(225,235,245,.13)');beam.addColorStop(1,'rgba(225,235,245,0)');ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,65,-.65,.65);ctx.closePath();ctx.fillStyle=beam;ctx.fill();ctx.restore()}
  if(enemy){ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(0,-5.8);ctx.lineTo(8,0);ctx.lineTo(0,5.8);ctx.lineTo(-8,0);ctx.closePath();ctx.fill()}
   else{
-   ctx.fillStyle=color;ctx.beginPath();ctx.arc(0,0,5.4,0,Math.PI*2);ctx.fill();
+   ctx.fillStyle=color;ctx.beginPath();ctx.arc(0,0,5,0,Math.PI*2);ctx.fill();
    ctx.lineWidth=.9;ctx.strokeStyle='rgba(12,22,34,.82)';ctx.stroke();
    ctx.save();ctx.rotate(-(Number.isFinite(p.yaw)?p.yaw:0)*Math.PI/180);
-   ctx.beginPath();ctx.moveTo(-.6,-2.35);ctx.lineTo(11.8,0);ctx.lineTo(-.6,2.35);ctx.closePath();ctx.fillStyle='#fff';ctx.fill();
-   ctx.lineJoin='round';ctx.lineWidth=.8;ctx.strokeStyle='rgba(25,35,49,.88)';ctx.stroke();ctx.restore()
+   ctx.beginPath();ctx.moveTo(1,-2);ctx.lineTo(9,0);ctx.lineTo(1,2);ctx.closePath();ctx.fillStyle='#fff';ctx.fill();
+   ctx.lineJoin='round';ctx.lineWidth=.65;ctx.strokeStyle='rgba(25,35,49,.85)';ctx.stroke();ctx.restore()
   }
  if(p.has_bomb){ctx.save();ctx.scale(.72,.72);bombGlyph(0,0,enemy?'#f32122':'#ead781');ctx.restore()}
  ctx.restore()
@@ -211,7 +211,72 @@ function drawWeaponDisplay(item,x,y,z,mode,iconScale,textScale,iconColor,textCol
 }
 function drawGroundWeapon(x,y,item,z){drawWeaponDisplay(item,x,y,z,groundWeaponMode,groundWeaponIconScale,groundWeaponTextScale,'#f3bd4f','#fff0c4')}
 function drawPlayerWeapon(player,x,y,z){if(!player.weapon)return;const zoomScale=Math.max(.25,Number(z)||1),color=player.team===3?'#6ba5ff':'#f3a949';drawWeaponDisplay({name:player.weapon,weapon_id:player.weapon_id},x,y+14*markerScale/zoomScale,z,playerWeaponMode,playerWeaponIconScale,playerWeaponTextScale,color,color)}function drawLabel(parts,x,y,z,team){if(!parts.length)return;const label=parts.join(' · '),scale=playerTextScale/z;ctx.save();ctx.fillStyle=team===3?'#6ba5ff':'#f3a949';ctx.strokeStyle='#081019';ctx.font=9*scale+'px "Unbounded",system-ui,sans-serif';ctx.lineWidth=3*scale;ctx.strokeText(label,x+10*scale,y-10*scale);ctx.fillText(label,x+10*scale,y-10*scale);ctx.restore()}
-function draw(){requestAnimationFrame(draw);updateBombCountdown();playerHits=[];const dpr=Math.min(devicePixelRatio||1,2),size=canvas.clientWidth;if(canvas.width!==Math.round(size*dpr)||canvas.height!==Math.round(canvas.clientHeight*dpr)){canvas.width=Math.round(size*dpr);canvas.height=Math.round(canvas.clientHeight*dpr)}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.fillStyle=state?.ok?'#765b46':'#111c22';ctx.fillRect(0,0,size,canvas.clientHeight);if(!state?.ok)return;const age=Math.max(0,Date.now()+clockOffset-(state.time||0)*1000),stale=performance.now()-last>3000||(state.serverTime&&age>5000);if(performance.now()-lastUI>250){lastUI=performance.now();$('age').innerHTML=state.time?Math.round(age)+' <small>мс</small>':'—';$('stale').textContent=stale?'ДАННЫЕ УСТАРЕЛИ':usingFallback?'РЕЗЕРВНЫЙ КАНАЛ · LIVE':transport==='rtc'?(rtcLast&&performance.now()-rtcLast<6000?(rtcRoute?'WEBRTC · '+rtcRoute:'WEBRTC · LIVE'):'HTTPS · ПОДКЛЮЧАЕМ WEBRTC'):transport==='ws'?'WEBSOCKET · LIVE':hosted?'HTTPS · LIVE':'ПРЯМОЕ ПОДКЛЮЧЕНИЕ · LIVE';}if(stale){$('message').textContent='Данные устарели\nВосстанавливаем связь…';return}const t=Math.min(1,(performance.now()-last)/(transport==='rtc'?20:hosted?150:45)),old=previous?.ok&&previous.map===state.map?previous:null;const interpolate=(p,o)=>o?{...p,position:p.position.map((v,i)=>o.position[i]+(v-o.position[i])*t),yaw:mixYaw(o.yaw,p.yaw,t)}:p;const me=interpolate(state.local,old?.local),origin=me.position,ready=meta&&image?.complete&&image.naturalWidth>0;const pos=p=>ready?[(p[0]-meta.x)/meta.scale/1024*size,(meta.y-p[1])/meta.scale/1024*size]:[(p[0]-origin[0])/5000*size+size/2,-(p[1]-origin[1])/5000*size+size/2];const local=pos(origin),center=zoom>1?local:[size/2,size/2];ctx.save();ctx.translate(size/2,canvas.clientHeight/2);ctx.scale(zoom,zoom);ctx.translate(-center[0],-center[1]);if(ready){if(renderedMap){ctx.save();ctx.drawImage(renderedMap,0,0,size,size);ctx.restore()}else{ctx.save();ctx.drawImage(image,0,0,size,size);ctx.restore()}drawBombSites(state.map,size,zoom)}else{ctx.strokeStyle='#253844';ctx.lineWidth=1/zoom;for(let i=0;i<10;i++){ctx.beginPath();ctx.moveTo(i*size/10,0);ctx.lineTo(i*size/10,size);ctx.moveTo(0,i*size/10);ctx.lineTo(size,i*size/10);ctx.stroke()}}if(state.bomb?.position){const [bx,by]=pos(state.bomb.position);drawBomb(bx,by,state.bomb,me.team,zoom)}if(groundWeaponsVisible&&Array.isArray(state.weapons)){for(const item of state.weapons){if(!Array.isArray(item.position)||item.position.length<2)continue;const [wx,wy]=pos(item.position);drawGroundWeapon(wx,wy,item,zoom)}}const prior=new Map(old?.players.map(p=>[p.id,p])||[]);for(const p of state.players){const player=interpolate(p,prior.get(p.id)),enemy=player.team!==me.team,detailsVisible=enemy?enemiesVisible:alliesVisible;const [x,y]=pos(player.position);playerHits.push({id:player.id,x:size/2+zoom*(x-center[0]),y:canvas.clientHeight/2+zoom*(y-center[1])});marker(x,y,player,false,zoom,me.team);const parts=[];if(detailsVisible&&names)parts.push(player.name);if(detailsVisible&&health&&enemy)parts.push(player.hp+' HP');drawLabel(parts,x,y,zoom,player.team);if(detailsVisible&&playerWeaponsVisible&&player.weapon)drawPlayerWeapon(player,x,y,zoom)}if(me.alive!==false){playerHits.push({id:null,x:size/2+zoom*(local[0]-center[0]),y:canvas.clientHeight/2+zoom*(local[1]-center[1])});marker(local[0],local[1],me,true,zoom,me.team);if(playerWeaponsVisible&&me.weapon)drawPlayerWeapon(me,local[0],local[1],zoom)}updatePlayerIsland();ctx.restore();if(!ready&&mapStatus){ctx.fillStyle='#ffca84';ctx.font='12px "Unbounded",system-ui,sans-serif';ctx.fillText(mapStatus,12,44)}}
+function draw(){
+ requestAnimationFrame(draw);
+ updateBombCountdown();
+ playerHits=[];
+ const dpr=Math.min(devicePixelRatio||1,2),viewWidth=canvas.clientWidth,viewHeight=canvas.clientHeight;
+ const size=Math.max(1,Math.min(viewWidth,viewHeight)),offsetX=(viewWidth-size)/2,offsetY=(viewHeight-size)/2;
+ if(canvas.width!==Math.round(viewWidth*dpr)||canvas.height!==Math.round(viewHeight*dpr)){canvas.width=Math.round(viewWidth*dpr);canvas.height=Math.round(viewHeight*dpr)}
+ ctx.setTransform(dpr,0,0,dpr,0,0);
+ ctx.fillStyle=state?.ok?'#765b46':'#111c22';
+ ctx.fillRect(0,0,viewWidth,viewHeight);
+ if(!state?.ok)return;
+ const age=Math.max(0,Date.now()+clockOffset-(state.time||0)*1000);
+ const stale=performance.now()-last>3000||(state.serverTime&&age>5000);
+ if(performance.now()-lastUI>250){
+  lastUI=performance.now();
+  $('age').innerHTML=state.time?Math.round(age)+' <small>мс</small>':'—';
+  $('stale').textContent=stale?'ДАННЫЕ УСТАРЕЛИ':usingFallback?'РЕЗЕРВНЫЙ КАНАЛ · LIVE':transport==='rtc'?(rtcLast&&performance.now()-rtcLast<6000?(rtcRoute?'WEBRTC · '+rtcRoute:'WEBRTC · LIVE'):'HTTPS · ПОДКЛЮЧАЕМ WEBRTC'):transport==='ws'?'WEBSOCKET · LIVE':hosted?'HTTPS · LIVE':'ПРЯМОЕ ПОДКЛЮЧЕНИЕ · LIVE';
+ }
+ if(stale){$('message').textContent='Данные устарели\\nВосстанавливаем связь…';return}
+ const t=Math.min(1,(performance.now()-last)/(transport==='rtc'?20:hosted?150:45));
+ const old=previous?.ok&&previous.map===state.map?previous:null;
+ const interpolate=(p,o)=>o?{...p,position:p.position.map((v,i)=>o.position[i]+(v-o.position[i])*t),yaw:mixYaw(o.yaw,p.yaw,t)}:p;
+ const me=interpolate(state.local,old?.local),origin=me.position,ready=meta&&image?.complete&&image.naturalWidth>0;
+ const pos=p=>ready?[(p[0]-meta.x)/meta.scale/1024*size,(meta.y-p[1])/meta.scale/1024*size]:[(p[0]-origin[0])/5000*size+size/2,-(p[1]-origin[1])/5000*size+size/2];
+ const local=pos(origin);
+ const center=zoom>1?[local[0]+offsetX,local[1]+offsetY]:[viewWidth/2,viewHeight/2];
+ ctx.save();
+ ctx.translate(viewWidth/2,viewHeight/2);
+ ctx.scale(zoom,zoom);
+ ctx.translate(-center[0],-center[1]);
+ ctx.translate(offsetX,offsetY);
+ if(ready){
+  if(renderedMap)ctx.drawImage(renderedMap,0,0,size,size);
+  else ctx.drawImage(image,0,0,size,size);
+  drawBombSites(state.map,size,zoom);
+ }else{
+  ctx.strokeStyle='#253844';ctx.lineWidth=1/zoom;
+  for(let i=0;i<10;i++){ctx.beginPath();ctx.moveTo(i*size/10,0);ctx.lineTo(i*size/10,size);ctx.moveTo(0,i*size/10);ctx.lineTo(size,i*size/10);ctx.stroke()}
+ }
+ if(state.bomb?.position){const [bx,by]=pos(state.bomb.position);drawBomb(bx,by,state.bomb,me.team,zoom)}
+ if(groundWeaponsVisible&&Array.isArray(state.weapons)){
+  for(const item of state.weapons){if(!Array.isArray(item.position)||item.position.length<2)continue;const [wx,wy]=pos(item.position);drawGroundWeapon(wx,wy,item,zoom)}
+ }
+ const screenPoint=(x,y)=>({x:viewWidth/2+zoom*(x+offsetX-center[0]),y:viewHeight/2+zoom*(y+offsetY-center[1])});
+ const prior=new Map(old?.players.map(p=>[p.id,p])||[]);
+ for(const p of state.players){
+  const player=interpolate(p,prior.get(p.id)),enemy=player.team!==me.team,detailsVisible=enemy?enemiesVisible:alliesVisible;
+  const [x,y]=pos(player.position),hit=screenPoint(x,y);
+  playerHits.push({id:player.id,x:hit.x,y:hit.y});
+  marker(x,y,player,false,zoom,me.team);
+  const parts=[];
+  if(detailsVisible&&names)parts.push(player.name);
+  if(detailsVisible&&health&&enemy)parts.push(player.hp+' HP');
+  drawLabel(parts,x,y,zoom,player.team);
+  if(detailsVisible&&playerWeaponsVisible&&player.weapon)drawPlayerWeapon(player,x,y,zoom);
+ }
+ if(me.alive!==false){
+  const hit=screenPoint(local[0],local[1]);
+  playerHits.push({id:null,x:hit.x,y:hit.y});
+  marker(local[0],local[1],me,true,zoom,me.team);
+  if(playerWeaponsVisible&&me.weapon)drawPlayerWeapon(me,local[0],local[1],zoom);
+ }
+ updatePlayerIsland();
+ ctx.restore();
+ if(!ready&&mapStatus){ctx.fillStyle='#ffca84';ctx.font='12px "Unbounded",system-ui,sans-serif';ctx.fillText(mapStatus,12,44)}
+}
 function updatePlayerIsland(){const box=$('player-island');if(selectedPlayer===null){box.hidden=true;return}const p=state?.players?.find(v=>v.id===selectedPlayer);if(!p){selectedPlayer=null;box.hidden=true;return}box.hidden=false;$('view-name').textContent=p.name||'Игрок';$('view-name').style.color=p.team===3?'#6ba5ff':'#f3a949';$('view-hp').textContent=p.hp+' HP';$('view-armor').textContent=p.armor==null?'Броня: —':'Броня: '+p.armor;const weapon=$('view-weapon');weapon.textContent=p.weapon||'';weapon.hidden=!playerWeaponsVisible||!p.weapon}
 canvas.addEventListener('click',e=>{const rect=canvas.getBoundingClientRect(),x=(e.clientX-rect.left)*canvas.clientWidth/rect.width,y=(e.clientY-rect.top)*canvas.clientHeight/rect.height;let best=null,distance=24;for(const hit of playerHits){const d=Math.hypot(x-hit.x,y-hit.y);if(d<distance){best=hit;distance=d}}if(best){selectedPlayer=best.id;updatePlayerIsland()}});$('view-reset').onclick=()=>{selectedPlayer=null;updatePlayerIsland()};
 window.addEventListener('hashchange',()=>{if(new URLSearchParams(location.hash.slice(1)).has('connect'))location.reload()});

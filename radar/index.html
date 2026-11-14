@@ -42,7 +42,7 @@ const hosted=/^\/radar(?:\/|$)/.test(location.pathname),localHost=['127.0.0.1','
 let base=hosted?'':location.pathname.replace(/\/$/,''),transport='http',state=null,previous=null,last=0,zoom=1,names=false,health=false,alliesVisible=true,enemiesVisible=true,meta=null,image=null,renderedMap=null,loadingMap='',mapStatus='',socket=null,retryAt=0,clockOffset=0,bestRTT=Infinity,rtt=null,generation=0,lastRoster=0,lastSocketPacket=0,lastUI=0,groundWeaponsVisible=false,playerWeaponsVisible=false,primary='',fallback='',failures=0,usingFallback=false;
 const viewer=Array.from(crypto.getRandomValues(new Uint8Array(16)),x=>x.toString(16).padStart(2,'0')).join(''),options=new URLSearchParams(location.hash.slice(1));
 const store=(k,v)=>{try{localStorage.setItem(k,v)}catch{}},read=k=>{try{return localStorage.getItem(k)}catch{return null}};
-groundWeaponsVisible=read('shawyGroundWeapons')==='true';playerWeaponsVisible=read('shawyPlayerWeapons')==='true';
+groundWeaponsVisible=read('shawyGroundWeapons')!=='false';playerWeaponsVisible=read('shawyPlayerWeapons')==='true';
 function endpoint(value){const u=new URL(value);if(u.hash){const v=new URLSearchParams(u.hash.slice(1)).get('connect');if(v)return endpoint(v)}if(u.protocol!=='https:'&&!['127.0.0.1','localhost'].includes(u.hostname))throw Error('Требуется HTTPS-ссылка');return u.origin+u.pathname.replace(/\/$/,'')}
 const signalTimeout=ms=>{if(typeof AbortSignal!=='undefined'&&typeof AbortSignal.timeout==='function')return AbortSignal.timeout(ms);const controller=new AbortController();setTimeout(()=>controller.abort(),ms);return controller.signal};
 const request=(url,extra={})=>fetch(url,{cache:'no-store',credentials:'include',signal:signalTimeout(4500),...extra});
@@ -175,7 +175,7 @@ function marker(x,y,p,self,z,localTeam){
  ctx.save();ctx.translate(x,y);ctx.scale(1/z,1/z);
  const enemy=!self&&p.team!==localTeam,color=enemy?'#fa2020':localTeam===3?'#00d1f3':'#ffda19';
  if((self&&selectedPlayer===null)||(!self&&p.id===selectedPlayer)){ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180);const beam=ctx.createRadialGradient(0,0,2,0,0,65);beam.addColorStop(0,'rgba(238,244,250,.22)');beam.addColorStop(.45,'rgba(225,235,245,.13)');beam.addColorStop(1,'rgba(225,235,245,0)');ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,65,-.65,.65);ctx.closePath();ctx.fillStyle=beam;ctx.fill();ctx.restore()}
- if(p.has_bomb){ctx.save();ctx.translate(0,-15);ctx.scale(.72,.72);bombGlyph(0,0,enemy?'#f32122':'#ead781');ctx.restore()}
+ if(p.has_bomb){ctx.save();ctx.translate(0,-20);ctx.scale(.72,.72);bombGlyph(0,0,enemy?'#f32122':'#ead781');ctx.restore()}
  if(enemy){ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(0,-5.8);ctx.lineTo(8,0);ctx.lineTo(0,5.8);ctx.lineTo(-8,0);ctx.closePath();ctx.fill()}
  else{
   ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180);ctx.fillStyle='#fff';ctx.beginPath();ctx.moveTo(3,-4.3);ctx.quadraticCurveTo(7,-3.7,10.9,-1.1);ctx.quadraticCurveTo(12.4,0,10.9,1.1);ctx.quadraticCurveTo(7,3.7,3,4.3);ctx.closePath();ctx.fill();ctx.restore();
@@ -204,7 +204,7 @@ window.addEventListener('hashchange',()=>{if(new URLSearchParams(location.hash.s
 const setImageBeforeBackground=setImage;
 setImage=function(){setImageBeforeBackground();if(image?.src)document.querySelector('.radar').style.setProperty('--radar-background','url('+JSON.stringify(image.src)+')')};
 const fullscreenExit=document.createElement('button');fullscreenExit.className='fullscreen-exit';fullscreenExit.textContent='×';fullscreenExit.setAttribute('aria-label','Выйти из полноэкранного режима');fullscreenExit.onclick=()=>{if(document.fullscreenElement)document.exitFullscreen?.();else radarElement.classList.remove('pseudo-fullscreen')};document.querySelector('.radar').append(fullscreenExit);
-let markerScale=Math.max(.7,Math.min(1.8,Number(read('shawyMarkerScale'))||1.4));
+let markerScale=Math.max(.7,Math.min(1.8,Number(read('shawyMarkerScale'))||1.2));
 const originalMarker=marker;
 marker=function(x,y,p,self,z,team){ctx.save();ctx.translate(x,y);ctx.scale(markerScale,markerScale);originalMarker(0,0,p,self,z,team);ctx.restore()};
 function appearanceSlider(title,key,min,max,step,value,update){

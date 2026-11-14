@@ -185,10 +185,10 @@ function marker(x,y,p,self,z,localTeam){
  ctx.save();ctx.translate(x,y);ctx.scale(1/z,1/z);
  const enemy=!self&&p.team!==localTeam,palette=['#88cef5','#009e80','#f1e441','#e6802a','#bd2c96'],color=enemy?'#fa2020':(!self&&allyColors&&Number.isInteger(p.teammate_color)&&p.teammate_color>=0&&p.teammate_color<palette.length)?palette[p.teammate_color]:localTeam===3?'#00d1f3':'#ffda19';
  const selected=(self&&selectedPlayer===null)||(!self&&p.id===selectedPlayer);
- if(selected&&radarArt.view.complete&&radarArt.view.naturalWidth){ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180+Math.PI/2);if(radarArt.beam.complete&&radarArt.beam.naturalWidth){ctx.globalAlpha=.22;ctx.drawImage(radarArt.beam,-65,-65,130,65);ctx.globalAlpha=1}ctx.drawImage(radarArt.view,-19.5,-25.5,39,33);ctx.restore()}
+ if((selected||!enemy)&&radarArt.beam.complete&&radarArt.beam.naturalWidth){ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180+Math.PI/2);ctx.globalAlpha=selected?.22:.34;const length=selected?65:38;ctx.drawImage(radarArt.beam,-length,-length,length*2,length);ctx.restore()}
+ if(selected&&radarArt.view.complete&&radarArt.view.naturalWidth){ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180+Math.PI/2);ctx.drawImage(radarArt.view,-19.5,-25.5,39,33);ctx.restore()}
  if(enemy){const enemyIcon=enemyDot();if(enemyIcon)ctx.drawImage(enemyIcon,-8,-8,16,16)}
  else{
-  if(!selected&&radarArt.nose.complete&&radarArt.nose.naturalWidth){ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180+Math.PI/2);ctx.drawImage(radarArt.nose,-8,-12,16,16);ctx.restore()}
   const dot=radarDot(color);if(dot)ctx.drawImage(dot,-5.65,-5.65,11.3,11.3)
  }
  if(p.has_bomb){ctx.save();ctx.scale(.72,.72);bombGlyph(0,0,enemy?'#f32122':'#ead781');ctx.restore()}

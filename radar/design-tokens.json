@@ -1,0 +1,26 @@
+{
+  "palettes": [
+    {"name":"Lavender", "dark":"#9EA3FF", "light":"#5059BE"},
+    {"name":"Ocean Blue", "dark":"#80B9FF", "light":"#175FA6"},
+    {"name":"Emerald Green", "dark":"#65D6AC", "light":"#08684E"},
+    {"name":"Rose Pink", "dark":"#EEA9C8", "light":"#963B68"},
+    {"name":"Sunset Orange", "dark":"#FFC08A", "light":"#914B16"},
+    {"name":"Ruby Red", "dark":"#FF9B9D", "light":"#A13646"},
+    {"name":"Cyber Purple", "dark":"#CEAAFF", "light":"#7946AA"},
+    {"name":"Graphite", "dark":"#A9B7C7", "light":"#4F5D70"},
+    {"name":"Monochrome", "dark":"#DEDEDE", "light":"#474747"},
+    {"name":"Glacier", "dark":"#7BD9E2", "light":"#216770"},
+    {"name":"Olive", "dark":"#C3D689", "light":"#56671D"},
+    {"name":"Copper", "dark":"#ECB79C", "light":"#864A32"}
+  ],
+  "schemes": {
+    "dark": {"bg":"#131317", "surface":"#1B1B22", "text":"#EAE9F2", "border":"#484752", "success":"#82D7AA", "warning":"#F6C981", "error":"#FFA9AC"},
+    "light": {"bg":"#F6F5FA", "surface":"#FFFFFF", "text":"#22222B", "border":"#A5A4B0", "success":"#166845", "warning":"#895B17", "error":"#A03344"}
+  },
+  "density": {
+    "compact": {"space":12,"control":36,"native_control":32},
+    "comfortable": {"space":16,"control":44,"native_control":36},
+    "spacious": {"space":22,"control":50,"native_control":42}
+  },
+  "defaults": {"mode":"dark","radius":14,"density":"comfortable","opacity":100,"blur":6,"scale":100,"card":"tonal","motion":true}
+}

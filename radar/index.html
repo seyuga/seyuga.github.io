@@ -1,47 +1,45 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="referrer" content="no-referrer"><meta name="theme-color" content="#0b1016"><title>ShaWy radar v4.3 — live CS2</title><link rel="icon" href="./mark.svg?v=2" type="image/svg+xml">
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="referrer" content="no-referrer"><meta name="theme-color" content="#131317"><title>ShaWy radar v4.4 — CS2</title><link rel="icon" href="./mark.svg?v=2" type="image/svg+xml">
 <script>const assetBase=document.createElement("base");assetBase.href=location.origin+location.pathname.replace(/index\.html$/i,"").replace(/\/?$/,"/");document.head.append(assetBase)</script>
-<style>@font-face{font-family:Unbounded;src:url("./fonts/unbounded-cyrillic.woff2") format("woff2");font-style:normal;font-weight:200 900;font-display:swap;unicode-range:U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}@font-face{font-family:Unbounded;src:url("./fonts/unbounded-latin.woff2") format("woff2");font-style:normal;font-weight:200 900;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-</style><style>
-:root{color-scheme:dark;--bg:#090e17;--panel:#111b2a;--line:#27354a;--text:#edf3ff;--muted:#94a6c1;--accent:#386aff}
-*{box-sizing:border-box}body{margin:0;min-height:100svh;background:radial-gradient(ellipse at 36% 0,#14223a 0,transparent 52%),var(--bg);color:var(--text);font:13px/1.5 Unbounded,system-ui,sans-serif}
-button,input,select{font:inherit}button{cursor:pointer;color:var(--text);border:1px solid var(--line);background:#172334;border-radius:10px;padding:10px 12px}button:hover{border-color:#526b94;background:#1c2b40}button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid #7fa3ff;outline-offset:2px}[hidden]{display:none!important}
-.topbar{height:76px;display:flex;align-items:center;justify-content:space-between;padding:12px clamp(16px,3vw,38px);border-bottom:1px solid #ffffff0c;background:#0c1522e8;backdrop-filter:blur(12px)}
-.brand{display:flex;align-items:center;gap:12px}.brand img{width:64px;height:34px;object-fit:cover}.brand b{font-size:18px;letter-spacing:-.04em}.brand em{color:#628dff;font-style:normal}.brand small{display:block;font-size:8px;letter-spacing:.12em;color:var(--muted)}
-.status-badge{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:#aabbd0;font-size:9px;background:#111c2b}.status-badge:before{content:"";width:7px;height:7px;border-radius:50%;background:#ffc15a}.status-badge[data-phase=active]:before{background:#41d69e}.status-badge[data-phase=error]:before{background:#ff6673}
-.workspace{max-width:1640px;margin:auto;padding:22px clamp(16px,3vw,38px) 32px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:26px;align-items:start}
-.map-area{min-width:0}.map-header{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:14px}.map-header small,.panel-heading small{font-size:9px;letter-spacing:.14em;color:#788fad}.map-header h1,.panel-heading h2{font-size:20px;margin:3px 0 0;letter-spacing:-.04em}.route-status{font-size:9px;color:var(--muted);text-align:right}
-.radar{position:relative;width:min(100%,calc(100svh - 220px),850px);aspect-ratio:1;margin:auto;background:#0b131e;border:1px solid #2a3c54;border-radius:16px;overflow:hidden;box-shadow:0 18px 60px #0004}.radar canvas{display:block;width:100%;height:100%;touch-action:none}#message{position:absolute;inset:0;display:grid;place-items:center;text-align:center;white-space:pre-line;padding:25px;background:#0c1521e8;color:#b6c4d8;backdrop-filter:blur(5px)}#message:empty{display:none}
-.map-footer{width:min(100%,850px);margin:12px auto 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}.map-tools{display:flex;align-items:center;gap:7px}.map-tools button{padding:7px 12px}.map-tools span{font-size:10px;color:var(--muted)}.player-island{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:7px 10px;background:#111b2a;font-size:10px}.player-island button{padding:2px 6px}
-.sidebar{min-width:0;background:#101a28e8;border:1px solid #27364b;border-radius:16px;overflow:hidden;backdrop-filter:blur(10px);box-shadow:0 16px 45px #0003}
-.tabs{display:grid;grid-template-columns:1.4fr .9fr .8fr;gap:4px;padding:7px;border-bottom:1px solid var(--line)}.tab{padding:10px 4px;border:0;background:transparent;color:#8da0b9;font-size:10px}.tab.active{color:white;background:#25385b}.panel{padding:20px;max-height:calc(100svh - 160px);overflow:auto;scrollbar-width:thin}.panel-heading{margin-bottom:16px}.group{padding:17px 0;border-top:1px solid #ffffff10}.group h3{margin:0 0 10px;font-size:12px}.group p{margin:-5px 0 12px;color:var(--muted);font-size:10px}.group label{display:block;color:var(--muted);font-size:10px;margin:10px 0 6px}.group select,#transport{width:100%;border:1px solid #33445e;background:#172335;color:#f1f5ff;border-radius:9px;padding:10px;font-size:10px}.toggle-pair{display:grid;grid-template-columns:1fr 1fr;gap:7px}.toggle{font-size:10px;min-width:0;padding:9px 5px;color:#aebdd0}.toggle.on{background:#263e79;border-color:#386aff;color:white}.wide{grid-column:1/-1}.sliders{display:grid;gap:8px;margin-top:12px}.sliders:empty{display:none}.appearance-control{display:grid;gap:5px;color:#a6b7cc;font-size:10px}.appearance-control input{width:100%;margin:0;accent-color:#386aff}
-.stat{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #ffffff10;color:var(--muted);font-size:10px}.stat strong{color:var(--text);font-size:14px}.stat small{font-size:9px}.secondary{width:100%;margin-top:15px}.roster{display:grid;gap:6px}.person{display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid #ffffff0c;font-size:10px}.person .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.person small{margin-left:auto}.dot{width:8px;height:8px;border-radius:50%;background:#00d1f3;flex:none}.dot.t{background:#ffda19}.dot.enemy{background:#fa2020}
-.bomb-countdown{position:absolute;right:12px;top:12px;z-index:4;display:flex;gap:8px;align-items:center;padding:8px 11px;background:#431e25;border:1px solid #ed5959;border-radius:10px;font-size:9px}.bomb-countdown strong{font-size:17px;color:#ff8b7f}#connection{position:fixed;z-index:20;inset:0;margin:0;padding:20px;display:grid;place-items:center;background:#03070cbf}#connection>div{width:min(100%,520px);padding:24px;border:1px solid var(--line);border-radius:16px;background:#101a28}#close-connection{float:right;padding:3px 9px;font-size:18px}#connection h1{font-size:18px}#connection p,#connection label{font-size:10px;color:var(--muted)}#endpoint{width:100%;margin:8px 0;padding:11px;border:1px solid var(--line);border-radius:9px;background:#0a111b;color:white}.primary{margin-top:12px;background:#386aff;border-color:#386aff}
-.radar.fullscreen-active,.radar.pseudo-fullscreen{width:100vw!important;height:100vh!important;max-width:none;max-height:none;border:0;border-radius:0}.radar.pseudo-fullscreen{position:fixed;inset:0;z-index:10000}.fullscreen-exit{display:none;position:absolute;z-index:10;right:14px;top:14px;font-size:20px}.radar.fullscreen-active .fullscreen-exit,.radar.pseudo-fullscreen .fullscreen-exit{display:block}.radar.fullscreen-active .bomb-countdown,.radar.pseudo-fullscreen .bomb-countdown{right:72px}
-@media(max-width:850px) and (pointer:coarse){.radar.fullscreen-active::before,.radar.pseudo-fullscreen::before,.radar.fullscreen-active::after,.radar.pseudo-fullscreen::after{content:"";position:absolute;left:0;right:0;height:5px;z-index:8;pointer-events:none;border-radius:3px;background:linear-gradient(90deg,#bafaff,#49d9ff 28%,#386aff 72%,#bafaff);box-shadow:0 0 14px #386aff,0 0 4px #ecffff}.radar.fullscreen-active::before,.radar.pseudo-fullscreen::before{top:var(--radar-offset-y,0px)}.radar.fullscreen-active::after,.radar.pseudo-fullscreen::after{bottom:var(--radar-offset-y,0px)}}
-@media(max-width:850px){.workspace{grid-template-columns:1fr;gap:18px}.radar{width:min(100%,750px,calc(100vw - 32px));max-height:none}.sidebar{width:min(100%,750px);margin:auto}.panel{max-height:none}.topbar{height:66px}}
-@media(max-width:430px){.workspace{padding:14px 12px 24px}.map-header h1{font-size:16px}.route-status{font-size:8px}.radar{width:100%}.map-tools{width:100%}.map-tools #fullscreen{margin-left:auto}.panel{padding:16px}.tab{font-size:9px}.topbar{padding:10px 14px}.brand{gap:8px}.brand img{width:56px;height:30px}.brand b{font-size:13px;white-space:nowrap}.brand small{font-size:7px}.status-badge{max-width:130px}}
-</style></head><body>
-<header class="topbar"><div class="brand"><img src="./mark.svg?v=2" alt=""><div><b>ShaWy <em>radar</em></b><small>v4.3</small></div></div><div class="status-badge" id="status" role="status" data-phase="connecting">Ищем соединение</div></header>
-<form id="connection" hidden><div><button type="button" id="close-connection" aria-label="Закрыть">×</button><h1>Подключение</h1><p>Вставь ссылку из приложения ShaWy radar.</p><label for="endpoint">Личная ссылка</label><input id="endpoint" type="url" required autocomplete="off" placeholder="Вставь ссылку"><select id="transport" aria-label="Режим подключения"><option value="rtc">Быстрое подключение</option><option value="http">HTTPS · резерв</option><option value="ws">WebSocket</option></select><button class="primary">Подключить</button><p id="connect-error" role="alert"></p></div></form>
-<main class="workspace">
-<section class="map-area"><div class="map-header"><div><small>КАРТА</small><h1 id="map">Counter-Strike 2</h1></div><span id="stale" class="route-status">ОЖИДАНИЕ ПОТОКА</span></div>
+<link rel="stylesheet" href="./radar.css?v=5">
+<script src="./appearance.js?v=5"></script>
+</head><body>
+<header class="topbar"><div class="topbar-inner">
+<a class="brand" href="#radar" aria-label="ShaWy radar"><img src="./mark.svg?v=2" alt=""><b>ShaWy <em>radar</em></b></a>
+<nav class="pages" aria-label="Разделы"><button type="button" id="page-radar" aria-current="page">Радар</button><button type="button" id="page-appearance">Внешний вид</button></nav>
+<div class="status-badge" id="status" role="status" data-phase="connecting">Ищем соединение</div>
+</div></header>
+<form id="connection" hidden><div role="dialog" aria-modal="true" aria-labelledby="connection-title"><button type="button" id="close-connection" aria-label="Закрыть">×</button><h2 id="connection-title">Подключение</h2><p>Вставь ссылку из приложения ShaWy radar.</p><label for="endpoint">Личная ссылка</label><input id="endpoint" type="url" required autocomplete="off" placeholder="Вставь ссылку"><select id="transport" aria-label="Режим подключения"><option value="rtc">Быстрое подключение</option><option value="http">HTTPS · резерв</option><option value="ws">WebSocket</option></select><button class="primary">Подключить</button><p id="connect-error" role="alert"></p></div></form>
+<main class="workspace" data-view="radar">
+<section class="map-area" aria-label="Карта"><div class="map-header">
+<div class="map-title"><span class="eyebrow">Карта матча</span><h1 id="map">Counter-Strike 2</h1></div>
+<div class="map-tools"><button id="minus" aria-label="Уменьшить масштаб">−</button><span id="scale">×1.0</span><button id="plus" aria-label="Увеличить масштаб">+</button><button id="fullscreen" aria-label="На весь экран" title="На весь экран"><span aria-hidden="true">⛶</span></button></div>
+</div>
 <div class="radar"><div id="bomb-countdown" class="bomb-countdown" hidden><span>БОМБА ЗАЛОЖЕНА</span><strong id="bomb-time">0:00</strong></div><canvas id="canvas" aria-label="Живая карта CS2"></canvas><div id="message">Подключение к игровому ПК…</div></div>
-<div class="map-footer"><div class="map-tools"><button id="minus" aria-label="Уменьшить масштаб">−</button><span id="scale">×1.0</span><button id="plus" aria-label="Увеличить масштаб">+</button><button id="fullscreen">На весь экран</button></div><span id="startup"></span><div id="player-island" class="player-island" hidden><strong id="view-name"></strong><span id="view-hp"></span><span id="view-armor"></span><span id="view-weapon" hidden></span><button id="view-reset" aria-label="Вернуться к своему игроку">×</button></div></div></section>
-<aside class="sidebar"><nav class="tabs" role="tablist" aria-label="Панель радара"><button class="tab active" role="tab" aria-controls="panel-display" data-panel="display" aria-selected="true">Отображение</button><button class="tab" role="tab" aria-controls="panel-players" data-panel="players" aria-selected="false">Игроки</button><button class="tab" role="tab" aria-controls="panel-network" data-panel="network" aria-selected="false">Связь</button></nav>
-<section id="panel-display" class="panel" role="tabpanel" data-content="display"><div class="panel-heading"><div><small>НАСТРОЙКИ</small><h2>Отображение</h2></div></div>
+<div class="map-footer"><span id="stale" class="route-status">Ожидание потока</span><span id="startup" role="status"></span><div id="player-island" class="player-island" hidden><strong id="view-name"></strong><span id="view-hp"></span><span id="view-armor"></span><span id="view-weapon" hidden></span><button id="view-reset" aria-label="Вернуться к своему игроку">×</button></div></div></section>
+<aside class="sidebar"><nav class="tabs" role="tablist" aria-label="Панель радара"><button class="tab active" role="tab" id="tab-display" aria-controls="panel-display" data-panel="display" aria-selected="true">Настройка</button><button class="tab" role="tab" id="tab-players" aria-controls="panel-players" data-panel="players" aria-selected="false" tabindex="-1">Игроки</button><button class="tab" role="tab" id="tab-network" aria-controls="panel-network" data-panel="network" aria-selected="false" tabindex="-1">Связь</button></nav>
+<section id="panel-display" class="panel" role="tabpanel" aria-labelledby="tab-display" data-content="display">
+<h2>Настройка радара</h2>
+<label class="setting-row" for="radar-preset">Пресет<select id="radar-preset" aria-label="Пресет"><option>Minimal</option><option>Classic</option><option>Competitive</option><option>Custom</option></select></label>
+<div id="radar-style"></div>
 <div class="group"><h3>Игроки</h3><div class="toggle-pair"><button id="allies" class="toggle on" aria-pressed="true">Подписи союзников</button><button id="enemies" class="toggle on" aria-pressed="true">Подписи противников</button><button id="names" class="toggle off" aria-pressed="false">Имена</button><button id="health" class="toggle off" aria-pressed="false">Здоровье</button><button id="ally-colors" class="toggle off wide" aria-pressed="false">Цвета союзников</button></div><div id="player-size-controls" class="sliders"></div></div>
-<div class="group"><div class="group-heading"><div><h3>Оружие на земле</h3><p>Предметы на карте</p></div></div><label for="ground-weapon-mode">Отображение</label><select id="ground-weapon-mode"><option value="off">Выключено</option><option value="icon">Только иконка</option><option value="text">Только название</option><option value="both">Иконка + название</option></select><div id="ground-weapon-sizes" class="sliders"></div></div>
-<div class="group"><div class="group-heading"><div><h3>Оружие игроков</h3><p>Рядом с маркерами</p></div></div><label for="player-weapon-mode">Отображение</label><select id="player-weapon-mode"><option value="off">Выключено</option><option value="icon">Только иконка</option><option value="text">Только название</option><option value="both">Иконка + название</option></select><div id="player-weapon-sizes" class="sliders"></div></div></section>
-<section id="panel-players" class="panel" role="tabpanel" data-content="players" hidden><div class="panel-heading"><div><small>КОМАНДЫ</small><h2>На карте <span id="counts">—</span></h2></div></div><div id="roster" class="roster"></div></section>
-<section id="panel-network" class="panel" role="tabpanel" data-content="network" hidden><div class="panel-heading"><div><small>СОСТОЯНИЕ</small><h2>Связь</h2></div></div><div class="live-stats"><div class="stat"><span>Пинг канала</span><strong id="ping">—</strong></div><div class="stat"><span>Возраст данных</span><strong id="age">—</strong></div><div class="stat"><span>Задержка сети ICE</span><strong id="ice-rtt">—</strong></div><div class="stat"><span>Зрители</span><strong id="viewers">—</strong></div></div><div id="rtc-diagnostics" hidden style="margin-top:12px;color:#b6c4d8;font-size:10px;white-space:pre-line"></div><button id="settings" class="secondary">Подключение</button></section></aside></main>
+<div class="group"><h3>Оружие на земле</h3><label for="ground-weapon-mode">Отображение</label><select id="ground-weapon-mode"><option value="off">Выключено</option><option value="icon">Только иконка</option><option value="text">Только название</option><option value="both">Иконка + название</option></select><div id="ground-weapon-sizes" class="sliders"></div></div>
+<div class="group"><h3>Оружие игроков</h3><label for="player-weapon-mode">Отображение</label><select id="player-weapon-mode"><option value="off">Выключено</option><option value="icon">Только иконка</option><option value="text">Только название</option><option value="both">Иконка + название</option></select><div id="player-weapon-sizes" class="sliders"></div></div></section>
+<section id="panel-players" class="panel" role="tabpanel" aria-labelledby="tab-players" data-content="players" hidden><div class="panel-heading"><h2>На карте <span id="counts">—</span></h2></div><div id="roster" class="roster"><p class="roster-empty">Ожидаем данные матча</p></div></section>
+<section id="panel-network" class="panel" role="tabpanel" aria-labelledby="tab-network" data-content="network" hidden><div class="live-stats"><div class="stat"><span>Пинг канала</span><strong id="ping">—</strong></div><div class="stat"><span>Возраст данных</span><strong id="age">—</strong></div><div class="stat"><span>Задержка сети ICE</span><strong id="ice-rtt">—</strong></div><div class="stat"><span>Зрители</span><strong id="viewers">—</strong></div></div><div id="rtc-diagnostics" hidden class="diagnostics"></div><button id="settings" class="secondary">Подключение</button></section></aside>
+<aside id="appearance-page" class="sidebar appearance-page" aria-label="Внешний вид" hidden></aside></main>
 <script>
 'use strict';
 const $=id=>document.getElementById(id),canvas=$('canvas'),ctx=canvas.getContext('2d');
+function setText(element, text) {
+ if(element.textContent!==text)element.textContent=text;
+}
 const hosted=/^\/radar(?:\/|$)/.test(location.pathname),localHost=['127.0.0.1','localhost'].includes(location.hostname),API='https://radar-api.seyuga.ru';
 let base=hosted?'':location.pathname.replace(/\/$/,''),transport='http',state=null,previous=null,last=0,zoom=1,names=false,health=false,alliesVisible=true,enemiesVisible=true,meta=null,image=null,renderedMap=null,loadingMap='',mapStatus='',socket=null,retryAt=0,clockOffset=0,bestRTT=Infinity,rtt=null,generation=0,lastRoster=0,lastSocketPacket=0,lastUI=0,groundWeaponsVisible=false,playerWeaponsVisible=false,primary='',fallback='',failures=0,usingFallback=false;
 const viewer=Array.from(crypto.getRandomValues(new Uint8Array(16)),x=>x.toString(16).padStart(2,'0')).join(''),options=new URLSearchParams(location.hash.slice(1));
 const store=(k,v)=>{try{localStorage.setItem(k,v)}catch{}},read=k=>{try{return localStorage.getItem(k)}catch{return null}};
+const hadRadarPreferences = ['shawyNames', 'shawyHealth', 'shawyAllies', 'shawyEnemies', 'shawyAllyColors',
+ 'shawyGroundWeaponMode', 'shawyPlayerWeaponMode', 'shawyPlayerTextScale'].some(key => read(key) !== null);
 names=read('shawyNames')==='true';health=read('shawyHealth')==='true';alliesVisible=read('shawyAllies')!=='false';enemiesVisible=read('shawyEnemies')!=='false';
 let allyColors=read('shawyAllyColors')==='true';
 let bombMarkerScale=.86,bombSiteScale=1,playerTextScale=Number(read('shawyPlayerTextScale'))||1;
@@ -57,7 +55,11 @@ let discoveryCheckedAt=0;
 function decodeDiscoveryEndpoint(value){const u=new URL(value),match=/^sr1-([a-f0-9]+)\.lhr\.life$/i.exec(u.hostname);if(match){const encoded=match[1];if(encoded.length%2)throw Error('Некорректный адрес');const prefix=encoded.match(/../g).map(byte=>String.fromCharCode(parseInt(byte,16))).join('');if(!/^[a-z0-9-]+(?:\.[a-z0-9-]+)+$/.test(prefix))throw Error('Некорректный адрес');u.hostname=prefix+'.lhr.life'}return endpoint(u.href)}
 async function discoverEndpoint(){discoveryCheckedAt=Date.now();try{const r=await request(API+'/discover');if(!r.ok)return '';const data=await r.json();return data.active&&typeof data.endpoint==='string'?decodeDiscoveryEndpoint(data.endpoint):''}catch{return ''}}
 function useDiscoveredEndpoint(candidate){let next;try{next=endpoint(candidate)}catch{return false}if(next===base&&transport==='rtc')return false;base=next;primary=next;transport='rtc';usingFallback=false;failures=0;rtcAttempts=0;rtcRetry=0;rtcPreferred='';rtcAlternate='';store('shawiUseFallback','false');store('cloudRadarEndpoint',base);store('cloudRadarMode','rtc');$('transport').value='rtc';$('endpoint').value=base;$('connection').hidden=true;generation++;if(socket)socket.close();socket=null;resetRTC();state=null;previous=null;last=0;meta=null;image=null;loadingMap='';$('message').textContent='Подключение к игровому ПК…';return true}
-function setStatus(text,phase='connecting'){const el=$('status');el.textContent=text;el.dataset.phase=phase}
+function setStatus(text,phase='connecting'){
+ const status=$('status');
+ setText(status,text);
+ if(status.dataset.phase!==phase)status.dataset.phase=phase;
+}
 async function bind(candidate){const u=new URL(candidate);if(u.origin!==API||u.pathname==='/device')return candidate;try{const existing=await request(API+'/session');if(existing.ok)return (await existing.json()).endpoint}catch{}const key=u.pathname.slice(1);const r=await request(API+'/pair',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key})});if(!r.ok)throw Error('Не удалось привязать устройство');const s=await request(API+'/session');if(!s.ok)throw Error('Браузер не сохранил привязку');return (await s.json()).endpoint}
 async function initialize(){
  if(!hosted)return;
@@ -81,20 +83,59 @@ async function initialize(){
 }
 $('settings').onclick=()=>{$('connection').hidden=!$('connection').hidden};
 $('connection').onsubmit=async e=>{e.preventDefault();$('connect-error').textContent='Подключение…';try{let candidate=endpoint($('endpoint').value);try{candidate=await bind(candidate)}catch{}base=candidate;transport=$('transport').value;store('shawiUseFallback','false');store('cloudRadarEndpoint',base);store('cloudRadarMode',transport);primary=base;usingFallback=false;failures=0;generation++;rtcPreferred='';if(socket)socket.close();socket=null;resetRTC();retryAt=0;state=null;previous=null;meta=null;image=null;loadingMap='';$('connection').hidden=true;$('connect-error').textContent='';history.replaceState(null,'',location.pathname)}catch(e){$('connect-error').textContent=e.message}};
-function setZoom(z){zoom=Math.min(8,Math.max(1,z));$('scale').textContent='МАСШТАБ ×'+zoom.toFixed(1)}
+const pan = { x: 0, y: 0 };
+function setZoom(z) {
+ zoom = Math.min(8, Math.max(1, z));
+ if (zoom === 1) { pan.x = 0; pan.y = 0; }
+ $('scale').textContent = '×' + zoom.toFixed(1);
+}
 $('minus').onclick=()=>setZoom(zoom/1.4);$('plus').onclick=()=>setZoom(zoom*1.4);canvas.ondblclick=()=>setZoom(1);canvas.onwheel=e=>{e.preventDefault();setZoom(zoom*(e.deltaY<0?1.12:1/1.12))};
 function setToggle(id,enabled){const b=$(id);b.classList.toggle('on',enabled);b.classList.toggle('off',!enabled);b.setAttribute('aria-pressed',String(enabled))}
-function renderRoster(next){
- $('counts').textContent=next.players.length+(next.local.alive===false?0:1);
- $('roster').replaceChildren(...next.players.filter(p=>p.team===next.local.team?alliesVisible:enemiesVisible).map(p=>{
-  const row=document.createElement('div');row.className='person';
-  const dot=document.createElement('i');dot.className='dot'+(p.team===next.local.team?(next.local.team===2?' t':''):' enemy');
-  const palette=['#88cef5','#009e80','#f1e441','#e6802a','#bd2c96'];if(p.team===next.local.team&&allyColors&&Number.isInteger(p.teammate_color)&&p.teammate_color>=0&&p.teammate_color<palette.length)dot.style.backgroundColor=palette[p.teammate_color];
-  const name=document.createElement('span');name.className='name';name.textContent=p.name;name.style.color=p.team===3?'#6ba5ff':'#f3a949';
-  const hp=document.createElement('small');hp.className='health-value';hp.textContent=p.hp+' HP';hp.hidden=!health;
-  const weapon=document.createElement('small');weapon.className='weapon';weapon.textContent=p.weapon||'';weapon.style.color=p.team===3?'#6ba5ff':'#f3a949';weapon.hidden=!playerWeaponsVisible||!p.weapon;
-  row.append(dot,name,hp,weapon);return row;
- }));
+function renderRoster(next) {
+ const roster = $('roster');
+ const players = next.ok ? next.players.filter(player => player.team === next.local.team ? alliesVisible : enemiesVisible) : [];
+ $('counts').textContent = next.ok ? next.players.length + (next.local.alive === false ? 0 : 1) : '—';
+ const rows = new Map([...roster.querySelectorAll('.person')].map(row => [row.dataset.player, row]));
+ if (!players.length) {
+  let empty = roster.querySelector('.roster-empty');
+  if (!empty) {
+   empty = document.createElement('p');
+   empty.className = 'roster-empty';
+   roster.replaceChildren(empty);
+  }
+  setText(empty, next.ok ? 'Нет игроков для отображения' : 'Ожидаем данные матча');
+  return;
+ }
+ roster.querySelector('.roster-empty')?.remove();
+ for (const player of players) {
+  const key = String(player.id);
+  let row = rows.get(key);
+  if (!row) {
+   row = document.createElement('button');
+   row.type = 'button';
+   row.className = 'person';
+   row.dataset.player = key;
+   for (const [tag, name] of [['i','dot'], ['span','name'], ['small','health-value'], ['small','weapon']]) {
+    const part = document.createElement(tag);
+    part.className = name;
+    row.append(part);
+   }
+   row.onclick = () => selectPlayer(player.id);
+   roster.append(row);
+  }
+  rows.delete(key);
+  const enemy = player.team !== next.local.team;
+  const [dot, name, hp, weapon] = row.children;
+  dot.classList.toggle('enemy', enemy);
+  dot.style.backgroundColor = markerColor(player, false, next.local.team);
+  setText(name, player.name || 'Игрок');
+  setText(hp, player.hp + ' HP');
+  hp.hidden = !health;
+  setText(weapon, player.weapon || '');
+  weapon.hidden = !playerWeaponsVisible || !player.weapon;
+  row.setAttribute('aria-pressed', String(player.id === selectedPlayer));
+ }
+ for (const row of rows.values()) row.remove();
 }
 setToggle('ally-colors',allyColors);$('ally-colors').onclick=()=>{allyColors=!allyColors;store('shawyAllyColors',String(allyColors));setToggle('ally-colors',allyColors);if(state?.ok)renderRoster(state)};
 $('names').onclick=()=>{names=!names;store('shawyNames',String(names));setToggle('names',names)};setToggle('names',names);
@@ -102,7 +143,28 @@ $('health').onclick=()=>{health=!health;store('shawyHealth',String(health));setT
 setToggle('allies',alliesVisible);setToggle('enemies',enemiesVisible);setToggle('health',health);
 $('ground-weapon-mode').value=groundWeaponsVisible?groundWeaponMode:'off';
 $('player-weapon-mode').value=playerWeaponsVisible?playerWeaponMode:'off';
-document.querySelectorAll('.tab').forEach(tab=>tab.onclick=()=>{document.querySelectorAll('.tab').forEach(t=>{const active=t===tab;t.classList.toggle('active',active);t.setAttribute('aria-selected',String(active))});document.querySelectorAll('[data-content]').forEach(panel=>panel.hidden=panel.dataset.content!==tab.dataset.panel)});
+const tabs=Array.from(document.querySelectorAll('.tab'));
+function selectTab(tab){
+ for(const candidate of tabs){
+  const active=candidate===tab;
+  candidate.classList.toggle('active',active);
+  candidate.setAttribute('aria-selected',String(active));
+  candidate.tabIndex=active?0:-1;
+  $(candidate.getAttribute('aria-controls')).hidden=!active;
+ }
+}
+tabs.forEach((tab,index)=>{
+ tab.onclick=()=>selectTab(tab);
+ tab.onkeydown=event=>{
+  const last=tabs.length-1;
+  const indexes={ArrowLeft:index===0?last:index-1,ArrowRight:index===last?0:index+1,Home:0,End:last};
+  if(!Object.hasOwn(indexes,event.key))return;
+  event.preventDefault();
+  const next=tabs[indexes[event.key]];
+  selectTab(next);
+  next.focus();
+ };
+});
 $('close-connection').onclick=()=>{$('connection').hidden=true};
 $('allies').onclick=()=>{alliesVisible=!alliesVisible;store('shawyAllies',String(alliesVisible));setToggle('allies',alliesVisible);if(state?.ok)renderRoster(state)};
 $('enemies').onclick=()=>{enemiesVisible=!enemiesVisible;store('shawyEnemies',String(enemiesVisible));setToggle('enemies',enemiesVisible);if(state?.ok)renderRoster(state)};
@@ -124,8 +186,41 @@ function setImage(){if(!meta)return;const filename=meta.image,key=normalizeMap(s
 async function loadMap(name){const key=normalizeMap(name);loadingMap=key;meta=null;image=null;mapStatus='Загружаем данные карты…';$('startup').textContent=mapStatus;try{const r=await fetch(mapBase()+'/maps/'+encodeURIComponent(key)+'.json',{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const m=await r.json();if(loadingMap!==key)return;meta=m;setImage()}catch{if(loadingMap===key){mapStatus='Нет данных радара для карты: '+key;$('startup').textContent=mapStatus}}}
 function telemetry(next,start,end){const measured=end-start;if(measured<bestRTT&&Number.isFinite(next.serverTime)){bestRTT=measured;clockOffset=next.serverTime-(Date.now()-measured/2)}rtt=measured;$('ping').innerHTML=Math.round(measured)+' <small>мс</small>';if(Number.isFinite(next.viewers))$('viewers').textContent=next.viewers}
 let bombReceivedAt=performance.now();
-function updateBombCountdown(){const panel=$('bomb-countdown'),timer=$('bomb-time'),bomb=state?.bomb;if(!bomb?.planted){panel.hidden=true;return}panel.hidden=false;if(performance.now()-last>3000){timer.textContent='--:--';return}if(Number.isFinite(bomb.seconds_remaining)){const left=Math.max(0,Math.ceil(bomb.seconds_remaining-(performance.now()-bombReceivedAt)/1000));timer.textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0')}else timer.textContent='--:--'}
-function accept(next){if(typeof next.ok!=='boolean'||(next.ok&&(!Array.isArray(next.players)||!next.local)))return;previous=state;state=next;if(next.bomb?.planted&&Number.isFinite(next.bomb.seconds_remaining))bombReceivedAt=performance.now();last=performance.now();setStatus(next.ok?'На связи':'Ожидание CS2',next.ok?'active':'connecting');$('map').textContent=next.map?next.map.replace(/^de_|^cs_/,'').toUpperCase():'Counter-Strike 2';$('message').textContent=next.ok?'':next.error||'Ожидание матча';if(next.ok&&normalizeMap(next.map)!==loadingMap)loadMap(next.map);if(next.ok&&performance.now()-lastRoster>500){lastRoster=performance.now();renderRoster(next)}}
+function updateBombCountdown(){
+ const panel=$('bomb-countdown'),bomb=state?.bomb,hidden=!radarStyle.bomb||!bomb?.planted;
+ if(panel.hidden!==hidden)panel.hidden=hidden;
+ if(hidden)return;
+ const now=performance.now();
+ if(now-last>3000||!Number.isFinite(bomb.seconds_remaining)){
+  setText($('bomb-time'),'--:--');
+  return;
+ }
+ const left=Math.max(0,Math.ceil(bomb.seconds_remaining-(now-bombReceivedAt)/1000));
+ setText($('bomb-time'),Math.floor(left/60)+':'+String(left%60).padStart(2,'0'));
+}
+function accept(next) {
+ if (typeof next.ok !== 'boolean' || (next.ok && (!Array.isArray(next.players) || !next.local))) return;
+ previous = state;
+ state = next;
+ last = performance.now();
+ if (next.bomb?.planted && Number.isFinite(next.bomb.seconds_remaining)) bombReceivedAt = last;
+ setStatus(next.ok ? 'На связи' : 'Ожидание CS2', next.ok ? 'active' : 'connecting');
+ setText($('map'), next.map ? next.map.replace(/^de_|^cs_/, '').toUpperCase() : 'Counter-Strike 2');
+ setText($('message'), next.ok ? '' : next.error || 'Ожидание матча');
+ if (next.ok) {
+  if (normalizeMap(next.map) !== loadingMap) loadMap(next.map);
+  if (last - lastRoster > 500 || !previous?.ok) {
+   lastRoster = last;
+   renderRoster(next);
+  }
+ } else if (previous?.ok) {
+  selectPlayer(null);
+  renderRoster(next);
+  setText($('stale'), 'Ожидание потока');
+ }
+ if (next.ok || previous?.ok || hasDrawnFrame) scheduleDraw();
+}
+
 function cloudConnection(){if(socket||Date.now()<retryAt)return;const current=generation,ws=new WebSocket(base.replace(/^http/,'ws')+'/live?viewer='+viewer);socket=ws;lastSocketPacket=performance.now();let bytes=0;ws.onopen=()=>ws.send(JSON.stringify({type:'ping',clientTime:performance.now()}));ws.onmessage=e=>{if(current!==generation||socket!==ws)return;lastSocketPacket=performance.now();bytes+=e.data.length;try{const next=JSON.parse(e.data);if(next.type==='pong')telemetry(next,next.clientTime,performance.now());else {failures=0;accept(next)}if(bytes>7000)ws.close(1000,'Refresh connection')}catch{}};ws.onerror=()=>ws.close();ws.onclose=()=>{if(socket===ws){socket=null;retryAt=Date.now()+200;failures++;if(failures>=3)transport='http'}}}
 async function poll(){if(!base||((usingFallback||transport==='http'||transport==='rtc'&&rtcAttempts>0)&&hosted&&!options.get('connect'))){if(hosted&&!options.get('connect')&&Date.now()-discoveryCheckedAt>8000){const discovered=await discoverEndpoint();if(discovered&&useDiscoveredEndpoint(discovered)){setTimeout(poll,100);return}}if(!base){setTimeout(poll,700);return}}const started=performance.now(),current=generation;try{if(transport==='rtc'){showFirstSnapshot();rtcConnection();setTimeout(poll,250);return}if(transport==='ws'&&!usingFallback){cloudConnection();if(socket&&performance.now()-lastSocketPacket>3500){socket.close();socket=null;retryAt=0}setTimeout(poll,350);return}const r=await request(base+'/api?viewer='+viewer+'&t='+Date.now());if(!r.ok){if(r.status===401){store('cloudRadarEndpoint','');$('connection').hidden=false;throw Error('Привяжи устройство заново')}throw Error('Ошибка канала '+r.status)}const next=await r.json();if(!next.ok&&next.error==='Нет свежих данных с игрового ПК'&&fallback&&!usingFallback)throw Error('Основной канал не получает данные');if(current===generation){failures=0;telemetry(next,started,performance.now());accept(next);if(next.fallbackOrigin&&fallback){const candidate=new URL(next.fallbackOrigin);if(candidate.protocol==='https:'&&/\.(lhr\.life|localhost\.run)$/.test(candidate.hostname)){fallback=candidate.origin+new URL(fallback).pathname;store('shawiFallback',fallback)}}}}catch(e){if(current===generation){failures++;if(fallback&&!usingFallback&&failures>=2){base=fallback;usingFallback=true;store('shawiUseFallback','true');generation++;retryAt=0;if(socket)socket.close();socket=null;setStatus('Переключаем канал')}else setStatus(e.message||'Нет связи','error');if(usingFallback&&failures>=2&&primary){try{const recovery=await request(primary+'/connection');if(recovery.ok){const info=await recovery.json();if(info.active&&info.fallbackOrigin){const next=new URL(info.fallbackOrigin);if(next.protocol==='https:'&&/\.(lhr\.life|localhost\.run)$/.test(next.hostname)){base=fallback=next.origin+new URL(fallback).pathname;store('shawiFallback',fallback)}}}}catch{}}if(performance.now()-last>4500)$('message').textContent='Канал данных недоступен\nПроверь состояние сервера в приложении на ПК'}}const elapsed=performance.now()-started;setTimeout(poll,Math.max(20,(document.hidden?1800:localHost?20:hosted?150:40)-elapsed))}
 
@@ -171,31 +266,79 @@ async function rtcConnection(){
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&transport==='rtc'&&performance.now()-rtcLast>6000){resetRTC();rtcRetry=0}});
 
 const bombSites={"de_cbble":{"A":[0.25,0.67],"B":[0.66,0.65]},"de_ancient":{"A":[0.31,0.25],"B":[0.8,0.4]},"de_ancient_night":{"A":[0.31,0.25],"B":[0.8,0.4]},"de_ancient_v1":{"A":[0.31,0.25],"B":[0.8,0.4]},"de_ancient_v2":{"A":[0.31,0.25],"B":[0.8,0.4]},"de_cache":{"A":[0.325,0.26],"B":[0.345,0.79]},"de_dust":{"A":[0.8,0.55],"B":[0.53,0.74]},"de_dust2":{"A":[0.8,0.16],"B":[0.21,0.12]},"de_inferno":{"A":[0.81,0.69],"B":[0.49,0.22]},"de_inferno_s2":{"A":[0.81,0.69],"B":[0.49,0.22]},"de_mirage":{"A":[0.54,0.76],"B":[0.23,0.28]},"de_nuke":{"A":[0.58,0.48],"B":[0.58,0.58]},"de_overpass":{"A":[0.55,0.23],"B":[0.7,0.31]},"de_overpass_2v2":{"A":[0.55,0.23],"B":[0.7,0.31]},"de_train":{"A":[0.63,0.49],"B":[0.52,0.76]},"de_vertigo":{"A":[0.705,0.585],"B":[0.222,0.223]}};
-function drawBombSites(map,size,z){const sites=bombSites[normalizeMap(map)];if(!sites)return;ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=`bold ${14*bombSiteScale/z}px Unbounded,system-ui,sans-serif`;for(const [name,position] of Object.entries(sites)){const x=position[0]*size,y=position[1]*size;ctx.fillStyle='rgba(37,35,31,.53)';ctx.fillRect(x-8/z,y-8/z,16/z,16/z);ctx.strokeStyle='rgba(27,25,23,.7)';ctx.lineWidth=2/z;ctx.strokeText(name,x,y+.5/z);ctx.fillStyle='#e4b548';ctx.fillText(name,x,y+.5/z)}ctx.restore()}
+function drawBombSites(map,size,z){const sites=bombSites[normalizeMap(map)];if(!sites)return;ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=`bold ${14*bombSiteScale/z}px system-ui,sans-serif`;for(const [name,position] of Object.entries(sites)){const x=position[0]*size,y=position[1]*size;ctx.fillStyle='rgba(37,35,31,.53)';ctx.fillRect(x-8/z,y-8/z,16/z,16/z);ctx.strokeStyle='rgba(27,25,23,.7)';ctx.lineWidth=2/z;ctx.strokeText(name,x,y+.5/z);ctx.fillStyle='#e4b548';ctx.fillText(name,x,y+.5/z)}ctx.restore()}
 let selectedPlayer=null,playerHits=[];
-const radarArt={};
-radarArt.dot=new Image();radarArt.dot.src='data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB3aWR0aD0iMjMuMDI3cHgiIGhlaWdodD0iMjMuMDI3cHgiIHZpZXdCb3g9IjAgMCAyMy4wMjcgMjMuMDI3IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyMy4wMjcgMjMuMDI3IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IkxheWVyXzIiPgoJPGNpcmNsZSBmaWxsPSIjRkZGRkZGIiBjeD0iMTEuNTEyIiBjeT0iMTEuNTE0IiByPSIxMSIvPgo8L2c+Cjwvc3ZnPg==';
-radarArt.direction=new Image();radarArt.direction.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAQCAYAAADwMZRfAAAABHNCSVQICAgIfAhkiAAAAMBJREFUOE/V0KFKg2EUh/EfbKjbNHsFIiIMVnYFuweTZc0igsUgiHHBomWwsrTbcNVLsRosDr6VDV7/fLovWHza+5xznvC2q6qyg2O8pyxpp6ihkyJpEummSJpEeimSJpHDFMn/ivzJxx6kSJpE9lMkuyJj3OMLLznc8lOkh0fcbt7POMMdPmK3NtLHAufhrzDCJd7KQRlp4QJTHBW+5ASvuMYcK0VkDxPcfL+ppYMZhpv9z21kggGWcfAbp3jCwxpppRbUKSfuNQAAAABJRU5ErkJggg==';
-radarArt.view=new Image();radarArt.view.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE4AAABCCAYAAAD5aOBmAAAIvUlEQVR4nO2ZS2wdVxmAv3/urdOmEJvQLKhcnNAWVeKRQEsi0YpEaSuxAWVF2CAqtiywxAIWSM0CISSEiISQugIHJKrAxlKFKpHEcZEgsXGLI1CpQh924louCY5jO05yfe/8LGbm+txzz5mZ+5gxSPml0XnM3PP4/L/OMdyTe3JP/g9EtnNyVTXn99VbfmKViIh6vi1USgUXg0oee35XX9sQVmn3KZQDs1BwHlBFg2tpFwWx7+AM8wuM8QNjvlLBmU8/IfYNnKVdwvaDC43+kD4D7BlcDCyBZIPD0Y/1zl5LP8HZdfMJewHYNTgPMBfA7QCX9ZgguwLYFThVDWiF5Kv7wNlt6B2caZp5gJntkA5NuCNwlpZllXnAkVI6l2CVST01KOAB5ejLrX25wRla1gkwVx+Ouqt0LsMqk3q34FxlLu2rpr0Ep5bZ8NLM1I6s/QbXlvzih6Xx2L4yMXUBQlVN1b5UcAa0NGAujTP7cNSLAufyd0I7xASUCQyrX1S14YPnBecxzbzmmjc9IaV0LiulNMGZsJJ66KibWubSPmLNM+ECHnAWtF4AZj2klM6lpZQ+cD6ATc3CAcziISLSMPvawFnQKqTD8gFMCw5Fg7PN09Y2G5TLXM26AA1VrZjwWsAZ0CrGps16L/6uTHAun+YzUdtcXe/AgtcE54CWZq42zE79HbSfHvKAMyFBNjgTmDN60g4sTZrwTI1Lg5UFMkvrbO1L5oP+gLMP9EndNs8sv2abqUs2odVUG3HbZZJp/s6X4/l8HrQDxVH6xAVOjLYrovr8G8bvJWZQseqm1JMI2wQnIqqqd4EHHGCSwdJ8n0/zug0SPnElu0IrRF/ehvFd8q0NscWvsQXvtojUkxctwSFO9jZU9UPxuzw+r9u8rp/g0tIO03y78WubwHpmOgIgIuvxqeFB/ObZDcAywPkA5vFrtmwCN3MnwAAisqaqdeCjpPs7l++zzdYVIIoEl5a3NbdIu18z578LLPuOXFmLRFUfAPbQarpZ/q6TvA5HPXVJ+MGl3beFnrb9NIBVEbmetohMcACqOgB8DLifVlC9+Dtoj7J51mQfr3ygfGXWsygia1lMcoGDZoL8cSK/14u/S0tPstZkmk1olGrVs4ApkWaZfZvAgois5+GRG1xz5arDtPq9vP7OZ7LQOThb4/KYqNnXoBXeHeA9EbmTl0PH4ABUdQ+R9vXi71zJsLmmI3E5aU5tlCY835V4Hr+2Bly2040sybwBdomIXFPVENgL7KC7I1laWjICfDtuXwHm47ovKNgR1Hdwt+XfwHyn0JKBuxZV3Ql8Fhigc5/nAzcC/IDIlwLcAn5IBDBPGuLTLtuvzYnIlW733hM4AFWtAJ8DdtHu7zo9iu0kgrTHmuYW8N24hPzQzHbi1+4A/xKRpV723TM4AFWtAp8EhvGnKlknigeB7xP5TpdcAX4MbODP3bJ82h3gr3kjZ5r0BVwiqvoE8CidpygA3wOeyJjiLeAnZOduLhO9AbwuIrd732mfwUEzXXkSd7piA0yebwFP55ziL8Av47ovitqpxyIRtHrbaF1K38EBqOog8CWiK6qsFOWrwFc6nOIccJp8qce7IjLT247apRBw0Iy4zwAP4TfXZ4HjXU5xCrhAul+7ICLvdb8LvxQGDkBV7wO+SJRimOD2AF8DDjh+9rZnuMccfZeBl4iirR0EzovIB72sP00KBZeIqj5DFHUrwCNEqcVO45P3gdeAGWtNSUKbyKeALwCfMfo2gB8B1+JvrwF/EpHl/u6iVUoBB6CqjwPfoBXaBjDOFjAzyibrM8ElPu0TwNeB3XH/AvAzohPGKyJSK2YXrQsrRd5YPDdyf+Ujs48/9OmhanAfRFr2C6ILQ1d6kqzPBmf6s+PAQYDrG0vvzN/9x5NP7X7+ZtF7ga2DduFSq+nY6p0bQ//84G/cqq3dBl4GakTmaz6Bo8/3vAK8P3/jMu9cf/PR+lpwoqz9lAJuav7sNxE5ArCxuc7b//n7MSLzNANGFjTXu5trt28cX1pdWImnGp2+OnG4jD2VAk5VThjNsQMPP/1HETkNvEnrEa0ShqH9VJM6rYBrwOldO3f/WURHk8HDRmjOVZgU7uOmFib2a0NnAVBWqrvCvaYfUtWDwJfDMHT5uaRsOV4FQbAInBKRu8k4F+fOnk+0Wipy4NDw0UtF7qtwjdOGvtBsCOO28xaR6Vqt9juiIJFpoqp6eW5u7tcmtGgcxpqNhh4rYi+mFG+qqltJrsi465MdO3a8FQTBr4CbpPi5IAguVKvV3+7bt6/tirvyYW2OrapH+rkFl5Tg46QJbqAam6zrK5GlIAh+HgTBEg54jUbj9yLyB9/vn9r9/E2UOXvOoqR4cMJQUv38w8/Op34a/bPkJVV9nS1otSAIfjowMJDjoK5z9pxFSVf/cyhSYngvq+pKGIb7gyD4jYgsbve6bPmfA5eIiLwKvLrd6/BJCcEh8TvRsavYyWSvPWdRUkJwiP0OUKsX57Rnls8MIuy15yxKCgcnIpPNRoFpQn29sjW24Ex7+inFa1zFyN2UFwqbJwybY0slmCxsnlgKB3do+Oilps8Rhqbmz73Y7zmmr04cRiQ6LahOFn3cgpIO+SJ6IqmrMjq1MLG/X2PPLJ8ZDBvhyaQdVMq5WioF3KGR506hOgmAMKT1cGxm+cxgP8aurwUnkTjoqI4ffOToa/0YN0tKu8iUajCKEt2biRyorwazvWjezPKZwYtzZ89D7DeVueou40KhYCkN3KHho5fMezOEvVrXyYvzZ7/T6VjTVycO11eD2eQaCWVFqnKsrGtzKPF/DolMX504HDZ0vOU8qToeVIKTWWb2xuK5kdomo8DWH0B1dmBAjmWdg/stpYODGEBNx5u+KRFlDmFcYKW1myFUj7R/r7PVXXqkTE1LZFvAJTI1f+5FVUY7vs1QVkR09NDIc6cKWlqmbCs4iJx8Y02ORQAzjmSqkyKMbSewRP4LRF6AxV4CdQsAAAAASUVORK5CYII=';
-radarArt.enemy=new Image();radarArt.enemy.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAYRJREFUWEe11T1OwzAAhuHXjUWKqraR2o5ITKz0CByl3ABuBDfhCMxsrFRRRIcQCSdmAENq2vinybdUimK9zxJXEjGdZSAEaH2NlBuEuAcQ2639qnPSfuCaFX9CiAzIgFu9WgUjggBH4gCbn99ghDegI24WhfACeMTNghFOQFe8qetSVVV+NplctI4EIToBrvhHUbygda2bpk6n08vWUW/EUYBvHEBVVQ4QgzgICImbxSL+AWLiZjGIPcApcbNQxC+gj7hZCELSc9zMFyGHiJv5IORQcTMXQg4ZN+tCSJJkbd/tWqmyr7iZVqqkaRSjUfvLW0uEeKRpYDR6ME+TNF2OZzOq3e619XL0EinPx/P5lRV/RqkbidYMieiKI8S7FHmOXiwGQbjiaP19DwyB8ImLovi7CftE+Max/wv6QITEsQGciAiNcwhAJCImzjEAgYjYOF0APBGfZfkWG8cFwAORpOly/4R/HB8ADoS1oDi+APwQwXFCAHQjouKEAjiMuIuNA3wBkDoMe7dcFq4AAAAASUVORK5CYII=';
-radarArt.beam=new Image();radarArt.beam.src='data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHdpZHRoPSIxNTUuMzIycHgiIGhlaWdodD0iNzcuNDE3cHgiIHZpZXdCb3g9IjAgMCAxNTUuMzIyIDc3LjQxNyIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTU1LjMyMiA3Ny40MTciCgkgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnIGlkPSJMYXllcl8yIj4KCTxnPgoJCTxkZWZzPgoJCQk8cG9seWdvbiBpZD0iU1ZHSURfOTJfIiBwb2ludHM9IjE1NC42NTYsMjYuMjc1IDc3LjY2MSw3NC44MTIgMC42NjYsMjYuMjc1IDc3LjY2MSwtMTkuNTA3IAkJCSIvPgoJCTwvZGVmcz4KCQk8Y2xpcFBhdGggaWQ9IlNWR0lEXzFfIj4KCQkJPHVzZSB4bGluazpocmVmPSIjU1ZHSURfOTJfIiAgb3ZlcmZsb3c9InZpc2libGUiLz4KCQk8L2NsaXBQYXRoPgoJCQoJCQk8cmFkaWFsR3JhZGllbnQgaWQ9IlNWR0lEXzJfIiBjeD0iODYuMzcxMSIgY3k9IjkuMTM4NyIgcj0iNzMuMDg3OSIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgxLjMxNDQgMCAwIDEuMDk2NSAtMzUuNTE2MiA3Ny45OTMyKSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgoJCQk8c3RvcCAgb2Zmc2V0PSIwIiBzdHlsZT0ic3RvcC1jb2xvcjojRkZGRkZGIi8+CgkJCTxzdG9wICBvZmZzZXQ9IjAuMzYwMiIgc3R5bGU9InN0b3AtY29sb3I6I0ZGRkZGRjtzdG9wLW9wYWNpdHk6MC43Ii8+CgkJCTxzdG9wICBvZmZzZXQ9IjAuNTY5OSIgc3R5bGU9InN0b3AtY29sb3I6I0ZGRkZGRjtzdG9wLW9wYWNpdHk6MC40MiIvPgoJCQk8c3RvcCAgb2Zmc2V0PSIwLjgzODciIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkZGRkY7c3RvcC1vcGFjaXR5OjAuMTQiLz4KCQkJPHN0b3AgIG9mZnNldD0iMSIgc3R5bGU9InN0b3AtY29sb3I6I0ZGRkZGRjtzdG9wLW9wYWNpdHk6MCIvPgoJCTwvcmFkaWFsR3JhZGllbnQ+CgkJPGVsbGlwc2UgY2xpcC1wYXRoPSJ1cmwoI1NWR0lEXzFfKSIgZmlsbD0idXJsKCNTVkdJRF8yXykiIGN4PSI3OC4wMDgiIGN5PSI4OC4wMTYiIHJ4PSI5Ni4wNjUiIHJ5PSI4MC4xNDEiLz4KCTwvZz4KCTxnPgoJCTxnPgoJCQk8ZGVmcz4KCQkJCTxwb2x5Z29uIGlkPSJTVkdJRF85NV8iIHBvaW50cz0iOS43NzcsNS4xODkgLTQ0Ljg2NCw1Mi43MyAtOTkuNTA0LDUuMTg5IC00NC44NjMsLTM5LjY1NCAJCQkJIi8+CgkJCTwvZGVmcz4KCQkJPGNsaXBQYXRoIGlkPSJTVkdJRF8zXyI+CgkJCQk8dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF85NV8iICBvdmVyZmxvdz0idmlzaWJsZSIvPgoJCQk8L2NsaXBQYXRoPgoJCQkKCQkJCTxyYWRpYWxHcmFkaWVudCBpZD0iU1ZHSURfNF8iIGN4PSItNi45MjM4IiBjeT0iLTkuMzY1MiIgcj0iNTEuODY3NyIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgxLjMxNDQgMCAwIDEuMzEyOSAtMzUuNTE2MiA4OC4zNTk2KSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgoJCQkJPHN0b3AgIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6I0ZGRkZGRiIvPgoJCQkJPHN0b3AgIG9mZnNldD0iMC4zMTcyIiBzdHlsZT0ic3RvcC1jb2xvcjojRkZGRkZGO3N0b3Atb3BhY2l0eTowLjciLz4KCQkJCTxzdG9wICBvZmZzZXQ9IjAuNjM0NCIgc3R5bGU9InN0b3AtY29sb3I6I0ZGRkZGRjtzdG9wLW9wYWNpdHk6MC40MiIvPgoJCQkJPHN0b3AgIG9mZnNldD0iMC44NjAyIiBzdHlsZT0ic3RvcC1jb2xvcjojRkZGRkZGO3N0b3Atb3BhY2l0eTowLjE0Ii8+CgkJCQk8c3RvcCAgb2Zmc2V0PSIxIiBzdHlsZT0ic3RvcC1jb2xvcjojRkZGRkZGO3N0b3Atb3BhY2l0eTowIi8+CgkJCTwvcmFkaWFsR3JhZGllbnQ+CgkJCTxlbGxpcHNlIGNsaXAtcGF0aD0idXJsKCNTVkdJRF8zXykiIGZpbGw9InVybCgjU1ZHSURfNF8pIiBjeD0iLTQ0LjYxNiIgY3k9Ijc2LjA2MyIgcng9IjY4LjE3NCIgcnk9IjY4LjA5OSIvPgoJCTwvZz4KCTwvZz4KPC9nPgo8L3N2Zz4=';
-radarArt.nose=new Image();radarArt.nose.src='data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMzJweCIKCSBoZWlnaHQ9IjMycHgiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMzIgMzIiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8ZyBpZD0iTGF5ZXJfMSI+Cgk8cG9seWdvbiBmaWxsPSIjRkZGRkZGIiBwb2ludHM9IjE2LjcwNiwxMi4xNDYgNi40MTIsMTkuODU0IDI3LDE5Ljg1NCAJIi8+CjwvZz4KPC9zdmc+';
-radarArt.allyView=new Image();radarArt.allyView.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE4AAABCCAYAAAD5aOBmAAAAtElEQVR4nO3Qy20CQRBF0RrSgAAIggAIh3AcCguH4DAIwBk8ZMkLy0LWDB9PwZyz7q7uulUAAAAAAAAAAAAwXb5VU6tqKD+CdY3XLlwuhOoYr1W4/BGoW7w24TIiTKd4LcIlOU44+/7Y3zyJJIdM91ZLlmSf623n/Psw18NJTlW1vnXOMAyz7fDvctluxL1Nks/fF2sJckWwMXPq1eWOyyb5WEy4L/dcdDHRAAAAAAAAoG51BoJMGUZv1861AAAAAElFTkSuQmCC';
-const radarDotCache=new Map(),enemyDotCache=new Map();
-function enemyDot(){if(!radarArt.enemy.complete||!radarArt.enemy.naturalWidth)return null;if(!enemyDotCache.has('red')){const c=document.createElement('canvas');c.width=32;c.height=32;const x=c.getContext('2d');x.drawImage(radarArt.enemy,0,0,32,32);x.globalCompositeOperation='source-in';x.fillStyle='#fa2020';x.fillRect(0,0,32,32);enemyDotCache.set('red',c)}return enemyDotCache.get('red')}
-function radarDot(color){if(!radarArt.dot.complete||!radarArt.dot.naturalWidth)return null;if(!radarDotCache.has(color)){const dot=document.createElement("canvas");dot.width=32;dot.height=32;const dc=dot.getContext("2d");dc.drawImage(radarArt.dot,0,0,32,32);dc.globalCompositeOperation="source-in";dc.fillStyle=color;dc.fillRect(0,0,32,32);radarDotCache.set(color,dot)}return radarDotCache.get(color)}
-function marker(x,y,p,self,z,localTeam){
- ctx.save();ctx.translate(x,y);ctx.scale(1/z,1/z);
- const enemy=!self&&p.team!==localTeam,palette=['#88cef5','#009e80','#f1e441','#e6802a','#bd2c96'],color=enemy?'#fa2020':(!self&&allyColors&&Number.isInteger(p.teammate_color)&&p.teammate_color>=0&&p.teammate_color<palette.length)?palette[p.teammate_color]:localTeam===3?'#00d1f3':'#ffda19';
- const selected=(self&&selectedPlayer===null)||(!self&&p.id===selectedPlayer);
- if(self&&radarArt.beam.complete&&radarArt.beam.naturalWidth){ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180+Math.PI/2);ctx.globalAlpha=.22;ctx.drawImage(radarArt.beam,-65,-65,130,65);ctx.restore()}
- if((self||!enemy)&&radarArt.view.complete&&radarArt.view.naturalWidth&&radarArt.allyView.complete&&radarArt.allyView.naturalWidth){ctx.save();ctx.rotate(-(p.yaw||0)*Math.PI/180+Math.PI/2);if(self)ctx.drawImage(radarArt.view,-19.5,-25.5,39,33);else ctx.drawImage(radarArt.allyView,-15.6,-20.4,31.2,26.4);ctx.restore()}
- if(enemy){ctx.fillStyle='#fa2020';ctx.beginPath();ctx.moveTo(0,-8);ctx.lineTo(8,0);ctx.lineTo(0,8);ctx.lineTo(-8,0);ctx.closePath();ctx.fill()}
- else{
-  const dot=radarDot(color);if(dot)ctx.drawImage(dot,-5.65,-5.65,11.3,11.3)
+const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+const markerPalette = ['#88CEF5', '#59CDB3', '#F1E441', '#E99356', '#DB84CE'];
+function markerColor(player, self, localTeam) {
+ if (self) return radarStyle.colors.self;
+ if (player.team !== localTeam) return radarStyle.colors.enemy;
+ const color = markerPalette[player.teammate_color];
+ return allyColors && color ? color : radarStyle.colors.ally;
+}
+
+function marker(x, y, player, self, zoom, localTeam) {
+ const { shape, opacity, direction, cone } = radarStyle;
+ const enemy = !self && player.team !== localTeam;
+ const focused = self ? selectedPlayer === null : player.id === selectedPlayer;
+ const color = markerColor(player, self, localTeam);
+ const radius = 5.3 * markerScale;
+ const angle = -(player.yaw || 0) * Math.PI / 180;
+ ctx.save();
+ ctx.translate(x, y);
+ ctx.scale(1 / zoom, 1 / zoom);
+ if (cone && (self || !enemy)) {
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.arc(0, 0, radius * (self ? 6 : 4), angle - .44, angle + .44);
+  ctx.closePath();
+  ctx.globalAlpha = opacity * (self ? .28 : .18);
+  ctx.fillStyle = color;
+  ctx.fill();
  }
- if(p.has_bomb){ctx.save();ctx.scale(.72,.72);bombGlyph(0,0,enemy?'#f32122':'#ead781');ctx.restore()}
- ctx.restore()
+ if (direction) {
+  ctx.save();
+  ctx.rotate(angle);
+  ctx.globalAlpha = opacity;
+  ctx.beginPath();
+  ctx.moveTo(radius * 1.95, 0);
+  ctx.lineTo(radius * 1.12, -radius * .4);
+  ctx.lineTo(radius * 1.12, radius * .4);
+  ctx.closePath();
+  ctx.strokeStyle = '#111117';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  ctx.fillStyle = color;
+  ctx.fill();
+  ctx.restore();
+ }
+ ctx.globalAlpha = opacity;
+ ctx.beginPath();
+ if (shape === 'square') {
+  ctx.rect(-radius * .78, -radius * .78, radius * 1.56, radius * 1.56);
+ } else if (enemy || shape === 'diamond') {
+  ctx.moveTo(0, -radius * 1.2);
+  ctx.lineTo(radius * 1.2, 0);
+  ctx.lineTo(0, radius * 1.2);
+  ctx.lineTo(-radius * 1.2, 0);
+  ctx.closePath();
+ } else {
+  ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+ }
+ ctx.lineWidth = 2;
+ ctx.strokeStyle = '#111117';
+ ctx.stroke();
+ ctx.fillStyle = color;
+ ctx.fill();
+ if (focused) {
+  ctx.beginPath();
+  ctx.arc(0, 0, radius + 3, 0, 2 * Math.PI);
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = '#F7F7FF';
+  ctx.stroke();
+ }
+ if (player.has_bomb && radarStyle.bomb) bombGlyph(0, -radius - 10, radarStyle.colors.bomb);
+ ctx.restore();
 }
 const c4Source=new Image();
 c4Source.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAAnCAYAAACrDdDdAAAABHNCSVQICAgIfAhkiAAAAZ1JREFUaEPtmDFrg0AYht8EEbkMqSVQQQ66FgKd+hv6L/rj8hc6derUpVtA6FJoQGKSJUYwQcIFu1SwX5OcVxrPS32m797PwYe7+wStPM9xrlg0OCdaOVNp5Uzl38s1+VvRoUEZmdwHDRpGfkxQJndNA5OQyRmNFrkgCEY0q8pwOHyg2SG0yNVFK/cbykdP5Sj9JSeRm0wmjzTTgbLcvmFQ3pk4jsdpmsbfn9CDkpwQInUcp5dl2Zr2CqbT6RgAfN+/LWpdKMnNZrOXLMvWlmXZQogt7UdR9FzUruuaIyeESJMkWXzVWzokNptNuFwuQ2gcIBQlOZqViaLotaiDIBg5jtMr1mEYPnHO74t1XfKV5WTQe1heJ0my4JyX27VQWc627cvyugnfMRmV5brdru153s18Pn+jPewRbIJ8ZTkAGAwGd4wxb7Vave92ux/TktLv969ohiPiqrkMJTkAYIxxxpj0Aqm8xKlQljMJLXKHdlU1l6FFri5aOVORyXUAxAAuaKMhHPythwpyAODSwBSqyBlLK2cqrZypnLXcJxMGli3ce5KWAAAAAElFTkSuQmCC';
@@ -206,7 +349,20 @@ function bombGlyph(x,y,color){
  if(!icon){icon=document.createElement('canvas');icon.width=c4Source.naturalWidth;icon.height=c4Source.naturalHeight;const c=icon.getContext('2d');if(!c)return;c.drawImage(c4Source,0,0);c.globalCompositeOperation='source-in';c.fillStyle=color;c.fillRect(0,0,icon.width,icon.height);c4TintCache.set(color,icon)}
  const height=26*icon.height/icon.width;ctx.drawImage(icon,x-13,y-height/2,26,height);
 }
-function drawBomb(x,y,bomb,localTeam,zoom){ctx.save();ctx.translate(x,y);const bombScale=bombMarkerScale;ctx.scale(bombScale/zoom,bombScale/zoom);if(bomb.planted){const phase=performance.now()/500;for(let i=0;i<3;i++){const radius=10+((phase*5+i*10)%30);ctx.beginPath();ctx.arc(0,0,radius,0,Math.PI*2);ctx.strokeStyle='rgba(255,42,30,'+Math.max(.04,.55-radius/70)+')';ctx.lineWidth=1;ctx.stroke()}ctx.shadowColor='#ff3020';ctx.shadowBlur=10}bombGlyph(0,0,bomb.planted?'#f33320':localTeam===2?'#ead781':'#f32122');ctx.restore()}
+function drawBomb(x, y, bomb, zoom) {
+ ctx.save();
+ ctx.translate(x, y);
+ ctx.scale(bombMarkerScale / zoom, bombMarkerScale / zoom);
+ ctx.beginPath();
+ ctx.arc(0, 0, bomb.planted ? 15 : 11, 0, 2 * Math.PI);
+ ctx.fillStyle = '#17151B';
+ ctx.fill();
+ ctx.lineWidth = 1.5;
+ ctx.strokeStyle = radarStyle.colors.bomb;
+ ctx.stroke();
+ bombGlyph(0, 0, radarStyle.colors.bomb);
+ ctx.restore();
+}
 const mixYaw=(a,b,t)=>a+(((b-a+540)%360)-180)*t;
 const weaponIconAliases={tagrenade:'world',ak47:'ak47',awp:'awp',cv47:'ak47',m4a4:'m4a1',m4a1:'m4a1',m4a1s:'m4a1_silencer',m4a1silencer:'m4a1_silencer',aug:'aug',sg553:'sg556',sg556:'sg556',ssg08:'ssg08',scout:'ssg08',scar20:'scar20',g3sg1:'g3sg1',famas:'famas',galil:'galilar',galilar:'galilar',negev:'negev',m249:'m249',mac10:'mac10',mp9:'mp9',mp7:'mp7',mp5sd:'mp5sd',ump45:'ump45',p90:'p90',bizon:'bizon',ppbizon:'bizon',nova:'nova',m3:'nova',xm1014:'xm1014',mag7:'mag7',sawedoff:'sawedoff',deagle:'deagle',deserteagle:'deagle',revolver:'revolver',r8:'revolver',r8revolver:'revolver',glock:'glock',glock18:'glock',hkp2000:'hkp2000',p2000:'hkp2000',usps:'usp_silencer',uspsilencer:'usp_silencer',usp:'usp_silencer',p250:'p250',fiveseven:'fiveseven',tec9:'tec9',cz75a:'cz75a',cz75auto:'cz75a',elite:'elite',dualberettas:'elite',taser:'taser',zeusx27:'taser',knife:'knife',knifet:'knife_t',flashbang:'flashbang',flash:'flashbang',flashgrenade:'flashbang',smoke:'smokegrenade',smokegrenade:'smokegrenade',he:'hegrenade',hegrenade:'hegrenade',molotov:'molotov',incgrenade:'incgrenade',incendiarygrenade:'incgrenade',decoy:'decoy',taggrenade:'world',healthshot:'healthshot',ak:'ak47',дымоваяграната:'smokegrenade',световаяграната:'flashbang',осколочнаяграната:'hegrenade',коктейльмолотова:'molotov',ложнаяграната:'decoy',аптечка:'healthshot',нож:'knife'};
 const weaponImageCache=new Map();
@@ -215,25 +371,62 @@ function tintedWeaponImage(key,color){const cacheKey=key+'|'+color;let entry=wea
 function drawWeaponDisplay(item,x,y,z,mode,iconScale,textScale,iconColor,textColor){
  if(mode==='off')return;
  const showIcon=mode!=='text',showText=mode!=='icon',zoomScale=Math.max(.25,Number(z)||1),key=weaponIconKey(item.weapon_id||item.name),pistols=['deagle','revolver','glock','hkp2000','usp_silencer','p250','fiveseven','tec9','cz75a','elite','taser'],grenades=['flashbang','smokegrenade','hegrenade','molotov','incgrenade','decoy','taggrenade','healthshot'],iconSize=24*iconScale*(pistols.includes(key)?.67:grenades.includes(key)?.58:1)/zoomScale,label=String(item.name||'Оружие');
- ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';ctx.font=(10.5*textScale/zoomScale)+'px Unbounded,system-ui,sans-serif';
+ ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';ctx.font=(10.5*textScale/zoomScale)+'px system-ui,sans-serif';
  const textWidth=showText?ctx.measureText(label).width:0,gap=showIcon&&showText?5/zoomScale:0,totalWidth=(showIcon?iconSize:0)+gap+textWidth;let left=x-totalWidth/2;
  if(showIcon){const image=tintedWeaponImage(weaponIconKey(item.weapon_id||item.name),iconColor);if(image){const ratio=Math.min(iconSize/image.width,iconSize/image.height),w=image.width*ratio,h=image.height*ratio;ctx.drawImage(image,left+(iconSize-w)/2,y-h/2,w,h)}left+=iconSize+gap}
  if(showText){ctx.lineWidth=3/zoomScale;ctx.strokeStyle='#081019';ctx.strokeText(label,left,y);ctx.fillStyle=textColor;ctx.fillText(label,left,y)}
  ctx.restore()
 }
-function drawGroundWeapon(x,y,item,z){drawWeaponDisplay(item,x,y,z,groundWeaponMode,groundWeaponIconScale,groundWeaponTextScale,'#f3bd4f','#fff0c4')}
-function drawPlayerWeapon(player,x,y,z){if(!player.weapon)return;const zoomScale=Math.max(.25,Number(z)||1),color=player.team===3?'#6ba5ff':'#f3a949';drawWeaponDisplay({name:player.weapon,weapon_id:player.weapon_id},x,y+14*markerScale/zoomScale,z,playerWeaponMode,playerWeaponIconScale,playerWeaponTextScale,color,color)}function drawLabel(parts,x,y,z,team){if(!parts.length)return;const label=parts.join(' · '),scale=playerTextScale/z;ctx.save();ctx.fillStyle=team===3?'#6ba5ff':'#f3a949';ctx.strokeStyle='#081019';ctx.font=9*scale+'px "Unbounded",system-ui,sans-serif';ctx.lineWidth=3*scale;ctx.strokeText(label,x+10*scale,y-10*scale);ctx.fillText(label,x+10*scale,y-10*scale);ctx.restore()}
+function drawGroundWeapon(x, y, item, zoom) {
+ const color = radarStyle.colors.weapon;
+ drawWeaponDisplay(item, x, y, zoom, groundWeaponMode, groundWeaponIconScale, groundWeaponTextScale, color, color);
+}
+
+function drawPlayerWeapon(player, x, y, zoom, color) {
+ if (!player.weapon) return;
+ drawWeaponDisplay({ name: player.weapon, weapon_id: player.weapon_id },
+  x, y + 15 * markerScale / zoom, zoom, playerWeaponMode,
+  playerWeaponIconScale, playerWeaponTextScale, color, color);
+}
+
+function drawLabel(parts, x, y, zoom, color) {
+ if (!parts.length) return;
+ const label = parts.join(' · ');
+ const scale = playerTextScale / zoom;
+ ctx.save();
+ ctx.font = '600 ' + (11 * scale) + 'px system-ui,sans-serif';
+ ctx.fillStyle = color;
+ ctx.strokeStyle = '#111117';
+ ctx.lineJoin = 'round';
+ ctx.lineWidth = 3 * scale;
+ ctx.textBaseline = 'middle';
+ const left = x + (7 * markerScale + 5) / zoom;
+ ctx.strokeText(label, left, y - 7 * scale);
+ ctx.fillText(label, left, y - 7 * scale);
+ ctx.restore();
+}
+
+let hasDrawnFrame=false,drawFrame=0;
+function scheduleDraw(){if(!document.hidden&&!drawFrame)drawFrame=requestAnimationFrame(draw)}
 function draw(){
- requestAnimationFrame(draw);
+ drawFrame=0;
+ if(!state?.ok&&!hasDrawnFrame)return;
+ if(!document.hidden)scheduleDraw();
  updateBombCountdown();
  playerHits=[];
+ if(!state?.ok){
+  ctx.resetTransform();
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  hasDrawnFrame=false;
+  return;
+ }
+ hasDrawnFrame=true;
  const dpr=Math.min(devicePixelRatio||1,2),viewWidth=canvas.clientWidth,viewHeight=canvas.clientHeight;
  const size=Math.max(1,Math.min(viewWidth,viewHeight)),offsetX=(viewWidth-size)/2,offsetY=(viewHeight-size)/2;
  if(canvas.width!==Math.round(viewWidth*dpr)||canvas.height!==Math.round(viewHeight*dpr)){canvas.width=Math.round(viewWidth*dpr);canvas.height=Math.round(viewHeight*dpr);radarElement.style.setProperty('--radar-offset-y',offsetY+'px')}
  ctx.setTransform(dpr,0,0,dpr,0,0);
- ctx.fillStyle=state?.ok?'#765b46':'#111c22';
+ ctx.fillStyle=radarStyle.colors.field;
  ctx.fillRect(0,0,viewWidth,viewHeight);
- if(!state?.ok)return;
  const age=Math.max(0,Date.now()+clockOffset-(state.time||0)*1000);
  const stale=performance.now()-last>3000||(state.serverTime&&age>5000);
  if(performance.now()-lastUI>250){
@@ -242,13 +435,14 @@ function draw(){
   $('stale').textContent=stale?'ДАННЫЕ УСТАРЕЛИ':usingFallback?'РЕЗЕРВНЫЙ КАНАЛ · LIVE':transport==='rtc'?(rtcLast&&performance.now()-rtcLast<6000?(rtcRoute?'WEBRTC · '+rtcRoute:'WEBRTC · LIVE'):'HTTPS · ПОДКЛЮЧАЕМ WEBRTC'):transport==='ws'?'WEBSOCKET · LIVE':hosted?'HTTPS · LIVE':'ПРЯМОЕ ПОДКЛЮЧЕНИЕ · LIVE';
  }
  if(stale){$('message').textContent='Данные устарели\\nВосстанавливаем связь…';return}
- const t=Math.min(1,(performance.now()-last)/(transport==='rtc'?20:hosted?150:45));
+ const motion = document.documentElement.dataset.motion !== 'false' && !motionPreference.matches;
+ const t = motion ? Math.min(1,(performance.now()-last)/(transport==='rtc'?20:hosted?150:45)) : 1;
  const old=previous?.ok&&previous.map===state.map?previous:null;
  const interpolate=(p,o)=>o?{...p,position:p.position.map((v,i)=>o.position[i]+(v-o.position[i])*t),yaw:mixYaw(o.yaw,p.yaw,t)}:p;
  const me=interpolate(state.local,old?.local),origin=me.position,ready=meta&&image?.complete&&image.naturalWidth>0;
  const pos=p=>ready?[(p[0]-meta.x)/meta.scale/1024*size,(meta.y-p[1])/meta.scale/1024*size]:[(p[0]-origin[0])/5000*size+size/2,-(p[1]-origin[1])/5000*size+size/2];
  const local=pos(origin);
- const center=zoom>1?[local[0]+offsetX,local[1]+offsetY]:[viewWidth/2,viewHeight/2];
+ const center=zoom>1?[local[0]+offsetX+pan.x,local[1]+offsetY+pan.y]:[viewWidth/2,viewHeight/2];
  ctx.save();
  ctx.translate(viewWidth/2,viewHeight/2);
  ctx.scale(zoom,zoom);
@@ -262,7 +456,7 @@ function draw(){
   ctx.strokeStyle='#253844';ctx.lineWidth=1/zoom;
   for(let i=0;i<10;i++){ctx.beginPath();ctx.moveTo(i*size/10,0);ctx.lineTo(i*size/10,size);ctx.moveTo(0,i*size/10);ctx.lineTo(size,i*size/10);ctx.stroke()}
  }
- if(state.bomb?.position){const [bx,by]=pos(state.bomb.position);drawBomb(bx,by,state.bomb,me.team,zoom)}
+ if (radarStyle.bomb && state.bomb?.position) { const [bx,by]=pos(state.bomb.position); drawBomb(bx,by,state.bomb,zoom); }
  if(groundWeaponsVisible&&Array.isArray(state.weapons)){
   for(const item of state.weapons){if(!Array.isArray(item.position)||item.position.length<2)continue;const [wx,wy]=pos(item.position);drawGroundWeapon(wx,wy,item,zoom)}
  }
@@ -275,29 +469,83 @@ function draw(){
   marker(x,y,player,false,zoom,me.team);
   const parts=[];
   if(detailsVisible&&names)parts.push(player.name);
-  if(detailsVisible&&health&&enemy)parts.push(player.hp+' HP');
-  drawLabel(parts,x,y,zoom,player.team);
-  if(detailsVisible&&playerWeaponsVisible&&player.weapon)drawPlayerWeapon(player,x,y,zoom);
+  if(detailsVisible&&health)parts.push(player.hp+' HP');
+  const color = markerColor(player, false, me.team);
+  drawLabel(parts,x,y,zoom,color);
+  if(detailsVisible&&playerWeaponsVisible&&player.weapon)drawPlayerWeapon(player,x,y,zoom,color);
  }
  if(me.alive!==false){
   const hit=screenPoint(local[0],local[1]);
   playerHits.push({id:null,x:hit.x,y:hit.y});
   marker(local[0],local[1],me,true,zoom,me.team);
-  if(playerWeaponsVisible&&me.weapon)drawPlayerWeapon(me,local[0],local[1],zoom);
+  if(playerWeaponsVisible&&me.weapon)drawPlayerWeapon(me,local[0],local[1],zoom,radarStyle.colors.self);
  }
  updatePlayerIsland();
  ctx.restore();
- if(!ready&&mapStatus){ctx.fillStyle='#ffca84';ctx.font='12px "Unbounded",system-ui,sans-serif';ctx.fillText(mapStatus,12,44)}
+ if(!ready&&mapStatus){ctx.fillStyle='#ffca84';ctx.font='12px system-ui,sans-serif';ctx.fillText(mapStatus,12,44)}
 }
-function updatePlayerIsland(){const box=$('player-island');if(selectedPlayer===null){box.hidden=true;return}const p=state?.players?.find(v=>v.id===selectedPlayer);if(!p){selectedPlayer=null;box.hidden=true;return}box.hidden=false;$('view-name').textContent=p.name||'Игрок';$('view-name').style.color=p.team===3?'#6ba5ff':'#f3a949';$('view-hp').textContent=p.hp+' HP';$('view-armor').textContent=p.armor==null?'Броня: —':'Броня: '+p.armor;const weapon=$('view-weapon');weapon.textContent=p.weapon||'';weapon.hidden=!playerWeaponsVisible||!p.weapon}
-canvas.addEventListener('click',e=>{const rect=canvas.getBoundingClientRect(),x=(e.clientX-rect.left)*canvas.clientWidth/rect.width,y=(e.clientY-rect.top)*canvas.clientHeight/rect.height;let best=null,distance=24;for(const hit of playerHits){const d=Math.hypot(x-hit.x,y-hit.y);if(d<distance){best=hit;distance=d}}if(best){selectedPlayer=best.id;updatePlayerIsland()}});$('view-reset').onclick=()=>{selectedPlayer=null;updatePlayerIsland()};
+function updatePlayerIsland() {
+ const box = $('player-island');
+ const player = selectedPlayer === null ? null : state?.players?.find(p => p.id === selectedPlayer);
+ box.hidden = !player;
+ if (!player) { selectedPlayer = null; return; }
+ setText($('view-name'), player.name || 'Игрок');
+ setText($('view-hp'), player.hp + ' HP');
+ setText($('view-armor'), player.armor == null ? 'Броня: —' : 'Броня: ' + player.armor);
+ setText($('view-weapon'), player.weapon || '');
+ $('view-weapon').hidden = !playerWeaponsVisible || !player.weapon;
+}
+function selectPlayer(id) {
+ selectedPlayer = id;
+ updatePlayerIsland();
+ if (state?.ok) renderRoster(state);
+}
+
+const pointers = new Map();
+let suppressClick = false;
+canvas.addEventListener('pointerdown', event => {
+ if (event.button !== 0) return;
+ if (!pointers.size) suppressClick = false;
+ pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+ canvas.setPointerCapture(event.pointerId);
+});
+canvas.addEventListener('pointermove', event => {
+ const point = pointers.get(event.pointerId);
+ if (!point) return;
+ const next = { x: event.clientX, y: event.clientY };
+ const other = [...pointers].find(([id]) => id !== event.pointerId)?.[1];
+ const dx = next.x - point.x, dy = next.y - point.y;
+ pointers.set(event.pointerId, next);
+ if (other) {
+  const oldDistance = Math.hypot(other.x - point.x, other.y - point.y);
+  const distance = Math.hypot(other.x - next.x, other.y - next.y);
+  if (oldDistance > 3) setZoom(zoom * distance / oldDistance);
+  suppressClick = true;
+ } else if (zoom > 1 && (suppressClick || Math.hypot(dx, dy) > 2)) {
+  const limit = Math.min(canvas.clientWidth, canvas.clientHeight);
+  pan.x = Math.max(-limit, Math.min(limit, pan.x - dx / zoom));
+  pan.y = Math.max(-limit, Math.min(limit, pan.y - dy / zoom));
+  suppressClick = true;
+ }
+});
+for (const event of ['pointerup', 'pointercancel', 'lostpointercapture']) {
+ canvas.addEventListener(event, input => pointers.delete(input.pointerId));
+}
+canvas.addEventListener('click', event => {
+ if (suppressClick) return;
+ const rect = canvas.getBoundingClientRect();
+ const x = event.clientX - rect.left, y = event.clientY - rect.top;
+ let best = null, distance = 24;
+ for (const hit of playerHits) {
+  const d = Math.hypot(x - hit.x, y - hit.y);
+  if (d < distance) { best = hit; distance = d; }
+ }
+ if (best) selectPlayer(best.id);
+});
+$('view-reset').onclick = () => selectPlayer(null);
 window.addEventListener('hashchange',()=>{if(new URLSearchParams(location.hash.slice(1)).has('connect'))location.reload()});
-const setImageBeforeBackground=setImage;
-setImage=function(){setImageBeforeBackground();if(image?.src)document.querySelector('.radar').style.setProperty('--radar-background','url('+JSON.stringify(image.src)+')')};
 const fullscreenExit=document.createElement('button');fullscreenExit.className='fullscreen-exit';fullscreenExit.textContent='×';fullscreenExit.setAttribute('aria-label','Выйти из полноэкранного режима');fullscreenExit.onclick=()=>{if(document.fullscreenElement)document.exitFullscreen?.();else radarElement.classList.remove('pseudo-fullscreen')};document.querySelector('.radar').append(fullscreenExit);
 let markerScale=1.2;
-const originalMarker=marker;
-marker=function(x,y,p,self,z,team){ctx.save();ctx.translate(x,y);ctx.scale(markerScale,markerScale);originalMarker(0,0,p,self,z,team);ctx.restore()};
 function appearanceSlider(title,key,min,max,step,value,update,parent){
  const label=document.createElement('label');label.className='appearance-control';
  const text=document.createElement('span');text.textContent=title;const input=document.createElement('input');
@@ -328,6 +576,212 @@ async function showFirstSnapshot(){
   if(current===generation&&candidate===base&&transport==='rtc'&&(!rtcLast||performance.now()-rtcLast>=6000)&&next.ok){telemetry(next,started,performance.now());accept(next);$('stale').textContent='ПЕРВЫЕ ДАННЫЕ · ПОДКЛЮЧАЕМ WEBRTC'}
  }catch{}finally{earlySnapshotPending=false}
 }
-initialize().finally(()=>{showFirstSnapshot();poll()});draw();
+ document.addEventListener('visibilitychange',()=>{if(document.hidden){if(drawFrame)cancelAnimationFrame(drawFrame);drawFrame=0}else scheduleDraw()});
+const radarColors = {
+ ally: ['Союзники', '#9EA3FF'], enemy: ['Противники', '#F6C981'], self: ['Твой игрок', '#86E2C3'],
+ weapon: ['Оружие на земле', '#F4CF83'], bomb: ['Бомба', '#FFA1A8'], field: ['Поле карты', '#131317'],
+};
+const radarPresets = {
+ Minimal: { size: 1, opacity: .85, shape: 'circle', direction: false, cone: false, bomb: true, names: false, health: false, allyColors: false, ground: 'off', player: 'off', labelSize: .9, iconSize: 1, weaponText: 1 },
+ Classic: { size: 1.2, opacity: 1, shape: 'circle', direction: true, cone: true, bomb: true, names: false, health: false, allyColors: false, ground: 'both', player: 'off', labelSize: 1, iconSize: 1.2, weaponText: 1 },
+ Competitive: { size: 1.4, opacity: 1, shape: 'diamond', direction: true, cone: true, bomb: true, names: true, health: true, allyColors: true, ground: 'icon', player: 'icon', labelSize: 1.15, iconSize: 1.25, weaponText: 1.1 },
+};
+const radarKey = 'shawyRadarStyleV1';
+const customRadarKey = 'shawyRadarCustomV1';
+
+function readRadarStyle(key = radarKey) {
+ let data;
+ try { data = JSON.parse(read(key)); } catch {}
+ const defaults = radarPresets.Classic;
+ const colors = Object.fromEntries(Object.entries(radarColors).map(([key, [, fallback]]) =>
+  [key, typeof data?.colors?.[key] === 'string' && /^#[0-9a-f]{6}$/i.test(data.colors[key]) ? data.colors[key] : fallback]));
+ const clamp = (value, min, max, fallback) => Number.isFinite(value) ? Math.max(min, Math.min(max, value)) : fallback;
+ return {
+  preset: [...Object.keys(radarPresets), 'Custom'].includes(data?.preset) ? data.preset : hadRadarPreferences ? 'Custom' : 'Classic',
+  size: clamp(data?.size, .65, 2.2, defaults.size),
+  opacity: clamp(data?.opacity, .45, 1, defaults.opacity),
+  shape: ['circle', 'diamond', 'square'].includes(data?.shape) ? data.shape : defaults.shape,
+  direction: typeof data?.direction === 'boolean' ? data.direction : defaults.direction,
+  cone: typeof data?.cone === 'boolean' ? data.cone : defaults.cone,
+  bomb: typeof data?.bomb === 'boolean' ? data.bomb : defaults.bomb,
+  colors,
+ };
+}
+let radarStyle = readRadarStyle();
+const preset = $('radar-preset');
+
+function applyRadarStyle() {
+ markerScale = radarStyle.size;
+ preset.value = radarStyle.preset;
+ for (const [key, value] of Object.entries(radarStyle.colors)) {
+  document.documentElement.style.setProperty('--radar-' + key, value);
+ }
+ if (state?.ok) renderRoster(state);
+ updateBombCountdown();
+ scheduleDraw();
+}
+function rememberCustom() {
+ store(customRadarKey, JSON.stringify({
+  ...radarStyle, names, health, allyColors, allies: alliesVisible, enemies: enemiesVisible,
+  ground: $('ground-weapon-mode').value, player: $('player-weapon-mode').value,
+  labelSize: playerTextScale, groundIcon: groundWeaponIconScale, playerIcon: playerWeaponIconScale,
+  groundText: groundWeaponTextScale, playerText: playerWeaponTextScale,
+ }));
+}
+function saveRadarStyle(custom = true) {
+ if (custom) {
+  radarStyle.preset = 'Custom';
+  rememberCustom();
+ }
+ store(radarKey, JSON.stringify(radarStyle));
+ applyRadarStyle();
+}
+
+const radarGroup = $('radar-style');
+const radarControls = document.createElement('details');
+radarControls.className = 'settings-block';
+const radarSummary = document.createElement('summary');
+radarSummary.textContent = 'Маркеры и цвета';
+radarControls.append(radarSummary);
+radarGroup.append(radarControls);
+
+function renderRadarControls() {
+ radarControls.replaceChildren(radarSummary);
+ const options = [
+  ['size', 'Размер маркеров', 'range', '.65', '2.2', '.05'],
+  ['opacity', 'Непрозрачность', 'range', '.45', '1', '.05'],
+  ['shape', 'Форма', 'select'],
+  ['direction', 'Стрелки направления', 'checkbox'],
+  ['cone', 'Секторы обзора', 'checkbox'],
+  ['bomb', 'Бомба и таймер', 'checkbox'],
+ ];
+ for (const [key, title, type, min, max, step] of options) {
+  const label = document.createElement('label');
+  label.className = 'setting-row';
+  const span = document.createElement('span');
+  span.textContent = title;
+  const input = document.createElement(type === 'select' ? 'select' : 'input');
+  if (type === 'select') {
+   for (const [value, text] of [['circle','Круг'], ['diamond','Ромб'], ['square','Квадрат']]) {
+    input.add(new Option(text, value));
+   }
+  } else input.type = type;
+  if (type === 'range') Object.assign(input, { min, max, step });
+  if (type === 'checkbox') input.checked = radarStyle[key];
+  else input.value = radarStyle[key];
+  if (type === 'checkbox') input.setAttribute('role', 'switch');
+  input.setAttribute('aria-label', title);
+  label.append(span, input);
+  radarControls.append(label);
+  input.oninput = () => {
+   radarStyle[key] = type === 'range' ? Number(input.value) : type === 'checkbox' ? input.checked : input.value;
+   saveRadarStyle();
+  };
+ }
+ if (!window.ShaWyAppearance) return;
+ for (const [key, [label]] of Object.entries(radarColors)) {
+  radarControls.append(window.ShaWyAppearance.colorField(label, radarStyle.colors[key], color => {
+   radarStyle.colors[key] = color;
+   saveRadarStyle();
+  }));
+ }
+}
+preset.onchange = () => {
+ const picked = preset.value;
+ if (radarStyle.preset === 'Custom') rememberCustom();
+ let style = radarPresets[picked];
+ if (picked === 'Custom') {
+  try { style = JSON.parse(read(customRadarKey)); } catch {}
+  if (!style) { saveRadarStyle(); return; }
+  radarStyle = readRadarStyle(customRadarKey);
+  radarStyle.preset = 'Custom';
+ } else {
+  radarStyle = {
+   size: style.size, opacity: style.opacity, shape: style.shape, direction: style.direction, cone: style.cone,
+   bomb: style.bomb, preset: picked,
+   colors: Object.fromEntries(Object.entries(radarColors).map(([key, [, defaultColor]]) => [key, defaultColor])),
+  };
+ }
+ const toggles = {
+  names: style.names === true, health: style.health === true, 'ally-colors': style.allyColors === true,
+  allies: style.allies !== false, enemies: style.enemies !== false,
+ };
+ for (const [id, enabled] of Object.entries(toggles)) {
+  if (($(id).getAttribute('aria-pressed') === 'true') !== enabled) $(id).onclick();
+ }
+ for (const kind of ['ground', 'player']) {
+  $(kind + '-weapon-mode').value = validWeaponMode(style[kind]);
+  syncWeaponControls(kind);
+ }
+ for (const [control, value] of [
+  [$('player-size-controls'), style.labelSize], [groundIconControl, style.groundIcon ?? style.iconSize],
+  [playerIconControl, style.playerIcon ?? style.iconSize], [groundTextControl, style.groundText ?? style.weaponText],
+  [playerTextControl, style.playerText ?? style.weaponText],
+ ]) {
+  if (!Number.isFinite(value)) continue;
+  const input = control.querySelector('input');
+  input.value = value;
+  input.oninput();
+ }
+ saveRadarStyle(false);
+ renderRadarControls();
+};
+$('panel-display').addEventListener('input', event => {
+ if (event.target !== preset && !radarGroup.contains(event.target)) saveRadarStyle();
+});
+$('panel-display').addEventListener('click', event => {
+ if (event.target.closest('.toggle')) saveRadarStyle();
+});
+renderRadarControls();
+applyRadarStyle();
+
+const appearancePage = $('appearance-page');
+const mainWorkspace = document.querySelector('.workspace');
+const inspector = document.querySelector('.sidebar');
+function showPage(name) {
+ const appearance = name === 'appearance';
+ mainWorkspace.dataset.view = name;
+ appearancePage.hidden = !appearance;
+ inspector.hidden = appearance;
+ for (const id of ['radar', 'appearance']) {
+  if (id === name) $('page-' + id).setAttribute('aria-current', 'page');
+  else $('page-' + id).removeAttribute('aria-current');
+ }
+}
+$('page-radar').onclick = () => showPage('radar');
+$('page-appearance').onclick = () => showPage('appearance');
+document.querySelector('.brand').onclick = event => { event.preventDefault(); showPage('radar'); };
+if (window.ShaWyAppearance) {
+ window.ShaWyAppearance.mount(appearancePage).catch(() => {
+  appearancePage.textContent = 'Не удалось загрузить настройки внешнего вида. Обнови страницу.';
+ });
+} else {
+ appearancePage.textContent = 'Для настройки внешнего вида нужна новая версия приложения.';
+}
+
+const connectionForm = $('connection');
+let connectionFocus;
+new MutationObserver(() => {
+ if (!connectionForm.hidden) {
+  connectionFocus = document.activeElement;
+  mainWorkspace.inert = true;
+  document.querySelector('.topbar').inert = true;
+  $('endpoint').focus();
+ } else {
+  mainWorkspace.inert = false;
+  document.querySelector('.topbar').inert = false;
+  connectionFocus?.focus();
+ }
+}).observe(connectionForm, { attributeFilter: ['hidden'] });
+connectionForm.addEventListener('keydown', event => {
+ if (event.key === 'Escape') { connectionForm.hidden = true; return; }
+ if (event.key !== 'Tab') return;
+ const items = [...connectionForm.querySelectorAll('button,input,select')];
+ const first = items[0], last = items.at(-1);
+ if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+ else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+});
+
+ initialize().finally(()=>{showFirstSnapshot();poll()});scheduleDraw();
 </script></body></html>
 
